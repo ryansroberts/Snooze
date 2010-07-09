@@ -104,12 +104,7 @@ namespace Snooze
             if (controllerType == null)
                 throw new InvalidOperationException("Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
 
-            var desc = new ReflectedControllerDescriptor(controllerType);
-            var controllerName = desc.ControllerName;
-          
-            var routeValues = new RouteValueDictionary(url);
-            routeValues.Add("controller",controllerName);
-            routeValues.Add("action", "dummy_value_to_please_mvc_implementation");
+            var routeValues = GetRouteValues(controllerType, url);
 
             var routeData = CreateRouteData(ResourceRoute<TUrl>.Route(), routeValues,routeValues, htmlHelper.ViewContext);
             var httpContext = htmlHelper.ViewContext.HttpContext;
@@ -119,6 +114,17 @@ namespace Snooze
             ExecuteRequest(httpContext, requestContext, writer);
 
             return writer.GetStringBuilder().ToString();
+        }
+
+        static RouteValueDictionary GetRouteValues<TUrl>(Type controllerType, TUrl url)
+        {
+            var desc = new ReflectedControllerDescriptor(controllerType);
+            var controllerName = desc.ControllerName;
+          
+            var routeValues = new RouteValueDictionary(url);
+            routeValues.Add("controller",controllerName);
+            routeValues.Add("action", "dummy_value_to_please_mvc_implementation");
+            return routeValues;
         }
 
         static void ExecuteRequest(HttpContextBase httpContext, RequestContext requestContext, TextWriter textWriter)
