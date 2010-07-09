@@ -25,7 +25,7 @@ namespace Snooze
             {
                 var s = new XmlSerializer(resource.GetType());
                 context.HttpContext.Response.ContentType = contentType ?? "text/xml";
-                s.Serialize(context.HttpContext.Response.OutputStream, resource);
+                s.Serialize(context.HttpContext.Response.Output, resource);
             }
         }
     }

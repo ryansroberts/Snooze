@@ -1,4 +1,5 @@
 <%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<SampleApplication.Controllers.HomeViewModel>" %>
+<%@ Import Namespace="SampleApplication.Controllers" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="<%= Url.StaticFile("styles/global.css") %>" />
 </head>
 <body>
+
     <h1>Snooze Sample Application</h1>
     <p>
     <a href="<%= Model.Login %>">Login</a>
@@ -14,5 +16,13 @@
     <p>
         <a href="<%= Model.BooksLink %>">List Books</a>
     </p>
+
+    <p>
+        Partial result ("bob")
+
+        <%: Html.Render(new PartialItemUrl{Something = "bob"}) %>
+
+    </p>
+
 </body>
 </html>

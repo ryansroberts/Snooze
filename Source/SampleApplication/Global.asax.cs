@@ -20,6 +20,7 @@ namespace SampleApplication
             routes.Map<BookUrl>(b => "book/" + b.BookId);
             routes.Map<BookCommentsUrl>(c => "comments");
             routes.Map<BookCommentUrl>(c => c.CommentId.ToString());
+            routes.Map<PartialItemUrl>(c => "partial/item" + c.Something);
         }
 
         protected void Application_Start()

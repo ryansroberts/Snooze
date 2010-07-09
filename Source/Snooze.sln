@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze", "Snooze\Snooze.csproj", "{290C5812-2A16-4BA3-9A40-0DF6E0E63288}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze.Tests", "Snooze.Tests\Snooze.Tests.csproj", "{E81D25CB-108A-4E71-AEDB-2E19A1A60948}"

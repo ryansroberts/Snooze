@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -9,6 +10,15 @@ namespace Snooze.Routing
     class ResourceRoute<TUrl> : Route
         where TUrl : Url
     {
+        static readonly IDictionary<Type,Route> _registeredRoutes = new Dictionary<Type, Route>();
+
+        public static Route Route()
+        {
+            if (!_registeredRoutes.ContainsKey(typeof(TUrl)))
+                throw new InvalidOperationException("Route for " + typeof (TUrl).Name + " not configured");
+            return _registeredRoutes[typeof (TUrl)];
+        }
+
         public ResourceRoute(Expression<Func<TUrl, string>> routeExpression)
             : base(GetUrl(routeExpression), new MvcRouteHandler())
         {
@@ -16,13 +26,9 @@ namespace Snooze.Routing
 
             var controllerType = ResourceControllerTypes.FindTypeForUrl<TUrl>();
 
-            // NICE / SH - Check if controller type is null. If it is it means a route has been defined
-            // but matching Action has not been defined in a Controller (and Controller contains no other snooze routes)
-            // Throw more meaningful Exception
             if (controllerType == null)
-                throw new ApplicationException("Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
-            // NICE / SH - End
-
+                throw new InvalidOperationException("Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
+        
             var desc = new ReflectedControllerDescriptor(controllerType);
             var controllerName = desc.ControllerName;
                         
@@ -30,6 +36,8 @@ namespace Snooze.Routing
             Defaults = new RouteValueDictionary(defaultsProvider.Defaults);
             Defaults.Add("controller", controllerName);
             Defaults.Add("action", "dummy_value_to_please_mvc_implementation");
+
+            _registeredRoutes[typeof (TUrl)] = this;
         }
 
         static string GetUrl(Expression<Func<TUrl, string>> routeExpression)
