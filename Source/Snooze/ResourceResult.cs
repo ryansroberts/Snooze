@@ -191,7 +191,7 @@ namespace Snooze
         {
             foreach (var header in _headers)
             {
-                context.HttpContext.Response.AppendHeader(header.Key, header.ToString());
+                context.HttpContext.Response.AppendHeader(header.Key, header.Value.ToString());
             }
         }
 
