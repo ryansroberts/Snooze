@@ -23,23 +23,4 @@ namespace Snooze
             }
         }
     }
-
-    class FakeHttpRequest : HttpRequestBase
-    {
-        public override string ApplicationPath
-        {
-            get
-            {
-                return "/";
-            }
-        }
-    }
-
-    class FakeHttpResponse : HttpResponseBase
-    {
-        public override string ApplyAppPathModifier(string virtualPath)
-        {
-            return virtualPath;
-        }
-    }
 }

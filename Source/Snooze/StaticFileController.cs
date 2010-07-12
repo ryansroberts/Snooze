@@ -3,12 +3,6 @@ using System.Web.Mvc;
 
 namespace Snooze
 {
-    public class StaticFileUrl : Url
-    {
-        public string Version { get; set; }
-        public string Path { get; set; }
-    }
-
     public class StaticFileController : ResourceController
     {
         public void Get(StaticFileUrl url)
