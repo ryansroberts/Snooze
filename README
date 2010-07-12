@@ -1,0 +1,8 @@
+A RESTful Framework for ASP.NET MVC originaly developed by http://github.com/andrewdavey
+
+ASP.NET MVC is far too reliant on magic-strings. Snooze is a thin layer on top of the ASP.NET MVC framework that brings some sanity back!
+Snooze makes URLs a first-class, strongly-typed concept. Controllers contain methods that handle HTTP requests for URLs.
+
+Snooze is still under development, but the following samples are from working code.
+
+Enjoy!
