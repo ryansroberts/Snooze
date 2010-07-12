@@ -1,19 +1,24 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
+#endregion
+
 namespace Snooze
 {
     /// <summary>
-    /// Find actions methods that match the HTTP method and has the requested Url type as the first parameter.
+    ///   Find actions methods that match the HTTP method and has the requested Url type as the first parameter.
     /// </summary>
     public class ResourceActionInvoker : ControllerActionInvoker
     {
-        static Dictionary<string, MethodInfo> s_actionMethodCache = new Dictionary<string, MethodInfo>();
+        static readonly Dictionary<string, MethodInfo> s_actionMethodCache = new Dictionary<string, MethodInfo>();
 
-        protected override ActionDescriptor FindAction(ControllerContext controllerContext, ControllerDescriptor controllerDescriptor, string actionName)
+        protected override ActionDescriptor FindAction(ControllerContext controllerContext,
+                                                       ControllerDescriptor controllerDescriptor, string actionName)
         {
             var urlType = GetUrlType(controllerContext);
             var httpMethod = GetHttpMethod(controllerContext);
@@ -24,11 +29,12 @@ namespace Snooze
             // Fix up the "action" name to be the Url type name (minus the "Url" suffix).
             // This makes for decent View names e.g. AuthorUrl => controller=Book, action=Author => /Views/Book/Author.aspx
             controllerContext.RouteData.Values["action"] = urlType.Name.Substring(0, urlType.Name.Length - 3);
-            
+
             return new ReflectedActionDescriptor(methodInfo, httpMethod, controllerDescriptor);
         }
 
-        protected override ActionResult CreateActionResult(ControllerContext controllerContext, ActionDescriptor actionDescriptor, object actionReturnValue)
+        protected override ActionResult CreateActionResult(ControllerContext controllerContext,
+                                                           ActionDescriptor actionDescriptor, object actionReturnValue)
         {
             if (!(actionReturnValue is ActionResult))
             {
@@ -36,7 +42,7 @@ namespace Snooze
             }
             return base.CreateActionResult(controllerContext, actionDescriptor, actionReturnValue);
         }
-        
+
         static MethodInfo GetMethodInfo(Type controllerType, Type urlType, string httpMethod)
         {
             var key = urlType.FullName + "!" + httpMethod;
@@ -63,7 +69,7 @@ namespace Snooze
                 where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
                 let parameters = m.GetParameters()
                 where parameters.Length > 0
-                && parameters[0].ParameterType.Equals(urlType)
+                      && parameters[0].ParameterType.Equals(urlType)
                 select m;
 
             return methods.FirstOrDefault();
@@ -82,6 +88,5 @@ namespace Snooze
 
             return methodInForm ?? methodInHeader ?? methodInRequest;
         }
-
     }
 }

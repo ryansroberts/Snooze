@@ -1,28 +1,54 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using Snooze.Routing;
+
+#endregion
 
 namespace Snooze
 {
     /// <summary>
-    /// Base class for strongly-typed URLs parameters.
+    ///   Base class for strongly-typed URLs parameters.
     /// </summary>
     public abstract class Url : IXmlSerializable
     {
+        static readonly Dictionary<Type, IEnumerable<Action<Url, RouteValueDictionary>>> s_propertyPushersCache =
+            new Dictionary<Type, IEnumerable<Action<Url, RouteValueDictionary>>>();
+
+        readonly IEnumerable<Action<Url, RouteValueDictionary>> _propertyPushers;
+
         public Url()
         {
             _propertyPushers = GetOrCreatePropertyPushers(GetType());
         }
 
-        IEnumerable<Action<Url, RouteValueDictionary>> _propertyPushers;
+        #region IXmlSerializable Members
 
-        static Dictionary<Type, IEnumerable<Action<Url, RouteValueDictionary>>> s_propertyPushersCache = new Dictionary<Type, IEnumerable<Action<Url, RouteValueDictionary>>>();
+        XmlSchema IXmlSerializable.GetSchema()
+        {
+            return null;
+        }
+
+        void IXmlSerializable.ReadXml(XmlReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IXmlSerializable.WriteXml(XmlWriter writer)
+        {
+            writer.WriteString(ToString());
+        }
+
+        #endregion
 
         static IEnumerable<Action<Url, RouteValueDictionary>> GetOrCreatePropertyPushers(Type urlType)
         {
@@ -43,8 +69,9 @@ namespace Snooze
 
         static IEnumerable<Action<Url, RouteValueDictionary>> CreatePropertyPushers(Type urlType)
         {
-            var properties = urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
-            var addMethod = typeof(RouteValueDictionary).GetMethod("Add");
+            var properties =
+                urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
             foreach (var property in properties)
             {
                 var lambda = CreatePropertyPusher(urlType, addMethod, property);
@@ -52,20 +79,22 @@ namespace Snooze
             }
         }
 
-        static Expression<Action<Url, RouteValueDictionary>> CreatePropertyPusher(Type urlType, MethodInfo addMethod, PropertyInfo property)
+        static Expression<Action<Url, RouteValueDictionary>> CreatePropertyPusher(Type urlType, MethodInfo addMethod,
+                                                                                  PropertyInfo property)
         {
-            var url = Expression.Parameter(typeof(Url), "url");
-            var values = Expression.Parameter(typeof(RouteValueDictionary), "values");
+            var url = Expression.Parameter(typeof (Url), "url");
+            var values = Expression.Parameter(typeof (RouteValueDictionary), "values");
 
             var typedUrl = Expression.TypeAs(url, urlType);
             Expression getPropertyValue = Expression.Property(typedUrl, property);
-            if (property.PropertyType.IsValueType) 
+            if (property.PropertyType.IsValueType)
             {
                 // need to box the value type.
-                getPropertyValue = Expression.TypeAs(getPropertyValue, typeof(object));
+                getPropertyValue = Expression.TypeAs(getPropertyValue, typeof (object));
             }
 
-            var addValue = Expression.Call(values, addMethod, Expression.Constant(property.Name, typeof(string)), getPropertyValue);
+            var addValue = Expression.Call(values, addMethod, Expression.Constant(property.Name, typeof (string)),
+                                           getPropertyValue);
 
             return Expression.Lambda<Action<Url, RouteValueDictionary>>(addValue, url, values);
         }
@@ -103,24 +132,5 @@ namespace Snooze
                 return new RequestContext(new FakeHttpContext(), new RouteData());
             }
         }
-
-        #region IXmlSerializable Members
-
-        System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
-        {
-            return null;
-        }
-
-        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-        {
-            writer.WriteString(ToString());
-        }
-
-        #endregion
     }
 }

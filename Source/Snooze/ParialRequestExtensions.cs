@@ -1,27 +1,30 @@
+#region
+
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Snooze.Routing;
 
+#endregion
+
 namespace Snooze
 {
     public static class ParialRequestExtensions
     {
-        public static string Render<TUrl>(this HtmlHelper htmlHelper,TUrl url) where TUrl : Url
+        public static string Render<TUrl>(this HtmlHelper htmlHelper, TUrl url) where TUrl : Url
         {
             var controllerType = ResourceControllerTypes.FindTypeForUrl<TUrl>();
 
             if (controllerType == null)
-                throw new InvalidOperationException("Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
+                throw new InvalidOperationException(
+                    "Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
 
             var routeValues = GetRouteValues(controllerType, url);
 
-            var routeData = CreateRouteData(ResourceRoute<TUrl>.Route(), routeValues,routeValues, htmlHelper.ViewContext);
+            var routeData = CreateRouteData(ResourceRoute<TUrl>.Route(), routeValues, routeValues,
+                                            htmlHelper.ViewContext);
             var httpContext = htmlHelper.ViewContext.HttpContext;
             var requestContext = new RequestContext(httpContext, routeData);
 
@@ -35,9 +38,9 @@ namespace Snooze
         {
             var desc = new ReflectedControllerDescriptor(controllerType);
             var controllerName = desc.ControllerName;
-          
+
             var routeValues = new RouteValueDictionary(url);
-            routeValues.Add("controller",controllerName);
+            routeValues.Add("controller", controllerName);
             routeValues.Add("action", "dummy_value_to_please_mvc_implementation");
             return routeValues;
         }
@@ -48,7 +51,8 @@ namespace Snooze
             httpContext.Server.Execute(HttpHandlerUtil.WrapForServerExecute(handler), textWriter, true);
         }
 
-        private static RouteData CreateRouteData(RouteBase route, RouteValueDictionary routeValues, RouteValueDictionary dataTokens, ViewContext parentViewContext)
+        static RouteData CreateRouteData(RouteBase route, RouteValueDictionary routeValues,
+                                         RouteValueDictionary dataTokens, ViewContext parentViewContext)
         {
             var routeData = new RouteData();
 

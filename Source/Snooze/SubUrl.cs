@@ -1,14 +1,16 @@
-﻿using System;
-using System.Web.Mvc;
-using Snooze.Routing;
+﻿#region
+
+using System;
 using System.Web.Routing;
+
+#endregion
 
 namespace Snooze
 {
     /// <summary>
-    /// Base class for sub-URL strongly-typed parameters.
+    ///   Base class for sub-URL strongly-typed parameters.
     /// </summary>
-    /// <typeparam name="TParentUrl">Type of parent URL.</typeparam>
+    /// <typeparam name = "TParentUrl">Type of parent URL.</typeparam>
     [SubUrl]
     public abstract class SubUrl<TParentUrl> : Url
         where TParentUrl : Url

@@ -1,12 +1,18 @@
-﻿using System.Web.Mvc;
-using System.Xml.Serialization;
-using System.Xml.Linq;
+﻿#region
+
+using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+
+#endregion
 
 namespace Snooze
 {
     public class XmlFormatter : IResourceFormatter
     {
+        #region IResourceFormatter Members
+
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
         {
             return resource != null && mimeType.Contains("/xml");
@@ -18,7 +24,7 @@ namespace Snooze
             {
                 using (var w = XmlWriter.Create(context.HttpContext.Response.Output))
                 {
-                    ((XNode)resource).WriteTo(w);
+                    ((XNode) resource).WriteTo(w);
                 }
             }
             else
@@ -28,5 +34,7 @@ namespace Snooze
                 s.Serialize(context.HttpContext.Response.Output, resource);
             }
         }
+
+        #endregion
     }
 }

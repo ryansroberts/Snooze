@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
+
+#endregion
 
 namespace Snooze
 {
     public static class ResourceFormatters
     {
-        static IList<IResourceFormatter> _formatters = new List<IResourceFormatter>();
+        static readonly IList<IResourceFormatter> _formatters = new List<IResourceFormatter>();
 
         static ResourceFormatters()
         {
@@ -25,10 +29,7 @@ namespace Snooze
 
         public static IList<IResourceFormatter> Formatters
         {
-            get
-            {
-                return _formatters;
-            }
+            get { return _formatters; }
         }
     }
 }

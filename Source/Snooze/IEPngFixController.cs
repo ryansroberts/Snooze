@@ -1,6 +1,10 @@
-﻿using System.Reflection;
-using System.Web.Mvc;
+﻿#region
+
 using System;
+using System.Reflection;
+using System.Web.Mvc;
+
+#endregion
 
 namespace Snooze
 {
@@ -9,15 +13,20 @@ namespace Snooze
         public ActionResult Get(IEPngFixUrl url)
         {
             SetFarFutureExpires();
-            return new FileStreamResult(Assembly.GetExecutingAssembly().GetManifestResourceStream("Snooze.Resources.iepngfix.htc"), "text/x-component");
+            return
+                new FileStreamResult(
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Snooze.Resources.iepngfix.htc"),
+                    "text/x-component");
         }
 
         public ActionResult Get(BlankGifUrl url)
         {
             SetFarFutureExpires();
-            return new FileStreamResult(Assembly.GetExecutingAssembly().GetManifestResourceStream("Snooze.Resources.blank.gif"), "image/gif");
+            return
+                new FileStreamResult(
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("Snooze.Resources.blank.gif"), "image/gif");
         }
-        
+
         void SetFarFutureExpires()
         {
             Response.Cache.SetExpires(DateTime.Now.AddYears(10));

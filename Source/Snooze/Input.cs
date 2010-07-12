@@ -1,33 +1,29 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+
+#endregion
 
 namespace Snooze
 {
     public class Input<T> : IInput
     {
+        readonly List<string> _errorMessages = new List<string>();
+        bool _conversionError;
         string _rawValue;
         T _value;
-        List<string> _errorMessages = new List<string>();
-        bool _conversionError;
 
         public Input()
         {
             IsValid = true;
         }
 
-        TypeConverter GetTypeConverter()
-        {
-            return TypeDescriptor.GetConverter(typeof(T));
-        }
-
         public T Value
         {
-            get
-            {
-                return _value;
-            }
+            get { return _value; }
             set
             {
                 _value = value;
@@ -37,18 +33,17 @@ namespace Snooze
             }
         }
 
+        #region IInput Members
+
         public string RawValue
         {
-            get
-            {
-                return _rawValue;
-            }
+            get { return _rawValue; }
             set
             {
                 _rawValue = value;
                 try
                 {
-                    _value = (T)GetTypeConverter().ConvertFromString(value);
+                    _value = (T) GetTypeConverter().ConvertFromString(value);
                     IsValid = true;
                     HasValue = true;
                     _conversionError = false;
@@ -72,7 +67,7 @@ namespace Snooze
             {
                 if (_conversionError)
                 {
-                    return Enumerable.Concat(new[] { "Invalid data." }, _errorMessages);
+                    return Enumerable.Concat(new[] {"Invalid data."}, _errorMessages);
                 }
                 else
                 {
@@ -84,6 +79,13 @@ namespace Snooze
         public void AddErrorMessage(string message)
         {
             _errorMessages.Add(message);
+        }
+
+        #endregion
+
+        TypeConverter GetTypeConverter()
+        {
+            return TypeDescriptor.GetConverter(typeof (T));
         }
 
         public override string ToString()
@@ -112,7 +114,7 @@ namespace Snooze
 
         public static implicit operator Input<T>(T value)
         {
-            return new Input<T> { Value = value };
+            return new Input<T> {Value = value};
         }
     }
 }

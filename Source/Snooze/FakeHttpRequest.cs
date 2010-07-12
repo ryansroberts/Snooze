@@ -1,15 +1,16 @@
-﻿using System.Web;
+﻿#region
+
+using System.Web;
+
+#endregion
 
 namespace Snooze
 {
-    class FakeHttpRequest : HttpRequestBase
+    internal class FakeHttpRequest : HttpRequestBase
     {
         public override string ApplicationPath
         {
-            get
-            {
-                return "/";
-            }
+            get { return "/"; }
         }
     }
 }

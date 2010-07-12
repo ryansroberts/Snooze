@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+#endregion
 
 namespace Snooze
 {
@@ -12,19 +16,16 @@ namespace Snooze
         readonly List<HttpCookie> _cookies = new List<HttpCookie>();
         readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
 
-        public ILookup<string, object> Headers
-        {
-            get
-            {
-                return _headers.ToLookup(k => k.Key,v => v.Value);
-            }
-        }
-
         public ResourceResult(int statusCode, object resource)
         {
             StatusCode = statusCode;
 
             Resource = resource;
+        }
+
+        public ILookup<string, object> Headers
+        {
+            get { return _headers.ToLookup(k => k.Key, v => v.Value); }
         }
 
 
@@ -141,9 +142,9 @@ namespace Snooze
             }
 
 
-            IEnumerable<string> acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
+            var acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
 
-            IResourceFormatter formatter = FindFormatter(context, acceptTypes);
+            var formatter = FindFormatter(context, acceptTypes);
 
             if (formatter == null)
             {
@@ -179,7 +180,7 @@ namespace Snooze
 
         void AppendCookies(ControllerContext context)
         {
-            foreach (HttpCookie cookie in _cookies)
+            foreach (var cookie in _cookies)
             {
                 context.HttpContext.Response.AppendCookie(cookie);
             }
@@ -214,15 +215,10 @@ namespace Snooze
             }
 
 
-            foreach (IResourceFormatter formatter in ResourceFormatters.Formatters)
-            {
-                foreach (string acceptType in acceptTypes)
-                {
-                    if (formatter.CanFormat(context, Resource, acceptType)) return formatter;
-                }
-            }
-
-            return null;
+            return (from formatter in ResourceFormatters.Formatters
+                    from acceptType in acceptTypes
+                    where formatter.CanFormat(context, Resource, acceptType)
+                    select formatter).FirstOrDefault();
         }
 
         void EnsureContentTypeIsMimeType()

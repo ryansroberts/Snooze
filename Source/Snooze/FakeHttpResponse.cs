@@ -1,8 +1,12 @@
-﻿using System.Web;
+﻿#region
+
+using System.Web;
+
+#endregion
 
 namespace Snooze
 {
-    class FakeHttpResponse : HttpResponseBase
+    internal class FakeHttpResponse : HttpResponseBase
     {
         public override string ApplyAppPathModifier(string virtualPath)
         {

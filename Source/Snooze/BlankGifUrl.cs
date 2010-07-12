@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿#region
+
+using System.Reflection;
+
+#endregion
 
 namespace Snooze
 {
@@ -9,6 +13,6 @@ namespace Snooze
             SnoozeVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(4);
         }
 
-        public string SnoozeVersion { get; set; } 
+        public string SnoozeVersion { get; set; }
     }
 }

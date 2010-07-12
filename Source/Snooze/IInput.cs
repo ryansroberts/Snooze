@@ -1,5 +1,8 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
+
+#endregion
 
 namespace Snooze
 {

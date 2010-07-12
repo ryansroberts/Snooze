@@ -1,11 +1,15 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Snooze.Routing;
 
+#endregion
+
 namespace Snooze.ExpressionManipulation
 {
-    class RouteDefaultsProvider<T> : ExpressionVisitor
+    internal class RouteDefaultsProvider<T> : ExpressionVisitor
     {
         readonly Dictionary<string, object> _defaults = new Dictionary<string, object>();
         string _recentPropertyName;
@@ -29,7 +33,7 @@ namespace Snooze.ExpressionManipulation
 
         protected override Expression VisitMethodCall(MethodCallExpression m)
         {
-            if (m.Method.DeclaringType.Equals(typeof(RouteExpressionExtensions)))
+            if (m.Method.DeclaringType.Equals(typeof (RouteExpressionExtensions)))
             {
                 var body = m.Arguments[0];
                 var expr = Visit(body);
@@ -38,7 +42,7 @@ namespace Snooze.ExpressionManipulation
                     var value = m.Arguments[1];
                     if (value.NodeType == ExpressionType.Constant)
                     {
-                        _defaults.Add(_recentPropertyName, ((ConstantExpression)value).Value);
+                        _defaults.Add(_recentPropertyName, ((ConstantExpression) value).Value);
                     }
                     else
                     {

@@ -1,6 +1,9 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
 using System.Linq;
+
+#endregion
 
 namespace Snooze
 {
@@ -8,14 +11,8 @@ namespace Snooze
     {
         public override bool IsValid
         {
-            get
-            {
-                return HasValue && base.IsValid;
-            }
-            protected set
-            {
-                base.IsValid = value;
-            }
+            get { return HasValue && base.IsValid; }
+            protected set { base.IsValid = value; }
         }
 
         public override IEnumerable<string> ErrorMessages
@@ -24,7 +21,7 @@ namespace Snooze
             {
                 if (!HasValue)
                 {
-                    return Enumerable.Concat(new[] { "Required." }, base.ErrorMessages);
+                    return Enumerable.Concat(new[] {"Required."}, base.ErrorMessages);
                 }
                 else
                 {

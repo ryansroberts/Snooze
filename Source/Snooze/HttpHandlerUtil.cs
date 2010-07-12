@@ -1,24 +1,61 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Web;
 using System.Web.UI;
 
+#endregion
+
 namespace Snooze
 {
-    static class HttpHandlerUtil
+    internal static class HttpHandlerUtil
     {
-
         // Since Server.Execute() doesn't propagate HttpExceptions where the status code is
         // anything other than 500, we need to wrap these exceptions ourselves.
         public static IHttpHandler WrapForServerExecute(IHttpHandler httpHandler)
         {
-            IHttpAsyncHandler asyncHandler = httpHandler as IHttpAsyncHandler;
-            return (asyncHandler != null) ? new ServerExecuteHttpHandlerAsyncWrapper(asyncHandler) : new ServerExecuteHttpHandlerWrapper(httpHandler);
+            var asyncHandler = httpHandler as IHttpAsyncHandler;
+            return (asyncHandler != null)
+                       ? new ServerExecuteHttpHandlerAsyncWrapper(asyncHandler)
+                       : new ServerExecuteHttpHandlerWrapper(httpHandler);
         }
 
         // Server.Execute() requires that the provided IHttpHandler subclass Page.
+
+        #region Nested type: ServerExecuteHttpHandlerAsyncWrapper
+
+        sealed class ServerExecuteHttpHandlerAsyncWrapper : ServerExecuteHttpHandlerWrapper, IHttpAsyncHandler
+        {
+            readonly IHttpAsyncHandler _httpHandler;
+
+            public ServerExecuteHttpHandlerAsyncWrapper(IHttpAsyncHandler httpHandler)
+                : base(httpHandler)
+            {
+                _httpHandler = httpHandler;
+            }
+
+            #region IHttpAsyncHandler Members
+
+            public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+            {
+                return Wrap(() => _httpHandler.BeginProcessRequest(context, cb, extraData));
+            }
+
+            public void EndProcessRequest(IAsyncResult result)
+            {
+                Wrap(() => _httpHandler.EndProcessRequest(result));
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Nested type: ServerExecuteHttpHandlerWrapper
+
         internal class ServerExecuteHttpHandlerWrapper : Page
         {
-            private readonly IHttpHandler _httpHandler;
+            readonly IHttpHandler _httpHandler;
 
             public ServerExecuteHttpHandlerWrapper(IHttpHandler httpHandler)
             {
@@ -27,10 +64,7 @@ namespace Snooze
 
             internal IHttpHandler InnerHandler
             {
-                get
-                {
-                    return _httpHandler;
-                }
+                get { return _httpHandler; }
             }
 
             public override void ProcessRequest(HttpContext context)
@@ -43,7 +77,7 @@ namespace Snooze
                 Wrap(delegate
                     {
                         action();
-                        return (object)null;
+                        return (object) null;
                     });
             }
 
@@ -59,31 +93,13 @@ namespace Snooze
                     {
                         throw; // doesn't need to be wrapped
                     }
-                    throw new HttpException(500, "An exception occured on the execution of a partial request, see inner exception for details", he);
+                    throw new HttpException(500,
+                                            "An exception occured on the execution of a partial request, see inner exception for details",
+                                            he);
                 }
             }
         }
 
-        private sealed class ServerExecuteHttpHandlerAsyncWrapper : ServerExecuteHttpHandlerWrapper, IHttpAsyncHandler
-        {
-            private readonly IHttpAsyncHandler _httpHandler;
-
-            public ServerExecuteHttpHandlerAsyncWrapper(IHttpAsyncHandler httpHandler)
-                : base(httpHandler)
-            {
-                _httpHandler = httpHandler;
-            }
-
-            public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
-            {
-                return Wrap(() => _httpHandler.BeginProcessRequest(context, cb, extraData));
-            }
-
-            public void EndProcessRequest(IAsyncResult result)
-            {
-                Wrap(() => _httpHandler.EndProcessRequest(result));
-            }
-        }
-
+        #endregion
     }
 }

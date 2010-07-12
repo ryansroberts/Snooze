@@ -1,9 +1,15 @@
-﻿using System.Web.Mvc;
+﻿#region
+
+using System.Web.Mvc;
+
+#endregion
 
 namespace Snooze
 {
     public class ViewFormatter : IResourceFormatter
     {
+        readonly string _targetMimeType;
+
         public ViewFormatter()
         {
         }
@@ -13,12 +19,12 @@ namespace Snooze
             _targetMimeType = targetMimeType;
         }
 
-        string _targetMimeType;
+        #region IResourceFormatter Members
 
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
         {
-            return ((_targetMimeType == mimeType) || (_targetMimeType == null)) 
-                && FindView(context, resource).View != null;
+            return ((_targetMimeType == mimeType) || (_targetMimeType == null))
+                   && FindView(context, resource).View != null;
         }
 
         public void Output(ControllerContext context, object resource, string contentType)
@@ -40,16 +46,17 @@ namespace Snooze
                         context.Controller.ViewData,
                         new TempDataDictionary(),
                         context.HttpContext.Response.Output
-                    ),
+                        ),
                     context.HttpContext.Response.Output
-                );
+                    );
             }
 
-            result.ViewEngine.ReleaseView(context,result.View);
-
+            result.ViewEngine.ReleaseView(context, result.View);
         }
 
-        private ViewEngineResult FindView(ControllerContext context, object resource)
+        #endregion
+
+        ViewEngineResult FindView(ControllerContext context, object resource)
         {
             var viewName = GetViewName(resource);
             var result = ViewEngines.Engines.FindView(context, viewName, null);

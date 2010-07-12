@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+
+#endregion
 
 namespace Snooze
 {
@@ -26,7 +30,7 @@ namespace Snooze
         protected FutureAction(MethodCallExpression methodCall)
         {
             Method = methodCall.Method.Name.ToLowerInvariant();
-            Url = (Url)Expression.Lambda(methodCall.Arguments[0]).Compile().DynamicInvoke();
+            Url = (Url) Expression.Lambda(methodCall.Arguments[0]).Compile().DynamicInvoke();
             if (methodCall.Arguments.Count > 1)
             {
                 if (methodCall.Arguments[1].NodeType == ExpressionType.Parameter)
@@ -43,14 +47,12 @@ namespace Snooze
         public string Method { get; set; }
         public Url Url { get; set; }
         public object Entity { get; set; }
-
     }
 
     public class FutureAction<T> : FutureAction
     {
         public FutureAction(string method, Url url, T entity) : base(method, url, entity)
         {
-
         }
 
         public FutureAction(Expression<Func<T, object>> actionMethod)
@@ -70,7 +72,7 @@ namespace Snooze
 
         public new T Entity
         {
-            get { return (T)base.Entity; }
+            get { return (T) base.Entity; }
             set { base.Entity = value; }
         }
     }

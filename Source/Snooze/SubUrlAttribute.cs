@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace Snooze
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
-    class SubUrlAttribute : Attribute
+    internal class SubUrlAttribute : Attribute
     {
     }
 }

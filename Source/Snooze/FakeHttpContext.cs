@@ -1,26 +1,24 @@
-﻿using System.Web;
+﻿#region
+
+using System.Web;
+
+#endregion
 
 namespace Snooze
 {
     // Url uses RouteTable to generate its ToString() value.
     // So if there is no current HttpContext we will fake it using these.
 
-    class FakeHttpContext : HttpContextBase
+    internal class FakeHttpContext : HttpContextBase
     {
         public override HttpRequestBase Request
         {
-            get
-            {
-                return new FakeHttpRequest();
-            }
+            get { return new FakeHttpRequest(); }
         }
 
         public override HttpResponseBase Response
         {
-            get
-            {
-                return new FakeHttpResponse();
-            }
+            get { return new FakeHttpResponse(); }
         }
     }
 }

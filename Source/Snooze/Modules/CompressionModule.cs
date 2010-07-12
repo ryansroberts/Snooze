@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
+﻿#region
+
+using System;
 using System.IO.Compression;
+using System.Web;
+
+#endregion
 
 namespace Snooze.Modules
 {
     public class CompressionModule : IHttpModule
     {
+        #region IHttpModule Members
+
         public void Init(HttpApplication context)
         {
-            context.PreRequestHandlerExecute += new EventHandler(context_PreRequestHandlerExecute);
+            context.PreRequestHandlerExecute += context_PreRequestHandlerExecute;
         }
+
+        public void Dispose()
+        {
+        }
+
+        #endregion
 
         void context_PreRequestHandlerExecute(object sender, EventArgs e)
         {
@@ -33,10 +42,6 @@ namespace Snooze.Modules
                 context.Response.AppendHeader("Content-Encoding", "gzip");
                 context.Response.AppendHeader("Vary", "Content-Encoding");
             }
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

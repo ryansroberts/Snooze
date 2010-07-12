@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿#region
+
+using System.Web.Mvc;
+
+#endregion
 
 namespace Snooze
 {
