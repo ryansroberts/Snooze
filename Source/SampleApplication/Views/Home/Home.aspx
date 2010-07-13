@@ -20,14 +20,14 @@
     <p>
         Partial result ("bob")
 
-        <%: Html.Render(new PartialItemUrl{Something = "bob"}) %>
+        <%: Html.PartialFor(new PartialItemUrl{Something = "bob"}) %>
 
     </p>
 
     <p>
         Render enumeration as partial requests ("bob","jim","sophie")
 
-        <%: Html.Render(new[]{"bob","jim","sophie"},i => new PartialItemUrl{Something = i}) %>
+        <%: Html.PartialFor(new[] { "bob", "jim", "sophie" }, i => new PartialItemUrl { Something = i })%>
 
 
     </p>
