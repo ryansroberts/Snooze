@@ -17,13 +17,13 @@ namespace Snooze
 {
     public static class ParialRequestExtensions
     {
-        public static string Render<TUrl,TEnum>(this HtmlHelper htmlHelper,IEnumerable<TEnum> items,Func<TEnum,TUrl> f) where TUrl : Url
+        public static string PartialFor<TUrl,TEnum>(this HtmlHelper htmlHelper,IEnumerable<TEnum> items,Func<TEnum,TUrl> f) where TUrl : Url
         {
-            return items.Aggregate(new StringBuilder(),(b,i) => b.Append(htmlHelper.Render(f(i))))
+            return items.Aggregate(new StringBuilder(),(b,i) => b.Append(htmlHelper.PartialFor(f(i))))
                 .ToString();
         }
 
-        public static string Render<TUrl>(this HtmlHelper htmlHelper, TUrl url) where TUrl : Url
+        public static string PartialFor<TUrl>(this HtmlHelper htmlHelper, TUrl url) where TUrl : Url
         {
             var controllerType = ResourceControllerTypes.FindTypeForUrl<TUrl>();
 
