@@ -40,7 +40,7 @@ namespace Snooze
 
         public virtual ResourceResult SeeOther(Url url)
         {
-            return new ResourceResult(303, null).WithHeader("Location", url);
+            return new ResourceResult(303, null).WithHeader("Location", url.ToString());
         }
 
 
@@ -94,7 +94,7 @@ namespace Snooze
 
         public virtual ResourceResult NotFound(object errorResource)
         {
-            return new ResourceResult(404, null);
+            return new ResourceResult(404, errorResource);
         }
 
 
