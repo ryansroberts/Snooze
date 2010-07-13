@@ -2,18 +2,66 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Machine.Specifications;
 using Moq;
-using Xunit;
-using System.Collections.Specialized;
+using Snooze.Routing;
+using It = Machine.Specifications.It;
 
-namespace Snooze.Routing
+namespace Snooze
 {
-    public class RoutingFacts : IDisposable
+    [Subject(typeof(Url))]
+    public class When_routing_a_url : RoutingSpec
+    {
+        Because of = () => RoutingTo("~/customers");
+            
+        Behaves_like<Route> mvcroute;
+    }
+
+    [Subject(typeof(Url))]
+    public class When_routing_a_url_with_a_parameter : RoutingSpec
+    {
+        Because of =()=> RoutingTo("~/customers/42");
+        
+        Behaves_like<Route> mvcroute;
+
+        It Should_have_captured_the_parameter = () => v("CustomerId").ShouldEqual("42");
+    }
+
+    [Subject(typeof(SubUrl<>))]
+    public class When_routing_a_suburl : RoutingSpec
+    {
+        Because of = () => RoutingTo("~/customers/42/orders");
+        
+        Behaves_like<Route> mvcroute;
+    }
+
+    [Subject(typeof(SubUrl<>))]
+    public class When_routing_a_suburl_with_parameters : RoutingSpec
+    {
+        Because of = () => RoutingTo("~/customers/42/orders/17");
+        
+        Behaves_like<Route> mvcroute;
+
+        It Should_have_captured_the_parent_url_parameter = () => v("CustomerId").ShouldEqual("42");
+
+        It Should_have_captured_the_sub_url_parameter = () => v("OrderId").ShouldEqual("17");
+    }
+
+    [Subject(typeof(Url))]
+    public class When_routing_a_wildcard : RoutingSpec
+    {
+        Because of = () => RoutingTo("~/content/foo/bar.xml");
+
+        Behaves_like<Route> mvcroute;
+
+        It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
+    }
+
+    public class RoutingSpec
     {
         public class CustomersUrl : Url
         {
         }
-
         public class CustomerUrl : SubUrl<CustomersUrl>
         {
             public int CustomerId { get; set; }
@@ -22,6 +70,8 @@ namespace Snooze.Routing
         public class OrdersUrl : SubUrl<CustomerUrl>
         {
         }
+
+        protected static Mock<HttpContextBase> httpContext;
 
         public class OrderUrl : SubUrl<OrdersUrl>
         {
@@ -42,7 +92,7 @@ namespace Snooze.Routing
             public void Get(ContentUrl url) { }
         }
 
-        public RoutingFacts()
+        Establish context = () =>
         {
             RouteTable.Routes.Map<CustomersUrl>(c => "customers");
             RouteTable.Routes.Map<CustomerUrl>(c => c.CustomerId.ToString());
@@ -51,59 +101,33 @@ namespace Snooze.Routing
             RouteTable.Routes.Map<ContentUrl>(c => "content/" + c.Path.CatchAll());
             httpContext = new Mock<HttpContextBase>();
             httpContext.SetupGet(h => h.Request.PathInfo).Returns("");
-        }
+        };
 
-        public void Dispose()
+        protected static RouteData routeData;
+
+        Cleanup after_each = () =>
+            {
+                RouteTable.Routes.Clear();
+                ModelBinders.Binders.Clear();
+            };
+
+        protected static void RoutingTo(string path)
         {
-            RouteTable.Routes.Clear();
-            ModelBinders.Binders.Clear();
+            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns(path);
+            routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
         }
 
-        Mock<HttpContextBase> httpContext;
-
-        [Fact]
-        public void Can_route_CustomersUrl()
+        protected static object v(string k)
         {
-            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns("~/customers");
-            var routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
-            Assert.NotNull(routeData);
+            return routeData.Values[k];
         }
+    }
 
-        [Fact]
-        public void Can_route_CustomerUrl()
-        {
-            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns("~/customers/42");
-            var routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
-            Assert.NotNull(routeData);
-            Assert.Equal("42", routeData.Values["CustomerId"]);
-        }
+    [Behaviors]
+    public class Route 
+    {
+        protected static RouteData routeData;
 
-        [Fact]
-        public void Can_route_OrdersUrl()
-        {
-            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns("~/customers/42/orders");
-            var routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
-            Assert.NotNull(routeData);
-            Assert.Equal("42", routeData.Values["CustomerId"]);
-        }
-
-        [Fact]
-        public void Can_route_OrderUrl()
-        {
-            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns("~/customers/42/orders/17");
-            var routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
-            Assert.NotNull(routeData);
-            Assert.Equal("42", routeData.Values["CustomerId"]);
-            Assert.Equal("17", routeData.Values["OrderId"]);
-        }
-
-        [Fact]
-        public void Can_route_path_with_ContentUrl()
-        {
-            httpContext.SetupGet(h => h.Request.AppRelativeCurrentExecutionFilePath).Returns("~/content/foo/bar.xml");
-            var routeData = RouteTable.Routes.GetRouteData(httpContext.Object);
-            Assert.NotNull(routeData);
-            Assert.Equal("foo/bar.xml", routeData.Values["Path"]);
-        }
+        It Should_be_routable_by_mvc = () => routeData.ShouldNotBeNull();      
     }
 }

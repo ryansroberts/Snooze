@@ -54,6 +54,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\Tools\mspec\Machine.Specifications.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Tools\Moq\Moq.dll</HintPath>
@@ -73,17 +76,12 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit, Version=1.2.0.1406, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Tools\xunit\xunit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InputFacts.cs" />
     <Compile Include="RequiredInputFacts.cs" />
-    <Compile Include="ResourceControllerFacts.cs" />
     <Compile Include="RoutingFacts.cs" />
-    <Compile Include="UrlFacts.cs" />
+    <Compile Include="UrlSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snooze\Snooze.csproj">

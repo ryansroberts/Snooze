@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xunit;
+using Machine.Specifications;
 
 namespace Snooze
 {
-    public class RequiredInputFacts
+
+    [Subject(typeof(RequiredInput<>))]
+    public class When_constructing_a_required_input
     {
-        [Fact]
-        public void New_RequiredInput_is_invalid()
-        {
-            Assert.False(new RequiredInput<int>().IsValid);
-        }
+        static RequiredInput<int> input;
+        Establish context = () => input = new RequiredInput<int>();
+
+        It Should_be_invalid = () => input.IsValid.ShouldBeFalse();
     }
 }
