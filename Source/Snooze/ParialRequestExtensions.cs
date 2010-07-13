@@ -1,10 +1,14 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Linq.Expressions;
 using Snooze.Routing;
 
 #endregion
@@ -13,6 +17,12 @@ namespace Snooze
 {
     public static class ParialRequestExtensions
     {
+        public static string Render<TUrl,TEnum>(this HtmlHelper htmlHelper,IEnumerable<TEnum> items,Func<TEnum,TUrl> f) where TUrl : Url
+        {
+            return items.Aggregate(new StringBuilder(),(b,i) => b.Append(htmlHelper.Render(f(i))))
+                .ToString();
+        }
+
         public static string Render<TUrl>(this HtmlHelper htmlHelper, TUrl url) where TUrl : Url
         {
             var controllerType = ResourceControllerTypes.FindTypeForUrl<TUrl>();

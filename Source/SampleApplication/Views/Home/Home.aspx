@@ -24,5 +24,13 @@
 
     </p>
 
+    <p>
+        Render enumeration as partial requests ("bob","jim","sophie")
+
+        <%: Html.Render(new[]{"bob","jim","sophie"},i => new PartialItemUrl{Something = i}) %>
+
+
+    </p>
+
 </body>
 </html>
