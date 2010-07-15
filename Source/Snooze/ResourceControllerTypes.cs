@@ -44,12 +44,9 @@ namespace Snooze
 
                     foreach (var item in oneControllerPerUrlType)
                     {
-                        // NICE / SH - Wrap following line to catch "Key already exists" exception
+                        // Wrap following line to catch "Key already exists" exception
                         // This really means "Cannot find publically accessible Action defined in a Controller.
                         // Due to a logic error in this code it manifests as an ArgumentException
-
-                        // Original code
-                        //_controllerTypes.Add(item.urlType, item.controllerType);
                         try
                         {
                             _controllerTypes.Add(item.urlType, item.controllerType);
@@ -61,7 +58,6 @@ namespace Snooze
                                     "Cannot find action for Route - ensure configured routes have publically accessible Actions defined");
                             throw;
                         }
-                        // NICE / SH
                     }
                 }
 

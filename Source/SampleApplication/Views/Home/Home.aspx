@@ -27,8 +27,7 @@
     <p>
         Render enumeration as partial requests ("bob","jim","sophie")
 
-        <%: Html.PartialFor(new[]{"bob","jim","sophie"},i => new PartialItemUrl{Something = i}) %>
-
+<%: Html.PartialFor(new[] { "bob", "jim", "sophie" }, i => new PartialItemUrl { Something = i })%>
 
     </p>
 

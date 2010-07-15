@@ -142,9 +142,9 @@ namespace Snooze
             }
 
 
-            var acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
+            IEnumerable<string> acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
 
-            var formatter = FindFormatter(context, acceptTypes);
+            IResourceFormatter formatter = FindFormatter(context, acceptTypes);
 
             if (formatter == null)
             {
@@ -180,7 +180,7 @@ namespace Snooze
 
         void AppendCookies(ControllerContext context)
         {
-            foreach (var cookie in _cookies)
+            foreach (HttpCookie cookie in _cookies)
             {
                 context.HttpContext.Response.AppendCookie(cookie);
             }
