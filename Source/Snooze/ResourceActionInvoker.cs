@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 
 #endregion
@@ -23,6 +24,8 @@ namespace Snooze
             var urlType = GetUrlType(controllerContext);
             var httpMethod = GetHttpMethod(controllerContext);
 
+            CheckChildAction(controllerContext.IsChildAction,controllerContext.Controller.GetType(),controllerContext.RequestContext.HttpContext.Request.Url.ToString());
+
             var methodInfo = GetMethodInfo(controllerContext.Controller.GetType(), urlType, httpMethod);
             if (methodInfo == null) return null;
 
@@ -32,6 +35,12 @@ namespace Snooze
 
             return new ReflectedActionDescriptor(methodInfo, httpMethod, controllerDescriptor);
         }
+
+        void CheckChildAction(bool isChildaction,Type contollerType,string url)
+        {
+            if(!isChildaction && contollerType.Name.ToLower().StartsWith("Partial"))
+                throw new HttpException(502,"This is a partial controller cannot execute a non partial request " + url);        
+         }
 
         protected override ActionResult CreateActionResult(ControllerContext controllerContext,
                                                            ActionDescriptor actionDescriptor, object actionReturnValue)
