@@ -106,6 +106,8 @@
     <Compile Include="RequiredInput.cs" />
     <Compile Include="ResourceFormatters.cs" />
     <Compile Include="ResourceResult.cs" />
+    <Compile Include="Routing\IRouteRegistration.cs" />
+    <Compile Include="Routing\RoutingRegistrationDiscovery.cs" />
     <Compile Include="StaticFileController.cs" />
     <Compile Include="StaticFileUrl.cs" />
     <Compile Include="StringFormatter.cs" />

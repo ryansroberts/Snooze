@@ -80,8 +80,9 @@
   <ItemGroup>
     <Compile Include="InputFacts.cs" />
     <Compile Include="RequiredInputFacts.cs" />
+    <Compile Include="RoutingDiscoverySpec.cs" />
     <Compile Include="RoutingFacts.cs" />
-    <Compile Include="UrlSpec.cs" />
+    <Compile Include="UrlContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snooze\Snooze.csproj">

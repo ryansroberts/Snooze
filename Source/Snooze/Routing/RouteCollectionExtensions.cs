@@ -69,6 +69,16 @@ namespace Snooze.Routing
             routes.Map<BlankGifUrl>(u => "iesupport/" + u.SnoozeVersion + "/blank.gif");
         }
 
+        public static void FromAssemblyWithType<TRef>(this RouteCollection routes)
+        {
+            var disco = new RoutingRegistrationDiscovery();
+
+            foreach (var routeRegistration in disco.Scan(typeof(TRef).Assembly))
+            {
+                routeRegistration.Register(routes);
+            }         
+        }
+
         static Type GetSubResourceType<TUrl>() where TUrl : Url
         {
             var parentUrlType = typeof (TUrl).BaseType.GetGenericArguments()[0];

@@ -9,55 +9,58 @@ using It = Machine.Specifications.It;
 
 namespace Snooze
 {
-    [Subject(typeof(Url))]
-    public class When_routing_a_url : RoutingSpec
-    {
-        Because of = () => RoutingTo("~/customers");
-            
-        Behaves_like<Route> mvcroute;
-    }
-
-    [Subject(typeof(Url))]
-    public class When_routing_a_url_with_a_parameter : RoutingSpec
-    {
-        Because of =()=> RoutingTo("~/customers/42");
-        
-        Behaves_like<Route> mvcroute;
-
-        It Should_have_captured_the_parameter = () => v("CustomerId").ShouldEqual("42");
-    }
-
-    [Subject(typeof(SubUrl<>))]
-    public class When_routing_a_suburl : RoutingSpec
-    {
-        Because of = () => RoutingTo("~/customers/42/orders");
-        
-        Behaves_like<Route> mvcroute;
-    }
-
-    [Subject(typeof(SubUrl<>))]
-    public class When_routing_a_suburl_with_parameters : RoutingSpec
-    {
-        Because of = () => RoutingTo("~/customers/42/orders/17");
-        
-        Behaves_like<Route> mvcroute;
-
-        It Should_have_captured_the_parent_url_parameter = () => v("CustomerId").ShouldEqual("42");
-
-        It Should_have_captured_the_sub_url_parameter = () => v("OrderId").ShouldEqual("17");
-    }
-
-    [Subject(typeof(Url))]
-    public class When_routing_a_wildcard : RoutingSpec
-    {
-        Because of = () => RoutingTo("~/content/foo/bar.xml");
-
-        Behaves_like<Route> mvcroute;
-
-        It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
-    }
-
+    [Subject("Routing specifications")]
     public class RoutingSpec
+    {
+        public class When_routing_a_url : RoutingContext
+        {
+            Because of = () => RoutingTo("~/customers");
+
+            Behaves_like<Route> mvcroute;
+        }
+
+        [Subject(typeof(Url))]
+        public class When_routing_a_url_with_a_parameter : RoutingContext
+        {
+            Because of = () => RoutingTo("~/customers/42");
+
+            Behaves_like<Route> mvcroute;
+
+            It Should_have_captured_the_parameter = () => v("CustomerId").ShouldEqual("42");
+        }
+
+        [Subject(typeof(SubUrl<>))]
+        public class When_routing_a_suburl : RoutingContext
+        {
+            Because of = () => RoutingTo("~/customers/42/orders");
+
+            Behaves_like<Route> mvcroute;
+        }
+
+        [Subject(typeof(SubUrl<>))]
+        public class When_routing_a_suburl_with_parameters : RoutingContext
+        {
+            Because of = () => RoutingTo("~/customers/42/orders/17");
+
+            Behaves_like<Route> mvcroute;
+
+            It Should_have_captured_the_parent_url_parameter = () => v("CustomerId").ShouldEqual("42");
+
+            It Should_have_captured_the_sub_url_parameter = () => v("OrderId").ShouldEqual("17");
+        }
+
+        [Subject(typeof(Url))]
+        public class When_routing_a_wildcard : RoutingContext
+        {
+            Because of = () => RoutingTo("~/content/foo/bar.xml");
+
+            Behaves_like<Route> mvcroute;
+
+            It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
+        }
+    }
+
+    public class RoutingContext
     {
         public class CustomersUrl : Url
         {
