@@ -110,9 +110,15 @@ namespace Snooze
             FillRouteValueDictionary(values);
             var name = ResourceRoute.GetRouteNameFromUrlType(GetType());
 
-            var vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
-            if(vp == null)
+            VirtualPathData vp;
+            try
+            {
+                 vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
+            }
+            catch (ArgumentException)
+            {
                 return GetType().Name + "-NotConfigured";
+            }
                      
             return vp.VirtualPath;
         }

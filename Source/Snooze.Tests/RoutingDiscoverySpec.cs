@@ -7,6 +7,24 @@ using Snooze.Routing;
 
 namespace Snooze
 {
+    [Subject(typeof(Url))]
+    public class When_converting_an_unmapped_url_to_a_string
+    {
+        static TestUrl testUrl;
+        static string uri;
+        public class TestUrl : Url
+        {
+        } ;
+
+        Establish context = () => testUrl = new TestUrl();
+
+        Because of = () => uri = testUrl.ToString();
+
+        It Should_have_converted = () => uri.ShouldNotBeNull();
+    }
+
+
+
     [Subject("Convention based route discovery")]
     public class RoutingDiscoverySpec
     {

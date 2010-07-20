@@ -18,13 +18,20 @@ namespace Snooze
     {
         static readonly Dictionary<string, MethodInfo> s_actionMethodCache = new Dictionary<string, MethodInfo>();
 
+        protected override ActionResult InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary<string, object> parameters)
+        {
+            return Result =  base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
+        }
+
+        public  ActionResult Result { get; protected set; }
+
         protected override ActionDescriptor FindAction(ControllerContext controllerContext,
                                                        ControllerDescriptor controllerDescriptor, string actionName)
         {
             var urlType = GetUrlType(controllerContext);
             var httpMethod = GetHttpMethod(controllerContext);
 
-            CheckChildAction(controllerContext.IsChildAction,controllerContext.Controller.GetType(),controllerContext.RequestContext.HttpContext.Request.Url.ToString());
+            //CheckChildAction(controllerContext.IsChildAction,controllerContext.Controller.GetType(),controllerContext.RequestContext.HttpContext.Request.Url.ToString());
 
             var methodInfo = GetMethodInfo(controllerContext.Controller.GetType(), urlType, httpMethod);
             if (methodInfo == null) return null;
@@ -38,8 +45,8 @@ namespace Snooze
 
         void CheckChildAction(bool isChildaction,Type contollerType,string url)
         {
-            if(!isChildaction && contollerType.Name.ToLower().StartsWith("Partial"))
-                throw new HttpException(502,"This is a partial controller cannot execute a non partial request " + url);        
+            if(isChildaction && !contollerType.Name.ToLower().StartsWith("Partial"))
+                throw new HttpException(502,"This partial controller cannot execute a non partial request " + url);        
          }
 
         protected override ActionResult CreateActionResult(ControllerContext controllerContext,
@@ -71,7 +78,7 @@ namespace Snooze
             return methodInfo;
         }
 
-        static MethodInfo FindActionMethod(Type controllerType, Type urlType, string httpMethod)
+        public static MethodInfo FindActionMethod(Type controllerType, Type urlType, string httpMethod)
         {
             var methods =
                 from m in controllerType.GetMethods()
@@ -95,7 +102,7 @@ namespace Snooze
             var methodInHeader = controllerContext.HttpContext.Request.Headers["X-HTTP-Method-Override"];
             var methodInRequest = controllerContext.HttpContext.Request.HttpMethod;
 
-            return methodInForm ?? methodInHeader ?? methodInRequest;
+            return methodInForm ?? methodInHeader ?? methodInRequest ?? "GET";
         }
     }
 }
