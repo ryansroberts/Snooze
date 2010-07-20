@@ -85,7 +85,7 @@
     <Compile Include="MimeTypes.cs" />
     <Compile Include="Modules\CompressionModule.cs" />
     <Compile Include="IEPngFixController.cs" />
-    <Compile Include="ParialRequestExtensions.cs" />
+    <Compile Include="PartialRequestExtensions.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

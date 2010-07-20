@@ -18,36 +18,55 @@ namespace Snooze
     {
         static readonly Dictionary<string, MethodInfo> s_actionMethodCache = new Dictionary<string, MethodInfo>();
 
-        protected override ActionResult InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary<string, object> parameters)
+
+        protected override ActionResult InvokeActionMethod(ControllerContext controllerContext,
+                                                           ActionDescriptor actionDescriptor,
+                                                           IDictionary<string, object> parameters)
         {
-            return Result =  base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
+            return Result = base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
         }
 
-        public  ActionResult Result { get; protected set; }
+
+        public ActionResult Result { get; protected set; }
+
 
         protected override ActionDescriptor FindAction(ControllerContext controllerContext,
                                                        ControllerDescriptor controllerDescriptor, string actionName)
         {
             var urlType = GetUrlType(controllerContext);
+
             var httpMethod = GetHttpMethod(controllerContext);
 
-            //CheckChildAction(controllerContext.IsChildAction,controllerContext.Controller.GetType(),controllerContext.RequestContext.HttpContext.Request.Url.ToString());
+
+            CheckChildAction(IsSnoozePartial(controllerContext), controllerContext.Controller.GetType(),
+                             controllerContext.RequestContext.HttpContext.Request.Url.ToString());
 
             var methodInfo = GetMethodInfo(controllerContext.Controller.GetType(), urlType, httpMethod);
-            if (methodInfo == null) return null;
 
             // Fix up the "action" name to be the Url type name (minus the "Url" suffix).
             // This makes for decent View names e.g. AuthorUrl => controller=Book, action=Author => /Views/Book/Author.aspx
+
             controllerContext.RouteData.Values["action"] = urlType.Name.Substring(0, urlType.Name.Length - 3);
+
+
+            if (methodInfo == null)
+
+                throw new HttpException(502,
+                                        "Could not find a matching action for " +
+                                        controllerContext.RouteData.Values["action"] + " method " + httpMethod);
+
 
             return new ReflectedActionDescriptor(methodInfo, httpMethod, controllerDescriptor);
         }
 
-        void CheckChildAction(bool isChildaction,Type contollerType,string url)
+
+        void CheckChildAction(bool isChildaction, Type contollerType, string url)
         {
-            if(isChildaction && !contollerType.Name.ToLower().StartsWith("Partial"))
-                throw new HttpException(502,"This partial controller cannot execute a non partial request " + url);        
-         }
+            if (isChildaction && !contollerType.Name.ToLower().StartsWith("partial"))
+
+                throw new HttpException(502, "This partial controller cannot execute a non partial request " + url);
+        }
+
 
         protected override ActionResult CreateActionResult(ControllerContext controllerContext,
                                                            ActionDescriptor actionDescriptor, object actionReturnValue)
@@ -56,14 +75,18 @@ namespace Snooze
             {
                 return new ResourceResult(200, actionReturnValue);
             }
+
             return base.CreateActionResult(controllerContext, actionDescriptor, actionReturnValue);
         }
+
 
         static MethodInfo GetMethodInfo(Type controllerType, Type urlType, string httpMethod)
         {
             var key = urlType.FullName + "!" + httpMethod;
 
+
             MethodInfo methodInfo = null;
+
             if (!s_actionMethodCache.TryGetValue(key, out methodInfo))
             {
                 lock (s_actionMethodCache)
@@ -71,12 +94,15 @@ namespace Snooze
                     if (!s_actionMethodCache.TryGetValue(key, out methodInfo))
                     {
                         methodInfo = FindActionMethod(controllerType, urlType, httpMethod);
+
                         if (methodInfo != null) s_actionMethodCache[key] = methodInfo;
                     }
                 }
             }
+
             return methodInfo;
         }
+
 
         public static MethodInfo FindActionMethod(Type controllerType, Type urlType, string httpMethod)
         {
@@ -88,21 +114,38 @@ namespace Snooze
                       && parameters[0].ParameterType.Equals(urlType)
                 select m;
 
+
             return methods.FirstOrDefault();
         }
+
 
         static Type GetUrlType(ControllerContext controllerContext)
         {
             return controllerContext.RouteData.Route.GetType().GetGenericArguments()[0];
         }
 
+
         static string GetHttpMethod(ControllerContext controllerContext)
         {
+            if (IsSnoozePartial(controllerContext))
+
+                return "GET";
+
+
             var methodInForm = controllerContext.HttpContext.Request.Form["_method"];
+
             var methodInHeader = controllerContext.HttpContext.Request.Headers["X-HTTP-Method-Override"];
+
             var methodInRequest = controllerContext.HttpContext.Request.HttpMethod;
 
+
             return methodInForm ?? methodInHeader ?? methodInRequest ?? "GET";
+        }
+
+
+        static bool IsSnoozePartial(ControllerContext controllerContext)
+        {
+            return controllerContext.RouteData.Values.ContainsKey("snooze_partial");
         }
     }
 }
