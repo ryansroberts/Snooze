@@ -50,8 +50,7 @@ namespace Snooze
 
 
             if (methodInfo == null)
-
-                throw new HttpException(502,
+                throw new HttpException(400,
                                         "Could not find a matching action for " +
                                         controllerContext.RouteData.Values["action"] + " method " + httpMethod);
 
@@ -64,7 +63,7 @@ namespace Snooze
         {
             if (isChildaction && !contollerType.Name.ToLower().StartsWith("partial"))
 
-                throw new HttpException(502, "This partial controller cannot execute a non partial request " + url);
+                throw new HttpException(400, "This partial controller cannot execute a non partial request " + url);
         }
 
 
