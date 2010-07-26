@@ -20,6 +20,7 @@ namespace Snooze
             // So we add an explicitly typed ViewFormatter first.
 
             _formatters.Add(new ViewFormatter("application/xhtml+xml"));
+            _formatters.Add(new ViewFormatter("text/html"));
             _formatters.Add(new ViewFormatter("*/*")); // similar reason for this.
             _formatters.Add(new JsonFormatter());
             _formatters.Add(new XmlFormatter());

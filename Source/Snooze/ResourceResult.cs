@@ -91,6 +91,20 @@ namespace Snooze
             return this;
         }
 
+        public ResourceResult AsXhtml()
+        {
+            ContentType = "application/xhtml+xml";
+
+            return this;
+        }
+
+        public ResourceResult AsHtml()
+        {
+            ContentType = "text/html";
+
+            return this;
+        }
+
 
         public ResourceResult As(string type)
         {
