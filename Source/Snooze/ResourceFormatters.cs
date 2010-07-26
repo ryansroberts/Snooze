@@ -18,6 +18,8 @@ namespace Snooze
             // But we don't want to use the XML formatter by default 
             // - which would happen since "text/xml" appears first in the list.
             // So we add an explicitly typed ViewFormatter first.
+
+            _formatters.Add(new ViewFormatter("text/html"));
             _formatters.Add(new ViewFormatter("application/xhtml+xml"));
             _formatters.Add(new ViewFormatter("*/*")); // similar reason for this.
             _formatters.Add(new JsonFormatter());
