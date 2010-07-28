@@ -23,7 +23,7 @@ namespace Snooze
 
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
         {
-            return ((_targetMimeType == mimeType) || (_targetMimeType == null))
+            return ((_targetMimeType == mimeType) || ( string.IsNullOrEmpty(_targetMimeType)))
                    && FindView(context, resource).View != null;
         }
 

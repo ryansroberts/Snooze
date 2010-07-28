@@ -4,6 +4,7 @@ using Snooze;
 namespace SampleApplication.Controllers
 {
     public class HomeUrl : Url { }
+    public class LoginUrl : Url { }
 
     public class HomeController : ResourceController
     {
@@ -20,7 +21,7 @@ namespace SampleApplication.Controllers
 
     public class HomeViewModel
     {
-        public Url Login { get; set; }
+        public LoginUrl Login { get; set; }
         public string BooksLink { get; set; }
     }
 }

@@ -33,8 +33,22 @@ namespace Snooze
 
         public object Resource { get; set; }
 
-        public string ContentType { get; set; }
 
+        private bool _contentTypeExplicitlySet = false;
+
+        protected string _contentType;
+        public string ContentType
+        {
+            get
+            {
+                return this._contentType; 
+            }
+            set
+            {
+                this._contentType = value;
+                _contentTypeExplicitlySet = !string.IsNullOrEmpty(this._contentType);
+            }
+        }
 
         public ResourceResult WithHeader(string name, Url value)
         {
@@ -169,7 +183,14 @@ namespace Snooze
 
                 else
                 {
-                    context.HttpContext.Response.StatusCode = 406; // not acceptable
+                    if( this._contentTypeExplicitlySet )
+                    {
+                        throw new HttpException(500, string.Format("Mime type explicitly set to '{0}' but unable to find a view that can format this type.",ContentType));
+                    }
+                    else
+                    {
+                        context.HttpContext.Response.StatusCode = 406; // not acceptable
+                    }
                 }
 
                 return;
@@ -239,7 +260,9 @@ namespace Snooze
         {
             if (!ContentType.Contains('/')) // then it's probably a file extension.
             {
-                ContentType = MimeTypes.GetMimeTypeForExtension(ContentType);
+                string mimeType = MimeTypes.GetMimeTypeForExtension(ContentType);
+                if (!string.IsNullOrEmpty(mimeType))
+                    ContentType = mimeType;
             }
         }
     }
