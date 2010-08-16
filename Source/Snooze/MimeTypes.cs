@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Snooze
 {
-    internal static class MimeTypes
+    public static class MimeTypes
     {
         static readonly Dictionary<string, string> _types = new Dictionary<string, string>
                                                                 {
@@ -47,6 +47,7 @@ namespace Snooze
                                                                     {"dll", "application/x-msdownload"},
                                                                     {"dms", "application/octet-stream"},
                                                                     {"doc", "application/msword"},
+                                                                    {"docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
                                                                     {"dot", "application/msword"},
                                                                     {"dvi", "application/x-dvi"},
                                                                     {"dxr", "application/x-director"},

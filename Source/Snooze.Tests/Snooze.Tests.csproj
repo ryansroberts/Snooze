@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FutureActionSpecs.cs" />
     <Compile Include="InputFacts.cs" />
     <Compile Include="RequiredInputFacts.cs" />
     <Compile Include="RoutingDiscoverySpec.cs" />
