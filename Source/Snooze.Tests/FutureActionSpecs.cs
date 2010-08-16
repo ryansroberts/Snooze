@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml.Serialization;
 using Machine.Specifications;
 
-namespace Snooze.Tests.FutureActionTests
+namespace Snooze.FutureActionTests
 {
 
     public class TestUrl1 : Url { }
@@ -65,7 +65,7 @@ namespace Snooze.Tests.FutureActionTests
             private static FutureAction<TestController1> futureAction;
 
             private Establish context =
-                () => futureAction = new FutureAction<TestController1>(c => c.Post(new TestUrl1(), new Test1ViewModel()), FormEncoding.FormEncodingTypes.MultipartForm);
+                () => futureAction = new FutureAction<TestController1>(c => c.Post(new TestUrl1(), new Test1ViewModel()), FormEncodingTypes.MultipartForm);
 
             It Has_multipart_form_encoding = () => futureAction.FormEncodingString.ShouldEqual("multipart/form-data");
         }

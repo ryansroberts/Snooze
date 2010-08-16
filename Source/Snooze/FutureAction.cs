@@ -25,7 +25,7 @@ namespace Snooze
             Entity = entity;
         }
 
-        public FutureAction(string method, Url url, object entity, FormEncoding.FormEncodingTypes formEncodingType) 
+        public FutureAction(string method, Url url, object entity, FormEncodingTypes formEncodingType) 
             : this (method, url, entity)
         {
             FormEncodingType = formEncodingType;
@@ -36,7 +36,7 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<object>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(Expression<Func<object>> actionMethod, FormEncodingTypes formEncodingType)
             : this(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
@@ -46,12 +46,12 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Action> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(Expression<Action> actionMethod, FormEncodingTypes formEncodingType)
             : this(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 
-        protected FutureAction(MethodCallExpression methodCall, FormEncoding.FormEncodingTypes formEncodingType)
+        protected FutureAction(MethodCallExpression methodCall, FormEncodingTypes formEncodingType)
             : this(methodCall)
         {
             FormEncodingType = formEncodingType;
@@ -77,7 +77,7 @@ namespace Snooze
         public string Method { get; set; }
         public Url Url { get; set; }
         public object Entity { get; set; }
-        public FormEncoding.FormEncodingTypes FormEncodingType { get; set; }
+        public FormEncodingTypes FormEncodingType { get; set; }
 
         public string FormEncodingString
         {
@@ -121,7 +121,7 @@ namespace Snooze
         {
         }
 
-        public FutureAction(string method, Url url, T entity, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(string method, Url url, T entity, FormEncodingTypes formEncodingType)
             : base(method, url, entity, formEncodingType)
         {
         }
@@ -131,7 +131,7 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<T, object>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(Expression<Func<T, object>> actionMethod, FormEncodingTypes formEncodingType)
             : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
@@ -141,7 +141,7 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<ActionResult>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(Expression<Func<ActionResult>> actionMethod, FormEncodingTypes formEncodingType)
             : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
@@ -152,7 +152,7 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Action<T>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+        public FutureAction(Expression<Action<T>> actionMethod, FormEncodingTypes formEncodingType)
             : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
