@@ -74,6 +74,7 @@
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FakeHttpRequest.cs" />
     <Compile Include="FakeHttpResponse.cs" />
+    <Compile Include="FormEncoding.cs" />
     <Compile Include="FutureAction.cs" />
     <Compile Include="HttpHandlerUtil.cs" />
     <Compile Include="IEPngFixUrl.cs" />

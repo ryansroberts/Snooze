@@ -25,10 +25,10 @@ namespace Snooze
             Entity = entity;
         }
 
-        public FutureAction(string method, Url url, object entity, bool expectsMultipartEncoding) 
+        public FutureAction(string method, Url url, object entity, FormEncoding.FormEncodingTypes formEncodingType) 
             : this (method, url, entity)
         {
-            _expectsMultipartEncoding = expectsMultipartEncoding;
+            FormEncodingType = formEncodingType;
         }
 
         public FutureAction(Expression<Func<object>> actionMethod)
@@ -36,8 +36,8 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<object>> actionMethod, bool expectsMultipartEncoding)
-            : this(actionMethod.Body as MethodCallExpression, expectsMultipartEncoding)
+        public FutureAction(Expression<Func<object>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+            : this(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 
@@ -46,15 +46,15 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Action> actionMethod, bool expectsMultipartEncoding)
-            : this(actionMethod.Body as MethodCallExpression, expectsMultipartEncoding)
+        public FutureAction(Expression<Action> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+            : this(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 
-        protected FutureAction(MethodCallExpression methodCall, bool expectsMultipartEncoding)
+        protected FutureAction(MethodCallExpression methodCall, FormEncoding.FormEncodingTypes formEncodingType)
             : this(methodCall)
         {
-            _expectsMultipartEncoding = expectsMultipartEncoding;
+            FormEncodingType = formEncodingType;
         }
 
         protected FutureAction(MethodCallExpression methodCall)
@@ -74,19 +74,19 @@ namespace Snooze
             }
         }
 
-        private readonly bool _expectsMultipartEncoding;
-
         public string Method { get; set; }
         public Url Url { get; set; }
         public object Entity { get; set; }
+        public FormEncoding.FormEncodingTypes FormEncodingType { get; set; }
 
-        public string FormEncoding
+        public string FormEncodingString
         {
             get 
             {
-                return _expectsMultipartEncoding ? "multipart/form-data" : "application/x-www-form-urlencoded";
+                return FormEncoding.GetFormEncodingString(this.FormEncodingType);
             }
         }
+        
 
         #region Implementation of IXmlSerializable
 
@@ -104,8 +104,8 @@ namespace Snooze
         {
             writer.WriteElementString("Method", Method);
             writer.WriteElementString("Url", Url.ToString());
-            writer.WriteElementString("Entity", Entity.ToString());
-            writer.WriteElementString("FormEncoding", FormEncoding);
+            writer.WriteElementString("FormEncodingType", FormEncodingType.ToString());
+            writer.WriteElementString("FormEncodingString", FormEncodingString);
         }
 
         #endregion
@@ -121,8 +121,8 @@ namespace Snooze
         {
         }
 
-        public FutureAction(string method, Url url, T entity, bool expectsMultipartEncoding)
-            : base(method, url, entity, expectsMultipartEncoding)
+        public FutureAction(string method, Url url, T entity, FormEncoding.FormEncodingTypes formEncodingType)
+            : base(method, url, entity, formEncodingType)
         {
         }
 
@@ -131,8 +131,8 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<T, object>> actionMethod, bool expectsMultipartEncoding)
-            : base(actionMethod.Body as MethodCallExpression, expectsMultipartEncoding)
+        public FutureAction(Expression<Func<T, object>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+            : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 
@@ -141,8 +141,8 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Func<ActionResult>> actionMethod, bool expectsMultipartEncoding)
-            : base(actionMethod.Body as MethodCallExpression, expectsMultipartEncoding)
+        public FutureAction(Expression<Func<ActionResult>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+            : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 
@@ -152,8 +152,8 @@ namespace Snooze
         {
         }
 
-        public FutureAction(Expression<Action<T>> actionMethod, bool expectsMultipartEncoding)
-            : base(actionMethod.Body as MethodCallExpression, expectsMultipartEncoding)
+        public FutureAction(Expression<Action<T>> actionMethod, FormEncoding.FormEncodingTypes formEncodingType)
+            : base(actionMethod.Body as MethodCallExpression, formEncodingType)
         {
         }
 

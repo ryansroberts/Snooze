@@ -56,7 +56,7 @@ namespace Snooze.Tests.FutureActionTests
 
             Establish context = () => futureAction = new FutureAction<TestController2>(c => c.Get(new TestUrl2()));
 
-            It Has_default_form_encoding = () => futureAction.FormEncoding.ShouldEqual("application/x-www-form-urlencoded");
+            It Has_default_form_encoding = () => futureAction.FormEncodingString.ShouldEqual("application/x-www-form-urlencoded");
         }
 
 
@@ -65,9 +65,9 @@ namespace Snooze.Tests.FutureActionTests
             private static FutureAction<TestController1> futureAction;
 
             private Establish context =
-                () => futureAction = new FutureAction<TestController1>(c => c.Post(new TestUrl1(), new Test1ViewModel()), true);
+                () => futureAction = new FutureAction<TestController1>(c => c.Post(new TestUrl1(), new Test1ViewModel()), FormEncoding.FormEncodingTypes.MultipartForm);
 
-            It Has_multipart_form_encoding = () => futureAction.FormEncoding.ShouldEqual("multipart/form-data");
+            It Has_multipart_form_encoding = () => futureAction.FormEncodingString.ShouldEqual("multipart/form-data");
         }
 
 
