@@ -22,8 +22,9 @@ namespace Snooze
             _formatters.Add(new ViewFormatter("application/xhtml+xml"));
             _formatters.Add(new ViewFormatter("text/html"));
             _formatters.Add(new ViewFormatter("*/*")); // similar reason for this.
+            _formatters.Add(new ViewFormatter("application/xml"));
             _formatters.Add(new JsonFormatter());
-            _formatters.Add(new XmlFormatter());
+            //_formatters.Add(new XmlFormatter());
             _formatters.Add(new ViewFormatter());
             _formatters.Add(new StringFormatter());
             _formatters.Add(new ByteArrayFormatter());

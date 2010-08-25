@@ -12,9 +12,9 @@ namespace Snooze
 {
     public class ResourceResult : ActionResult
     {
-        readonly List<Action<HttpCachePolicyBase>> _cacheActions = new List<Action<HttpCachePolicyBase>>();
-        readonly List<HttpCookie> _cookies = new List<HttpCookie>();
-        readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
+        private readonly List<Action<HttpCachePolicyBase>> _cacheActions = new List<Action<HttpCachePolicyBase>>();
+        private readonly List<HttpCookie> _cookies = new List<HttpCookie>();
+        private readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
 
         public ResourceResult(int statusCode, object resource)
         {
@@ -34,19 +34,17 @@ namespace Snooze
         public object Resource { get; set; }
 
 
-        private bool _contentTypeExplicitlySet = false;
+        private bool _contentTypeExplicitlySet;
 
         protected string _contentType;
+
         public string ContentType
         {
-            get
-            {
-                return this._contentType; 
-            }
+            get { return _contentType; }
             set
             {
-                this._contentType = value;
-                _contentTypeExplicitlySet = !string.IsNullOrEmpty(this._contentType);
+                _contentType = value;
+                _contentTypeExplicitlySet = !string.IsNullOrEmpty(_contentType);
             }
         }
 
@@ -165,14 +163,12 @@ namespace Snooze
             if (innerResult != null)
             {
                 innerResult.ExecuteResult(context);
-
                 return;
             }
 
+            var acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
 
-            IEnumerable<string> acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
-
-            IResourceFormatter formatter = FindFormatter(context, acceptTypes);
+            var formatter = FindFormatter(context, acceptTypes);
 
             if (formatter == null)
             {
@@ -180,19 +176,20 @@ namespace Snooze
                 {
                     context.HttpContext.Response.Output.Write(Resource);
                 }
-
                 else
                 {
-                    if( this._contentTypeExplicitlySet )
+                    if (_contentTypeExplicitlySet)
                     {
-                        throw new HttpException(500, string.Format("Mime type explicitly set to '{0}' but unable to find a view that can format this type.",ContentType));
+                        throw new HttpException(500,
+                                                string.Format(
+                                                    "Mime type explicitly set to '{0}' but unable to find a view that can format this type.",
+                                                    ContentType));
                     }
                     else
                     {
                         context.HttpContext.Response.StatusCode = 406; // not acceptable
                     }
                 }
-
                 return;
             }
 
@@ -200,7 +197,7 @@ namespace Snooze
         }
 
 
-        IEnumerable<string> ParseAcceptTypes(IEnumerable<string> types)
+        private IEnumerable<string> ParseAcceptTypes(IEnumerable<string> types)
         {
             // TODO process "q" and "level" options and sort accordingly by stealing code from openrasta
 
@@ -213,16 +210,16 @@ namespace Snooze
         }
 
 
-        void AppendCookies(ControllerContext context)
+        private void AppendCookies(ControllerContext context)
         {
-            foreach (HttpCookie cookie in _cookies)
+            foreach (var cookie in _cookies)
             {
                 context.HttpContext.Response.AppendCookie(cookie);
             }
         }
 
 
-        void AppendHeaders(ControllerContext context)
+        private void AppendHeaders(ControllerContext context)
         {
             foreach (var header in _headers)
             {
@@ -231,7 +228,7 @@ namespace Snooze
         }
 
 
-        void ApplyCacheActions(ControllerContext context)
+        private void ApplyCacheActions(ControllerContext context)
         {
             foreach (var action in _cacheActions)
             {
@@ -240,30 +237,30 @@ namespace Snooze
         }
 
 
-        IResourceFormatter FindFormatter(ControllerContext context, IEnumerable<string> acceptTypes)
+        private IResourceFormatter FindFormatter(ControllerContext context, IEnumerable<string> acceptTypes)
         {
             if (ContentType != null) // Controller action forced the content type.
             {
                 EnsureContentTypeIsMimeType();
-
                 return ResourceFormatters.Formatters.FirstOrDefault(f => f.CanFormat(context, Resource, ContentType));
             }
 
-
-            return (from formatter in ResourceFormatters.Formatters
-                    from acceptType in acceptTypes
-                    where formatter.CanFormat(context, Resource, acceptType)
-                    select formatter).FirstOrDefault();
+            foreach (var acceptType in acceptTypes)
+            {
+                foreach (var formatter in ResourceFormatters.Formatters)
+                {
+                    if (formatter.CanFormat(context, Resource, acceptType)) return formatter;
+                }
+            }
+            return null;
         }
 
-        void EnsureContentTypeIsMimeType()
+        private void EnsureContentTypeIsMimeType()
         {
-            if (!ContentType.Contains('/')) // then it's probably a file extension.
-            {
-                string mimeType = MimeTypes.GetMimeTypeForExtension(ContentType);
-                if (!string.IsNullOrEmpty(mimeType))
-                    ContentType = mimeType;
-            }
+            if (ContentType.Contains('/')) return;
+            var mimeType = MimeTypes.GetMimeTypeForExtension(ContentType);
+            if (!string.IsNullOrEmpty(mimeType))
+                ContentType = mimeType;
         }
     }
 }
