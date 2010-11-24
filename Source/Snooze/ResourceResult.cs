@@ -48,6 +48,11 @@ namespace Snooze
             }
         }
 
+        public List<HttpCookie> Cookies
+        {
+            get { return _cookies; }
+        }
+
         public ResourceResult WithHeader(string name, Url value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
@@ -66,7 +71,7 @@ namespace Snooze
 
         public ResourceResult WithCookie(HttpCookie cookie)
         {
-            _cookies.Add(cookie);
+            Cookies.Add(cookie);
 
             return this;
         }
@@ -212,7 +217,7 @@ namespace Snooze
 
         private void AppendCookies(ControllerContext context)
         {
-            foreach (var cookie in _cookies)
+            foreach (var cookie in Cookies)
             {
                 context.HttpContext.Response.AppendCookie(cookie);
             }

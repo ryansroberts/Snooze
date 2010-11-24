@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Web.Mvc;
 
 #endregion
@@ -50,6 +51,18 @@ namespace Snooze
         }
 
 
+        public virtual ResourceResult Found(Url url)
+        {
+            return new ResourceResult(302, null).WithHeader("Location", url.ToString());
+        }
+
+
+        public virtual ResourceResult Found(string url)
+        {
+            return new ResourceResult(302, null).WithHeader("Location", url);
+        }
+
+
         public virtual ResourceResult NotModified()
         {
             return new ResourceResult(304, null);
@@ -59,6 +72,11 @@ namespace Snooze
         public virtual ActionResult Redirect(Url url)
         {
             return Redirect(url.ToString());
+        }
+
+        protected override RedirectResult Redirect(string url)
+        {
+            throw new InvalidOperationException("302 Redirects should not be used unless you REALLY mean to return a 'FOUND' response, if so use the Found method instead.");
         }
 
 

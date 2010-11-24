@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using System.Xml.Serialization;
 using Machine.Specifications;
 
@@ -46,6 +47,8 @@ namespace Snooze.FutureActionTests
         }
 
     }
+
+    
 
     [Subject("FutureAction")]
     public class FutureActionSpecs
