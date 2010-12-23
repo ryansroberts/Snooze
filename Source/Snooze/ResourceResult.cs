@@ -48,10 +48,16 @@ namespace Snooze
             }
         }
 
-        public List<HttpCookie> Cookies
+        public IList<HttpCookie> Cookies
         {
             get { return _cookies; }
         }
+
+        public IEnumerable<Action<HttpCachePolicyBase>> CacheActions
+        {
+            get { return _cacheActions; }
+        }
+
 
         public ResourceResult WithHeader(string name, Url value)
         {
