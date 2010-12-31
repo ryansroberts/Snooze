@@ -69,8 +69,7 @@ namespace Snooze
 
         static IEnumerable<Action<Url, RouteValueDictionary>> CreatePropertyPushers(Type urlType)
         {
-            var properties =
-                urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            var properties =  urlType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p=>p.PropertyType!=typeof(Url));
             var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
             foreach (var property in properties)
             {
@@ -116,6 +115,10 @@ namespace Snooze
                  vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
             }
             catch (ArgumentException)
+            {
+                return GetType().Name + "-NotConfigured";
+            }
+            catch(Exception err)
             {
                 return GetType().Name + "-NotConfigured";
             }
