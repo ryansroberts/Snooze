@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
@@ -12,6 +13,8 @@ namespace Snooze.Routing
 {
     public static class RouteCollectionExtensions
     {
+        static HashSet<Type> added = new HashSet<Type>();
+
         /// <summary>
         ///   Adds a route for the given Url type.
         /// </summary>
@@ -25,15 +28,26 @@ namespace Snooze.Routing
                 var routeType = GetSubResourceType<TUrl>();
                 var parentRoute = GetParentRoute<TUrl>(RouteTable.Routes);
 
-                routes.Add(routeName, (RouteBase) Activator.CreateInstance(routeType, routeExpression, parentRoute));
+                DoIfRouteIsNotRegistered < TUrl>(() =>
+                {
+                    routes.Add(routeName,  (RouteBase) Activator.CreateInstance(routeType, routeExpression,parentRoute));
+                    ModelBinders.Binders.Add(typeof(TUrl), new SubUrlModelBinder());
+                });
 
                 // ModelBinders are not inherited, so we need to explicitly add the SubUrlModelBinder here.
-                ModelBinders.Binders.Add(typeof (TUrl), new SubUrlModelBinder());
+               
             }
             else
             {
-                routes.Add(routeName, new ResourceRoute<TUrl>(routeExpression));
+                 DoIfRouteIsNotRegistered<TUrl>(()=>routes.Add(routeName, new ResourceRoute<TUrl>(routeExpression)));
             }
+        }
+
+        static void DoIfRouteIsNotRegistered<TUrl>(Action action)
+        {
+            if (!added.Contains(typeof(TUrl)))
+                action();
+            added.Add(typeof(TUrl));
         }
 
         /// <summary>
