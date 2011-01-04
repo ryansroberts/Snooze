@@ -247,23 +247,23 @@ namespace Snooze
             }
         }
 
+        private Type ResourceType()
+        {
+            return Resource == null ? typeof (object) : Resource.GetType();
+        }
 
         private IResourceFormatter FindFormatter(ControllerContext context, IEnumerable<string> acceptTypes)
         {
             if (ContentType != null) // Controller action forced the content type.
             {
                 EnsureContentTypeIsMimeType();
-                return ResourceFormatters.Formatters.FirstOrDefault(f => f.CanFormat(context, Resource, ContentType));
+                return ResourceFormatters.FormattersFor(ResourceType()).FirstOrDefault(f => f.CanFormat(context, Resource, ContentType));
             }
 
-            foreach (var acceptType in acceptTypes)
-            {
-                foreach (var formatter in ResourceFormatters.Formatters)
-                {
-                    if (formatter.CanFormat(context, Resource, acceptType)) return formatter;
-                }
-            }
-            return null;
+            return (from acceptType in acceptTypes
+                    from formatter in ResourceFormatters.FormattersFor(ResourceType())
+                    where formatter.CanFormat(context, Resource, acceptType)
+                    select formatter).FirstOrDefault();
         }
 
         private void EnsureContentTypeIsMimeType()

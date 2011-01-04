@@ -119,7 +119,7 @@
     <Compile Include="UrlConverter.cs" />
     <Compile Include="UrlExtensions.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
-    <Compile Include="ViewFormatter.cs" />
+    <Compile Include="ResourceTypeConventionViewFormatter.cs" />
     <Compile Include="XmlFormatter.cs" />
   </ItemGroup>
   <ItemGroup>

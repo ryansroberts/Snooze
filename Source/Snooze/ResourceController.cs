@@ -38,6 +38,15 @@ namespace Snooze
             return new ResourceResult(205, null);
         }
 
+        public virtual ResourceResult MovedPermenently(Url url)
+        {
+            return new ResourceResult(301, null).WithHeader("Location", url.ToString());
+        }
+
+        public virtual ResourceResult MovedPermenently(string url)
+        {
+            return new ResourceResult(301, null).WithHeader("Location", url);
+        }
 
         public virtual ResourceResult SeeOther(Url url)
         {

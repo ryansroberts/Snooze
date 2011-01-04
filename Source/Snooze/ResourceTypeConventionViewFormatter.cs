@@ -1,25 +1,20 @@
 ﻿#region
 
+using System;
 using System.Web.Mvc;
 
 #endregion
 
 namespace Snooze
 {
-    public class ViewFormatter : IResourceFormatter
+    public abstract class BaseViewFormatter : IResourceFormatter
     {
-        readonly string _targetMimeType;
+        protected string _targetMimeType;
 
-        public ViewFormatter()
-        {
-        }
-
-        public ViewFormatter(string targetMimeType)
+        protected BaseViewFormatter(string targetMimeType)
         {
             _targetMimeType = targetMimeType;
         }
-
-        #region IResourceFormatter Members
 
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
         {
@@ -29,10 +24,7 @@ namespace Snooze
 
         public void Output(ControllerContext context, object resource, string contentType)
         {
-            if (contentType != null)
-            {
-                context.HttpContext.Response.ContentType = contentType;
-            }
+            context.HttpContext.Response.ContentType = contentType ?? _targetMimeType;
 
             var result = FindView(context, resource);
             if (result.View != null)
@@ -54,16 +46,38 @@ namespace Snooze
             result.ViewEngine.ReleaseView(context, result.View);
         }
 
-        #endregion
-
-        ViewEngineResult FindView(ControllerContext context, object resource)
+        private ViewEngineResult FindView(ControllerContext context, object resource)
         {
             var viewName = GetViewName(resource);
             var result = ViewEngines.Engines.FindView(context, viewName, null);
             return result;
         }
 
-        string GetViewName(object resource)
+        protected abstract string GetViewName(object resource);
+    }
+
+    public class ExplicitNameViewFormatter : BaseViewFormatter
+    {
+        private readonly string viewname;
+
+        public ExplicitNameViewFormatter(string targetMimeType,string viewname) : base(targetMimeType)
+        {
+            this.viewname = viewname;
+        }
+
+        protected override string GetViewName(object resource)
+        {
+            return viewname;
+        }
+    }
+
+    public class ResourceTypeConventionViewFormatter : BaseViewFormatter
+    {
+        public ResourceTypeConventionViewFormatter(string targetMimeType) : base(targetMimeType)
+        {
+        }
+
+        protected override string GetViewName(object resource)
         {
             var name = resource.GetType().Name;
             if (name.EndsWith("ViewModel"))
