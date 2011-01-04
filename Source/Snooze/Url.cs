@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -69,14 +70,14 @@ namespace Snooze
 
         static IEnumerable<Action<Url, RouteValueDictionary>> CreatePropertyPushers(Type urlType)
         {
-            var properties =
-                urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            //mm: removed the 'declared only' binding flag and added a filter to exclude properties of type Url ( for sub urls ) 
+            var properties = urlType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => !p.PropertyType.IsSubclassOf(typeof(Url)));
+
+            //var properties = urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+
             var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
-            foreach (var property in properties)
-            {
-                var lambda = CreatePropertyPusher(urlType, addMethod, property);
-                yield return lambda.Compile();
-            }
+
+            return properties.Select(property => CreatePropertyPusher(urlType, addMethod, property)).Select(lambda => lambda.Compile());
         }
 
         static Expression<Action<Url, RouteValueDictionary>> CreatePropertyPusher(Type urlType, MethodInfo addMethod,

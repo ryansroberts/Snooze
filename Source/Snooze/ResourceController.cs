@@ -48,17 +48,16 @@ namespace Snooze
             return new ResourceResult(301, null).WithHeader("Location", url);
         }
 
-        public virtual ResourceResult SeeOther(Url url)
+        public virtual ResourceResult MovedPermanently(Url url)
         {
-            return new ResourceResult(303, null).WithHeader("Location", url.ToString());
+            return new ResourceResult(301, null).WithHeader("Location", url.ToString());
         }
 
 
-        public virtual ResourceResult SeeOther(string url)
+        public virtual ResourceResult MovedPermanently(string url)
         {
-            return new ResourceResult(303, null).WithHeader("Location", url);
+            return new ResourceResult(301, null).WithHeader("Location", url);
         }
-
 
         public virtual ResourceResult Found(Url url)
         {
@@ -71,6 +70,16 @@ namespace Snooze
             return new ResourceResult(302, null).WithHeader("Location", url);
         }
 
+        public virtual ResourceResult SeeOther(Url url)
+        {
+            return new ResourceResult(303, null).WithHeader("Location", url.ToString());
+        }
+
+
+        public virtual ResourceResult SeeOther(string url)
+        {
+            return new ResourceResult(303, null).WithHeader("Location", url);
+        }
 
         public virtual ResourceResult NotModified()
         {
