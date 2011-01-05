@@ -33,11 +33,11 @@ namespace SampleApplication.Controllers
             // The action method doesn't say how the view model should be formatted.
             // Snooze will determin this based on the UA's Accept header.
             return OK(new BooksViewModel
-                {
-                    BookLinks = links.ToArray()
-                })
-                .WithCache(c => c.SetExpires(DateTime.Now.AddSeconds(60)))
-                .WithHeader("X-Snooze", "example header");
+            {
+                BookLinks = links.ToArray()
+            })
+            .WithCache((c,p) => p.SetExpires(DateTime.Now.AddSeconds(60)))
+            .WithHeader("X-Snooze", "example header");
         }
 
         // This action method simply returns a view model.

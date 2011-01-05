@@ -12,7 +12,7 @@ namespace Snooze
 {
     public class ResourceResult : ActionResult
     {
-        private readonly List<Action<HttpCachePolicyBase>> _cacheActions = new List<Action<HttpCachePolicyBase>>();
+        private readonly List<Action<HttpContextBase, HttpCachePolicyBase>> _cacheActions = new List<Action<HttpContextBase,HttpCachePolicyBase>>();
         private readonly List<HttpCookie> _cookies = new List<HttpCookie>();
         private readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
 
@@ -53,7 +53,7 @@ namespace Snooze
             get { return _cookies; }
         }
 
-        public IEnumerable<Action<HttpCachePolicyBase>> CacheActions
+        public IEnumerable<Action<HttpContextBase,HttpCachePolicyBase>> CacheActions
         {
             get { return _cacheActions; }
         }
@@ -83,7 +83,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithCache(Action<HttpCachePolicyBase> action)
+        public ResourceResult WithCache(Action<HttpContextBase,HttpCachePolicyBase> action)
         {
             _cacheActions.Add(action);
 
@@ -156,19 +156,14 @@ namespace Snooze
         public override void ExecuteResult(ControllerContext context)
         {
             context.HttpContext.Response.StatusCode = StatusCode;
-
+        
             AppendHeaders(context);
 
             AppendCookies(context);
 
-            ApplyCacheActions(context);
-
-
             if (Resource == null) return;
 
-
             // Delegate to ActionResult, if one was given.
-
             var innerResult = Resource as ActionResult;
 
             if (innerResult != null)
@@ -205,6 +200,9 @@ namespace Snooze
             }
 
             formatter.Output(context, Resource, ContentType);
+
+            ApplyCacheActions(context);
+
         }
 
 
@@ -243,7 +241,7 @@ namespace Snooze
         {
             foreach (var action in _cacheActions)
             {
-                action(context.HttpContext.Response.Cache);
+                action(context.HttpContext,context.HttpContext.Response.Cache);
             }
         }
 
@@ -254,16 +252,21 @@ namespace Snooze
 
         private IResourceFormatter FindFormatter(ControllerContext context, IEnumerable<string> acceptTypes)
         {
+            if (!acceptTypes.Any())
+                return ResourceFormatters.FormattersFor(ResourceType()).FirstOrDefault();
+
             if (ContentType != null) // Controller action forced the content type.
             {
                 EnsureContentTypeIsMimeType();
                 return ResourceFormatters.FormattersFor(ResourceType()).FirstOrDefault(f => f.CanFormat(context, Resource, ContentType));
             }
 
-            return (from acceptType in acceptTypes
-                    from formatter in ResourceFormatters.FormattersFor(ResourceType())
-                    where formatter.CanFormat(context, Resource, acceptType)
-                    select formatter).FirstOrDefault();
+            var formatters = (from acceptType in acceptTypes
+                              from formatter in ResourceFormatters.FormattersFor(ResourceType())
+                              where formatter.CanFormat(context, Resource, acceptType)
+                              select formatter).ToArray();
+
+            return formatters.FirstOrDefault();
         }
 
         private void EnsureContentTypeIsMimeType()

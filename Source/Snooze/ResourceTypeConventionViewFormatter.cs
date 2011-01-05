@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using System.Web.Mvc;
 
 #endregion
@@ -24,7 +25,10 @@ namespace Snooze
 
         public void Output(ControllerContext context, object resource, string contentType)
         {
-            context.HttpContext.Response.ContentType = contentType ?? _targetMimeType;
+            if (_targetMimeType == "*/*")//Oh dear 
+                context.HttpContext.Response.ContentType = "text/html";
+            else
+                context.HttpContext.Response.ContentType = contentType ?? _targetMimeType;
 
             var result = FindView(context, resource);
             if (result.View != null)
@@ -50,6 +54,8 @@ namespace Snooze
         {
             var viewName = GetViewName(resource);
             var result = ViewEngines.Engines.FindView(context, viewName, null);
+            if(result.View == null)
+                Trace.WriteLine("Could not locate view with name " + viewName);
             return result;
         }
 

@@ -34,7 +34,9 @@ namespace Snooze
 
     public static class ResourceFormatters
     {
-        static readonly IList<IResourceFormatter> defaultFormatters = new List<IResourceFormatter>();
+        static readonly IList<IResourceFormatter> defaultViewFormatters = new List<IResourceFormatter>();
+
+        static readonly IList<IResourceFormatter> defaultSerialisationFormatters = new List<IResourceFormatter>();
         static readonly IDictionary<Type,IResourceFormatter> resourceSpecificFormatters = new Dictionary<Type, IResourceFormatter>();
 
         static ResourceFormatters()
@@ -44,19 +46,21 @@ namespace Snooze
             // But we don't want to use the XML formatter by default 
             // - which would happen since "text/xml" appears first in the list.
             // So we add an explicitly typed ViewFormatter first.
-            defaultFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
-            defaultFormatters.Add(new ResourceTypeConventionViewFormatter("text/html"));
-            defaultFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
-            defaultFormatters.Add(new ResourceTypeConventionViewFormatter("application/xml"));
-            defaultFormatters.Add(new JsonFormatter());
-            defaultFormatters.Add(new StringFormatter());
-            defaultFormatters.Add(new ByteArrayFormatter());
+            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
+            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/html"));
+            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
+
+            defaultSerialisationFormatters.Add(new JsonFormatter());
+            defaultSerialisationFormatters.Add(new StringFormatter());
+            defaultSerialisationFormatters.Add(new ByteArrayFormatter());
         }
 
         public static IEnumerable<IResourceFormatter> FormattersFor(Type resourceType)
         {
-            return Enumerable.Concat(ResourceSpecificFormattersFor(resourceType),
-                              defaultFormatters);
+            return Enumerable.Concat(
+                              defaultViewFormatters,
+                        Enumerable.Concat(ResourceSpecificFormattersFor(resourceType),
+                              defaultSerialisationFormatters));
         }
 
         private static IEnumerable<IResourceFormatter> ResourceSpecificFormattersFor(Type resourceType)
