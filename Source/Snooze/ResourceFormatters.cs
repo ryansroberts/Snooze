@@ -51,8 +51,10 @@ namespace Snooze
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
 
             defaultSerialisationFormatters.Add(new JsonFormatter());
-            defaultSerialisationFormatters.Add(new StringFormatter());
+            //adding the byte array formatter before the string formatter to support text plain files from byte array
             defaultSerialisationFormatters.Add(new ByteArrayFormatter());
+            defaultSerialisationFormatters.Add(new StringFormatter());
+            
         }
 
         public static IEnumerable<IResourceFormatter> FormattersFor(Type resourceType)
