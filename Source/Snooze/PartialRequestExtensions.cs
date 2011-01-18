@@ -45,7 +45,6 @@ namespace Snooze
 
             var requestContext = new RequestContext(httpContext, routeData);
 
-
             var writer = new StringWriter();
 
             ExecuteRequest(httpContext, requestContext, writer);

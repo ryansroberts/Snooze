@@ -25,10 +25,10 @@ namespace Snooze
 
         public void Output(ControllerContext context, object resource, string contentType)
         {
-            if (_targetMimeType == "*/*")//Oh dear 
-                context.HttpContext.Response.ContentType = "text/html";
-            else
-                context.HttpContext.Response.ContentType = contentType ?? _targetMimeType;
+            if (!context.Controller.GetType().Name.StartsWith("Partial"))
+            {
+                SetContentType(context, contentType);
+            }
 
             var result = FindView(context, resource);
             if (result.View != null)
@@ -48,6 +48,14 @@ namespace Snooze
             }
 
             result.ViewEngine.ReleaseView(context, result.View);
+        }
+
+        private void SetContentType(ControllerContext context, string contentType)
+        {
+            if (_targetMimeType == "*/*") //Oh dear 
+                context.HttpContext.Response.ContentType = "text/html";
+            else
+                context.HttpContext.Response.ContentType = contentType ?? _targetMimeType;
         }
 
         private ViewEngineResult FindView(ControllerContext context, object resource)

@@ -46,8 +46,8 @@ namespace Snooze
             // But we don't want to use the XML formatter by default 
             // - which would happen since "text/xml" appears first in the list.
             // So we add an explicitly typed ViewFormatter first.
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/html"));
+            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
 
             defaultSerialisationFormatters.Add(new JsonFormatter());
