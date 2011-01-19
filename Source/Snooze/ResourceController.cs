@@ -109,18 +109,25 @@ namespace Snooze
             return new ResourceResult(307, url).WithHeader("Location", url);
         }
 
-
         public virtual ResourceResult BadRequest()
         {
             return new ResourceResult(400, null);
         }
-
 
         public virtual ResourceResult BadRequest(object errorResource)
         {
             return new ResourceResult(400, errorResource);
         }
 
+        public virtual ResourceResult Forbidden()
+        {
+            return new ResourceResult(403, null);
+        }
+
+        public virtual ResourceResult Forbidden(object errorResource)
+        {
+            return new ResourceResult(403, errorResource);
+        }
 
         public virtual ResourceResult NotFound()
         {
