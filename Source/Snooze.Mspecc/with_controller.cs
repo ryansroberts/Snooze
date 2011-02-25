@@ -7,7 +7,6 @@ using System.Web.Routing;
 using Machine.Specifications;
 using Moq;
 using nVentive.Umbrella.Extensions;
-using Snooze;
 using MvcContrib.TestHelper.Fakes;
 
 
@@ -90,7 +89,7 @@ namespace Snooze.MSpec
             return (Url)url;
         }
 
-        private static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)
+        static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)
         {
             foreach (var v in data.Values.Where(v => url.GetType().GetProperty(v.Key) != null))
             {
@@ -107,22 +106,24 @@ namespace Snooze.MSpec
 
                 pInfo.SetValue(url, queryString[key].Conversion().To(pInfo.PropertyType), null);
             }
-
         }
 
-        private static void AssignParentUrl(object url, RouteData data, NameValueCollection queryString)
+        static void AssignParentUrl(object url, RouteData data, NameValueCollection queryString)
         {
-            if (!url.GetType().BaseType.IsGenericType)
-                return;
 
-            var parentType = url.GetType().BaseType
-                .GetGenericArguments()[0];
+            while (url.GetType().BaseType.IsGenericType)
+            {
+                var parentType = url.GetType().BaseType
+                    .GetGenericArguments()[0];
 
-            var parentUrl = Activator.CreateInstance(parentType);
+                var parentUrl = Activator.CreateInstance(parentType);
 
-            AssignUrlProperties(data, parentUrl, queryString);
+                AssignUrlProperties(data, parentUrl, queryString);
 
-            url.Reflection().Set("Parent", parentUrl);
+                url.Reflection().Set("Parent", parentUrl);
+
+                url = parentUrl;
+            }
         }
 
         protected static void has_expected_resource_type()
@@ -200,6 +201,11 @@ namespace Snooze.MSpec
         protected static void is_201()
         {
             result.StatusCode.ShouldEqual(201);
+        }
+
+        protected static void is_303()
+        {
+            result.StatusCode.ShouldEqual(303);
         }
 
         protected static void is_304()
