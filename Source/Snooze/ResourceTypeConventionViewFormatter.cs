@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web.Mvc;
 
@@ -85,6 +86,11 @@ namespace Snooze
         }
     }
 
+
+    
+
+
+
     public class ResourceTypeConventionViewFormatter : BaseViewFormatter
     {
         public ResourceTypeConventionViewFormatter(string targetMimeType) : base(targetMimeType)
@@ -94,6 +100,9 @@ namespace Snooze
         protected override string GetViewName(object resource)
         {
             var name = resource.GetType().Name;
+            if (resource.GetType().IsGenericType)
+                name = resource.GetType().GetGenericArguments()[0].Name;
+
             if (name.EndsWith("ViewModel"))
             {
                 name = name.Substring(0, name.Length - "ViewModel".Length);
