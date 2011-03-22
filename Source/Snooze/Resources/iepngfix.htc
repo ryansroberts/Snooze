@@ -1,103 +1,194 @@
+<!--
+IE5.5+ PNG Alpha Fix v1.0RC5 with background-position support
+(c) 2004-2007 Angus Turnbull http://www.twinhelix.com
+Refactored and enhanced by Thomas Wittek http://gedankenkonstrukt.de/
+
+This is licensed under the GNU LGPL, version 2.1 or later.
+For details, see: http://creativecommons.org/licenses/LGPL/2.1/
+
+TODO: Add support for css class change detection
+TODO: Add support for background-position right/bottom/center
+FEATURE: Add support for inline elements (<span>)
+FEATURE: Add support for background-repeat
+-->
+
 <public:component>
-<public:attach event="onpropertychange" onevent="iePNGFix(0)" />
+<public:attach event="onpropertychange" onevent="updateChangedElements()" />
+<!-- <public:attach event="onclick" onevent="showLog()" /> -->
 
 <script type="text/javascript">
-
-// IE5.5+ PNG Alpha Fix v1.0
-// (c) 2004-2008 Angus Turnbull http://www.twinhelix.com
-
-// This is licensed under the GNU LGPL, version 2.1 or later.
-// For details, see: http://creativecommons.org/licenses/LGPL/2.1/
-
-
 // This must be a path to a blank image, relative to the HTML document(s).
 // In production use I suggest '/images/blank.gif' or similar. That's all!
-if (typeof blankImg == 'undefined') var blankImg = '/ie6support/blank.gif';
+if (typeof blankImage == 'undefined') {
+	var blankImage = '/ie6support/blank.gif';
+}
+var blankImageUrl = 'url(' + blankImage + ')';
+var filterString = 'DXImageTransform.Microsoft.AlphaImageLoader';
 
-
-
-function filt(s, b)
-{
- var f = 'DXImageTransform.Microsoft.AlphaImageLoader';
- var sM = (currentStyle.backgroundRepeat == 'no-repeat') ? 'crop' : 'scale';
- s = (s || '').replace(/\(/g, '%28').replace(/\)/g, '%29');
-
- if (s && !(/IMG|INPUT/.test(nodeName) && !b) &&
-  currentStyle.width == 'auto' && currentStyle.height == 'auto')
- {
-  style.width = offsetWidth + 'px';
-  style.height = clientHeight + 'px';
-  if (currentStyle.display == 'inline') style.display = 'inline-block';
- }
-
- if (filters[f])
- {
-  filters[f].enabled = s ? true : false;
-  if (s) with (filters[f]) { src = s }
- }
- else if (s) style.filter = 'progid:'+f+'(src="'+s+'",sizingMethod="' + sM + '")';
+// Fixes the PNG image in the src of an <img> or <input> tag as well as background-image PNGs.
+function fixPng() {
+	if (!/MSIE (5\.5|6)/.test(navigator.userAgent)) return;
+	
+	if (/IMG|INPUT/.test(this.nodeName) && /\.png$/.test(this.src)) {
+		// <img> or <input> tag. Replace src, force size to the size of the original image.
+		var src = this.src;
+		if (this.currentStyle.width == 'auto' && this.currentStyle.height == 'auto') {
+			this.style.width = this.offsetWidth + 'px';
+		}
+		this.src = blankImage;
+		applyAlphaFilter(src, 'scale');
+	} else if (getStyle('backgroundImage').match(/url\(["']?(.*\.png)["']?\)/i)) {
+		// PNG as background-image. Remove background-image, fix unclickable children.
+		var src = RegExp.$1;
+		// Check for background-position
+		var posX = getStyle('backgroundPositionX').match(/(-?\d+(?:\w\w|\%)|left|center|right)/i)[1];
+		var posY = getStyle('backgroundPositionY').match(/(-?\d+(?:\w\w|\%)|top|center|bottom)/i)[1];
+		if ((/center|right/).test(posX) || parseFloat(posX) != 0 || (/center|bottom/).test(posY) || parseFloat(posY) != 0) {
+			// Element uses background-position that is not 0. Fake it.
+			fakeBackgroundPosition(src, posX, posY);
+		} else {
+			this.style.backgroundImage = blankImageUrl;
+			applyAlphaFilter(src);
+			fixUnclickableChildren();
+		}
+	} else if (this._originalBackgroundImage) {
+		// Element has been fixed, but the src or background-image has been changed
+		// to a non-PNG image. Remove the filter.
+		removeAlphaFilter();
+	}
 }
 
-function iePNGFix(init)
-{
- if (!/MSIE (5\.5|6)/.test(navigator.userAgent) || typeof filters == 'unknown') return;
- var evt = init ? { propertyName: 'src,background' } : event;
- var isSrc = /src/.test(evt.propertyName);
- var isBg = /background/.test(evt.propertyName);
- var isClass = !init &&
-  ((this.className != this._png_class) && (this.className || this._png_class));
- if (!(isSrc || isBg || isClass)) return;
- this._png_class = this.className;
- var blank = blankImg.match(/([^\/]+)$/)[1];
-
- // Required for Whatever:hover support - erase any set BG if className changes.
- if (isClass && ((style.backgroundImage.indexOf('url(') == -1) ||
-     (style.backgroundImage.indexOf(blank) > -1)))
- {
-  setTimeout(function() { this.style.backgroundImage = '' }, 0);
-  return;
- }
-
- if (isSrc && this.src && /IMG|INPUT/.test(nodeName))
- {
-  if ((/\.png/i).test(src))
-  {
-   filt(src, 1);
-   src = blankImg;
-  }
-  else if (src.indexOf(blank) == -1) filt();
- }
-
- var bgSrc = currentStyle.backgroundImage || style.backgroundImage;
- if ((bgSrc + this.src).indexOf(blank) == -1)
- {
-  var bgPNG = bgSrc.match(/^url[("']+(.*\.png[^\)"']*)[\)"']+[^\)]*$/i);
-
-  if (bgPNG)
-  {
-   style.backgroundImage = 'url("' + blankImg + '")';
-   filt(bgPNG[1], 0);
-   // Unclickable elements inside PNG backgrounds.
-   var tags = ['a', 'input', 'select', 'textarea', 'iframe', 'object'],
-    t = tags.length, tFix = [];
-   while (t--)
-   {
-    var elms = all.tags(tags[t]), e = elms.length;
-    while (e--) tFix.push(elms[e]);
-   }
-   var t = tFix.length;
-   if (t && (/relative|absolute/i).test(currentStyle.position))
-    alert('IEPNGFix: Children of positioned element are unclickable:\n\n<' +
-     nodeName + (id && ' id=' + id) + '>');
-    while (t--)
-     if (!(/relative|absolute/i).test(tFix[t].currentStyle.position))
-      tFix[t].style.position = 'relative';
-  }
-  else filt();
- }
+// Returns the value of a style attribute
+function getStyle(attrName) {
+	return this.style[attrName] && this.style[attrName].length
+		? this.style[attrName]
+		: this.currentStyle[attrName];		
 }
 
-iePNGFix(1);
+// (Re-)Applies the alpha filter to an element.
+function applyAlphaFilter(src, mode, b) {
+	mode = mode || 'crop'; // Default mode: crop.
+	src = (src || '').replace(/\(/g, '%28').replace(/\)/g, '%29'); // Escape parens.
+	
+	var filter = this.filters[filterString];
+	if (filter) {
+		// Filter already applied. Update params.
+		filter.enabled = true;
+		filter.src = src;
+		filter.sizingMethod = mode;
+	} else {
+		// Apply filter.
+		this.style.filter = 'progid:' + filterString + '(src="' + src + '",sizingMethod="' + mode + '")';
+	}
+	this._originalBackgroundImage = src; // Remember the original background-image
+}
 
+// Removes (disables) the alpha filter for an element.
+function removeAlphaFilter() {
+	var filter = this.filters[filterString];
+	if (filter) {
+		filter.enabled = false;
+	}
+}
+
+// Fake background-position with a nested <div>
+function fakeBackgroundPosition(bgSrc, bgLeft, bgTop) {
+	var container = this;
+	if (!this._fakeBg) {
+		// Not already faked, modify container.
+		// Set size if not defined. Needed for "overflow: hidden".
+		if ((!getStyle('width') || getStyle('width') == 'auto') && (!getStyle('height') || getStyle('height') == 'auto')) {
+			container.style.width = '100%';
+		}
+		container.style.overflow = 'hidden';
+		container.style.position = 'relative';
+		
+		// Create child element that will hold the fake background.
+		this._fakeBg = document.createElement("div");
+		var child = this._fakeBg;
+		
+		// Position it absolutely according to the intended background-position.
+		child.style.backgroundImage = "url(" + bgSrc + ")";
+		child.style.width = 10000;
+		child.style.height = 10000; // TODO: Use real size
+		
+		// TODO: Emulate right/bottom/center. Therefore the image has to be (asynchronously) loaded.
+		if (bgLeft == 'right' || bgLeft == 'center') {
+			alert('IEPNGFix: background-position ' + bgLeft + ' not supported!\nImage: ' + getStyle('backgroundImage'));
+			bgLeft = 0;
+		} else if (bgTop == 'bottom' || bgTop == 'center') {
+			alert('IEPNGFix: background-position ' + bgTop + ' not supported!\nImage: ' + getStyle('backgroundImage'));
+			bgTop = 0;
+		}
+		
+		child.style.left = bgLeft;
+		child.style.top = bgTop;
+		child.style.position = 'absolute';
+		child.style.zIndex = -1;
+		
+		this.appendChild(this._fakeBg);
+	} else {
+		var child = this._fakeBg;
+	}
+	
+	// Update background fake.
+	container.style.backgroundImage = blankImageUrl;
+	child.style.backgroundImage = "url(" + bgSrc + ")";
+	child.style.left = bgLeft;
+	child.style.top = bgTop;
+}
+
+// Fixes unclickable elements inside elements with PNG backgrounds.
+function fixUnclickableChildren () {
+	var tags = ['a', 'input', 'select', 'textarea', 'iframe', 'object'];
+	var hasUnclickableChilds = false;
+	for (var i = 0; i < tags.length; i++) {
+		var allTags = this.all.tags(tags[i]);
+		for (var j = 0; j < allTags.length; j++) {
+			var elem = allTags[j];
+			hasUnclickableChilds = true;
+			elem.style.position = 'relative';
+		}
+	}
+	// This fix won't work if the parent element itself has a relative or absolute position.
+	if (hasUnclickableChilds && (/relative|absolute/i).test(getStyle('position'))) {
+		alert('IEPNGFix: Children of positioned element are unclickable!\nDon\'t use "position: absolute" or "position: relative" on your PNGFix\'ed element.\nElement: ' + this);
+	}
+}
+
+// React on property changes to a fixed element.
+function updateChangedElements() {
+	if (event.propertyName == 'src') {
+		fixPng();
+	} else if (event.propertyName == 'style.backgroundImage') {
+		// Don't fix our own changes
+		if (getStyle('backgroundImage') != blankImageUrl) {
+			fixPng();
+		}
+	} else if (event.propertyName == 'style.backgroundPosition') {
+		// Reset background-image to original image what will automatically re-apply the fix.
+		if (this._fakeBg) {
+			this.style.backgroundImage = 'url(' + this._fakeBg._originalBackgroundImage + ')';
+		}
+	} else if (event.propertyName == 'className') {
+		// TODO
+	}
+}
+
+// Fix this element initially
+fixPng();
+
+/*
+var logBuffer = '';
+function log(msg) {
+	//alert(msg);
+	logBuffer += msg + '\n';
+}
+
+function showLog() {
+	alert(logBuffer);
+	logBuffer = ''
+}
+*/
 </script>
 </public:component>
