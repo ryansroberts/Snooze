@@ -188,6 +188,11 @@ namespace Snooze.MSpec
             FauxHttp("PATCH", uri, @params);
         }
 
+        protected static void is_403()
+        {
+            result.StatusCode.ShouldEqual(403);
+        }
+
         protected static void is_404()
         {
             result.StatusCode.ShouldEqual(404);
