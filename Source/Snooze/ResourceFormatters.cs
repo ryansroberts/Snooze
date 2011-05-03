@@ -47,8 +47,8 @@ namespace Snooze
             // - which would happen since "text/xml" appears first in the list.
             // So we add an explicitly typed ViewFormatter first.
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/html"));
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
+            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/rss+xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
 
