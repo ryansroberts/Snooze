@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,6 +12,35 @@ using System.Web.Mvc;
 
 namespace Snooze
 {
+    public class NoMethodActionDescriptor : ActionDescriptor {
+        public readonly string httpMethod;
+
+        public NoMethodActionDescriptor(string httpMethod)
+        {
+            this.httpMethod = httpMethod;
+        }
+
+        public override object Execute(ControllerContext controllerContext, IDictionary<string, object> parameters)
+        { 
+            throw new NotImplementedException();
+        }
+
+        public override ParameterDescriptor[] GetParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ActionName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override ControllerDescriptor ControllerDescriptor
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
     /// <summary>
     ///   Find actions methods that match the HTTP method and has the requested Url type as the first parameter.
     /// </summary>
@@ -18,11 +48,13 @@ namespace Snooze
     {
         static readonly Dictionary<string, MethodInfo> s_actionMethodCache = new Dictionary<string, MethodInfo>();
 
-
         protected override ActionResult InvokeActionMethod(ControllerContext controllerContext,
                                                            ActionDescriptor actionDescriptor,
                                                            IDictionary<string, object> parameters)
         {
+            if (actionDescriptor is NoMethodActionDescriptor)
+                return new ResourceResult(400, ((NoMethodActionDescriptor) actionDescriptor).httpMethod);
+
             return Result = base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
         }
 
@@ -48,12 +80,8 @@ namespace Snooze
 
             controllerContext.RouteData.Values["action"] = urlType.Name.Substring(0, urlType.Name.Length - 3);
 
-
             if (methodInfo == null)
-                throw new HttpException(400,
-                                        "Could not find a matching action for " +
-                                        controllerContext.RouteData.Values["action"] + " method " + httpMethod);
-
+                return new NoMethodActionDescriptor(httpMethod);
 
             return new ReflectedActionDescriptor(methodInfo, httpMethod, controllerDescriptor);
         }
