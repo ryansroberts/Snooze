@@ -27,17 +27,17 @@ namespace Snooze
 
         public override ParameterDescriptor[] GetParameters()
         {
-            throw new NotImplementedException();
+            return new ParameterDescriptor[] {};
         }
 
         public override string ActionName
         {
-            get { throw new NotImplementedException(); }
+            get { return httpMethod; }
         }
 
         public override ControllerDescriptor ControllerDescriptor
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
     }
 
