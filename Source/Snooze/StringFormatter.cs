@@ -1,11 +1,14 @@
 ﻿#region
 
+using System;
+using System.IO;
 using System.Web.Mvc;
 
 #endregion
 
 namespace Snooze
 {
+
     public class StringFormatter : IResourceFormatter
     {
         #region IResourceFormatter Members

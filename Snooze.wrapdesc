@@ -1,0 +1,7 @@
+﻿name: Snooze
+depends: openwrap anchored content
+depends: machine.specifications
+build: msbuild; profile=net40; project=Source\Snooze/Snooze.csproj;project=Source/Snooze.MSpecc/Snooze.Mspecc.csproj
+anchored: true
+use-symlinks: true
+depends: log4net
