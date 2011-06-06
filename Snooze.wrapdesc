@@ -1,6 +1,4 @@
 ﻿name: Snooze
-build: msbuild; profile=net40;project=src/Snooze/Snooze.csproj;project=src/Snooze.MSpecc/Snooze.MSpecc.csproj;project=src/Snooze.Tests/Snooze.Tests.csproj
 depends: log4net
 depends: Moq
 depends: Machine.Specifications
-referenced-assemblies: MvcContrib,MvcContrib.TestHelper,nVentive.Umbrella
