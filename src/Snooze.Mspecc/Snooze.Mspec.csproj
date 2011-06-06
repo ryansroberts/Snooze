@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll</HintPath>
     </Reference>
