@@ -1,4 +1,5 @@
 ﻿name: Snooze
+depends: openwrap anchored content
 depends: log4net
-depends: Moq
+depends: Moq 
 depends: Machine.Specifications
