@@ -31,17 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\..\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="MvcContrib.TestHelper">
       <HintPath>..\..\Tools\mvccontrib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="nVentive.Umbrella">
       <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\..\Tools\structuremap\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
