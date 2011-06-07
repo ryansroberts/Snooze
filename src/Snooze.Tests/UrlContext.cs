@@ -71,12 +71,13 @@ namespace Snooze
 
             It Should_allow_slashes = () => UrlWithContext.ShouldEqual("/content/path/to/something");
         }
+
+        public class When_using_an_achored_url : UrlContext
+        {
+            Because of = () => url = new ContentUrl { Path = "path/to/something" , Anchor = "anchor"};
+            It Should_render_anchor = () => UrlWithContext.ShouldEqual("/content/path/to/something#anchor");
+        }
     }
-
-
-
-
-
 
     public class UrlContext
     {
