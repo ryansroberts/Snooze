@@ -32,6 +32,8 @@ namespace Snooze
             _propertyPushers = GetOrCreatePropertyPushers(GetType());
         }
 
+        public string Anchor { get; set; }
+
         #region IXmlSerializable Members
 
         XmlSchema IXmlSerializable.GetSchema()
@@ -121,7 +123,7 @@ namespace Snooze
                 return GetType().Name + "-NotConfigured";
             }
                      
-            return vp.VirtualPath;
+            return vp.VirtualPath + (!string.IsNullOrEmpty(Anchor)?"#"+Anchor:"");
         }
 
         protected internal virtual void FillRouteValueDictionary(RouteValueDictionary values)
