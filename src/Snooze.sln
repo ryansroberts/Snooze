@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze.Tests", "Snooze.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze.Mspec", "Snooze.Mspecc\Snooze.Mspec.csproj", "{AF46C37B-4A86-4AD9-A076-6599413DD8EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze.Testing", "Snooze.Testing\Snooze.Testing.csproj", "{FF2AE14E-22E3-4812-8655-ED050E666145}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF2AE14E-22E3-4812-8655-ED050E666145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF2AE14E-22E3-4812-8655-ED050E666145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF2AE14E-22E3-4812-8655-ED050E666145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF2AE14E-22E3-4812-8655-ED050E666145}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
