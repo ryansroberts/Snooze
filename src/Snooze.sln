@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Snooze.wrapdesc = ..\Snooze.wrapdesc
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication", "SampleApplication\SampleApplication.csproj", "{F849E911-21E6-4EF5-993B-C26354B55BBA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snooze.Testing", "Snooze.Testing\Snooze.Testing.csproj", "{FF2AE14E-22E3-4812-8655-ED050E666145}"
 EndProject
 Global
@@ -34,10 +32,6 @@ Global
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF46C37B-4A86-4AD9-A076-6599413DD8EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F849E911-21E6-4EF5-993B-C26354B55BBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F849E911-21E6-4EF5-993B-C26354B55BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F849E911-21E6-4EF5-993B-C26354B55BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F849E911-21E6-4EF5-993B-C26354B55BBA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF2AE14E-22E3-4812-8655-ED050E666145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF2AE14E-22E3-4812-8655-ED050E666145}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF2AE14E-22E3-4812-8655-ED050E666145}.Release|Any CPU.ActiveCfg = Release|Any CPU
