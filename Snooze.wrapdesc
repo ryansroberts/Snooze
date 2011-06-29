@@ -1,8 +1,9 @@
 ﻿name: Snooze
-build: msbuild;project=src/Snooze/Snooze.csproj;project=src/Snooze.Mspecc/Snooze.Mspec.csproj;
+build: msbuild;project=src/Snooze/Snooze.csproj;project=src/Snooze.Mspecc/Snooze.Mspec.csproj;project=src/Snooze.Testing/Snooze.Testing.csproj;
 depends: openwrap anchored content
 depends: log4net
 depends: Moq
 depends: Machine.Specifications
 depends: MvcContrib.Mvc3.TestHelper-ci
 depends: structuremap.automocking
+depends: nunit
