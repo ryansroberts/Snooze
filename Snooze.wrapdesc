@@ -6,3 +6,4 @@ depends: Moq
 depends: Machine.Specifications
 depends: MvcContrib.Mvc3.TestHelper-ci
 depends: structuremap.automocking
+depends: nunit
