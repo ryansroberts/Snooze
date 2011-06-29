@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MvcContrib.TestHelper">
-      <HintPath>..\..\Tools\mvccontrib\MvcContrib.TestHelper.dll</HintPath>
-    </Reference>
     <Reference Include="nVentive.Umbrella">
       <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
     </Reference>
