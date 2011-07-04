@@ -55,6 +55,7 @@ namespace Snooze
             defaultSerialisationFormatters.Add(new JsonFormatter());
             //adding the byte array formatter before the string formatter to support text plain files from byte array
             defaultSerialisationFormatters.Add(new ByteArrayFormatter());
+            defaultSerialisationFormatters.Add(new XmlFormatter());
             defaultSerialisationFormatters.Add(new StringFormatter());
             
         }
