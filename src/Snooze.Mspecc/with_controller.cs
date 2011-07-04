@@ -16,7 +16,7 @@ namespace Snooze.MSpec
     {
         private static ResourceResult result;
 
-        Establish context = with_routing<TResource>.enabled;
+		Establish context = with_routing<THandler>.enabled;
 
         protected static TResource Resource
         {
