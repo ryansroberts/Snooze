@@ -192,7 +192,12 @@ namespace Snooze.Testing
             FauxHttp("PATCH", uri, @params);
         }
 
-       protected static void is_403()
+        protected static void is_400()
+        {
+            Assert.AreEqual(400, result.StatusCode);
+        }
+
+        protected static void is_403()
         {
             Assert.AreEqual(403, result.StatusCode);
         }
