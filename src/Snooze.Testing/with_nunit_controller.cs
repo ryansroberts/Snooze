@@ -20,7 +20,7 @@ namespace Snooze.Testing
 
         public with_nunit_controller()
         {
-            with_routing<TResource>.enabled();
+			with_routing<THandler>.enabled();
         }
 
         protected static TResource Resource
