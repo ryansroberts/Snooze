@@ -99,6 +99,7 @@
     <Compile Include="Routing\RoutingRegistrationDiscovery.cs" />
     <Compile Include="StaticFileController.cs" />
     <Compile Include="StaticFileUrl.cs" />
+    <Compile Include="StreamFormatter.cs" />
     <Compile Include="StringFormatter.cs" />
     <Compile Include="SubUrlAttribute.cs" />
     <Compile Include="Routing\RouteCollectionExtensions.cs" />

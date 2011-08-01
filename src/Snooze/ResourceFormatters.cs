@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 #endregion
 
 namespace Snooze
@@ -55,6 +56,7 @@ namespace Snooze
             defaultSerialisationFormatters.Add(new JsonFormatter());
             //adding the byte array formatter before the string formatter to support text plain files from byte array
             defaultSerialisationFormatters.Add(new XmlFormatter());
+			defaultSerialisationFormatters.Add(new StreamFormatter());
             defaultSerialisationFormatters.Add(new ByteArrayFormatter());
             defaultSerialisationFormatters.Add(new StringFormatter());
             
