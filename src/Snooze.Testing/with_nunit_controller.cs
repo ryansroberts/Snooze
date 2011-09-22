@@ -245,7 +245,7 @@ namespace Snooze.Testing
                 .FirstOrDefault();
           
             Assert.IsNotNull(header);
-            Assert.AreEqual(header.First(), value);
+            Assert.AreEqual(value, header.First());
         }
     }
 }
