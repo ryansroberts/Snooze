@@ -149,6 +149,8 @@ namespace Snooze
         {
             ContentType = type;
 
+			
+	
             return WithHeader("Content-Disposition", "attachment; filename=" + defaultFilename);
         }
 

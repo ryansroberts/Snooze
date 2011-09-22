@@ -23,7 +23,7 @@ namespace Snooze
         public void Output(ControllerContext context, object resource, string contentType)
         {
             var text = resource.ToString();
-            context.HttpContext.Response.ContentType = "text/plain";
+			context.HttpContext.Response.ContentType = contentType;
             context.HttpContext.Response.Output.Write(text);
         }
 
