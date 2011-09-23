@@ -33,12 +33,25 @@ namespace Snooze
         }
     }
 
+
     public static class ResourceFormatters
     {
         static readonly IList<IResourceFormatter> defaultViewFormatters = new List<IResourceFormatter>();
 
         static readonly IList<IResourceFormatter> defaultSerialisationFormatters = new List<IResourceFormatter>();
         static readonly IDictionary<Type,IResourceFormatter> resourceSpecificFormatters = new Dictionary<Type, IResourceFormatter>();
+
+		public static void Defaults(params Type[] types)
+		{
+			defaultSerialisationFormatters.Clear();
+			foreach (var type in types)
+			{
+				if (!typeof(IResourceFormatter).IsAssignableFrom(type))
+					throw new InvalidOperationException("Type " + type + " is not an IResourceFormatter");
+
+				defaultSerialisationFormatters.Add((IResourceFormatter) Activator.CreateInstance(type,new object[]{}));
+			}
+		}
 
         static ResourceFormatters()
         {
@@ -53,13 +66,7 @@ namespace Snooze
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/rss+xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
 
-            defaultSerialisationFormatters.Add(new JsonFormatter());
-            //adding the byte array formatter before the string formatter to support text plain files from byte array
-            defaultSerialisationFormatters.Add(new XmlFormatter());
-			defaultSerialisationFormatters.Add(new StreamFormatter());
-            defaultSerialisationFormatters.Add(new ByteArrayFormatter());
-            defaultSerialisationFormatters.Add(new StringFormatter());
-            
+			Defaults(typeof(JsonFormatter), typeof(XmlFormatter), typeof(StreamFormatter),typeof(ByteArrayFormatter),typeof(StringFormatter));
         }
 
         public static IEnumerable<IResourceFormatter> FormattersFor(Type resourceType)
