@@ -15,6 +15,7 @@ namespace Snooze
 		{
 			context.HttpContext.Response.ContentType = contentType;
 			((Stream)resource).CopyTo(context.HttpContext.Response.OutputStream);
+			((Stream)resource).Close();
 		}
 	}
 }
