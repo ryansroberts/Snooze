@@ -247,5 +247,33 @@ namespace Snooze.Testing
             Assert.IsNotNull(header);
             Assert.AreEqual(value, header.First());
         }
+
+        protected void is_get(FutureAction futureAction)
+        {
+            Assert.IsNotNull(futureAction);
+            Assert.IsInstanceOf(typeof (FutureAction), futureAction);
+            Assert.AreEqual("get", futureAction.Method);
+        }
+
+        protected void is_post(FutureAction futureAction)
+        {
+            Assert.IsNotNull(futureAction);
+            Assert.IsInstanceOf(typeof(FutureAction), futureAction);
+            Assert.AreEqual("post", futureAction.Method);
+        }
+
+        protected void has_expected_url(FutureAction futureAction, Url expectedUrl)
+        {
+            Assert.IsNotNull(futureAction);
+            Assert.IsNotNull(futureAction.Url);
+            Assert.AreEqual(expectedUrl.ToString(), futureAction.Url.ToString());
+        }
+
+        protected void has_expected_type(FutureAction futureAction, Type expectedType)
+        {
+            Assert.IsNotNull(futureAction);
+            Assert.IsNotNull(futureAction.Entity);
+            Assert.IsInstanceOf(expectedType, futureAction.Entity);
+        }
     }
 }

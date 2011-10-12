@@ -242,5 +242,33 @@ namespace Snooze.Testing
             header.ShouldNotBeNull();
             header.First().ShouldEqual(value);
         }
+
+        protected void is_get(FutureAction futureAction)
+        {
+            futureAction.ShouldNotBeNull();
+            futureAction.ShouldBeOfType(typeof (FutureAction));
+            futureAction.Method.ShouldEqual("get");
+        }
+
+        protected void is_post(FutureAction futureAction)
+        {
+            futureAction.ShouldNotBeNull();
+            futureAction.ShouldBeOfType(typeof(FutureAction));
+            futureAction.Method.ShouldEqual("post");
+        }
+
+        protected void has_expected_url(FutureAction futureAction, Url expectedUrl)
+        {
+            futureAction.ShouldNotBeNull();
+            futureAction.Url.ShouldNotBeNull();
+            futureAction.Url.ToString().ShouldEqual(expectedUrl.ToString());
+        }
+
+        protected void has_expected_type(FutureAction futureAction, Type expectedType)
+        {
+            futureAction.ShouldNotBeNull();
+            futureAction.Entity.ShouldNotBeNull();
+            futureAction.ShouldBeOfType(expectedType);
+        }
     }
 }
