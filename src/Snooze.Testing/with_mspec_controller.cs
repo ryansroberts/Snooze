@@ -257,11 +257,11 @@ namespace Snooze.Testing
             futureAction.Method.ShouldEqual("post");
         }
 
-        protected void has_expected_url(FutureAction futureAction, Url expectedUrl)
+        protected void has_expected_url(FutureAction futureAction, string expectedUrl)
         {
             futureAction.ShouldNotBeNull();
             futureAction.Url.ShouldNotBeNull();
-            futureAction.Url.ToString().ShouldEqual(expectedUrl.ToString());
+            futureAction.Url.ToString().ShouldEqual(expectedUrl);
         }
 
         protected void has_expected_type(FutureAction futureAction, Type expectedType)
