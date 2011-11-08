@@ -9,17 +9,6 @@ using Glue;
 namespace Snooze
 {
 
-	public class ProjectingJsonSerialiser<L,R>
-	{
-		readonly L model;
-		readonly R projection;
-
-		public ProjectingJsonSerialiser(L model, R projection)
-		{
-			this.model = model;
-			this.projection = projection;
-		}
-	}
 
     public class JsonFormatter : IResourceFormatter
     {
