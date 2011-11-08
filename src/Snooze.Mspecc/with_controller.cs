@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
+using HtmlAgilityPack;
 using Machine.Specifications;
 using Moq;
 using nVentive.Umbrella.Extensions;
@@ -15,10 +19,20 @@ namespace Snooze.MSpec
        where THandler : ResourceController
     {
         private static ResourceResult result;
+    	static string pathToApplicationUnderTest;
 
-		Establish context = with_routing<THandler>.enabled;
 
-        protected static TResource Resource
+		protected static void application_under_test_is_located(string path)
+		{
+			pathToApplicationUnderTest = Path.Combine(Assembly.GetCallingAssembly().Location,path);
+		}
+
+		Establish routing = with_routing<THandler>.enabled;
+    	[ThreadStatic] static string lasturi;
+
+    	protected static  THandler GetController() { return autoMocker.ClassUnderTest; }
+
+    	protected static TResource Resource
         {
             get { return (TResource)result.Resource; }
         }
@@ -149,75 +163,77 @@ namespace Snooze.MSpec
             return routeData;
         }
 
-        protected static void FauxHttp(string method, string uri, params object[] @params)
+		protected static void FauxHttp(string method, string uri, params object[] @params)
         {
             if (uri.StartsWith("/"))
                 throw new ApplicationException("Uris in specs should not start with /");
 
+        	lasturi = uri;
+
             InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
         }
 
-        protected static void get(string uri)
+		protected static void get(string uri)
         {
             FauxHttp("GET", uri, new object[] { });
         }
 
-        protected static void get(string uri, params object[] @params)
+		protected static void get(string uri, params object[] @params)
         {
             FauxHttp("GET", uri, @params);
         }
 
-        protected static void post(string uri, params object[] @params)
+		protected static void post(string uri, params object[] @params)
         {
             FauxHttp("POST", uri, @params);
         }
 
-        protected static void put(string uri, params object[] @params)
+		protected static void put(string uri, params object[] @params)
         {
             FauxHttp("PUT", uri, @params);
         }
 
-        protected static void delete(string uri, params object[] @params)
+		protected static void delete(string uri, params object[] @params)
         {
             FauxHttp("DELETE", uri, @params);
         }
 
-        protected static void patch(string uri, params object[] @params)
+		protected static void patch(string uri, params object[] @params)
         {
             FauxHttp("PATCH", uri, @params);
         }
 
-        protected static void is_403()
+		protected static void is_403()
         {
             result.StatusCode.ShouldEqual(403);
         }
 
-        protected static void is_404()
+		protected static void is_404()
         {
             result.StatusCode.ShouldEqual(404);
         }
 
-        protected static void is_200()
+		protected static void is_200()
         {
             result.StatusCode.ShouldEqual(200);
         }
 
-        protected static void is_201()
+		protected static void is_201()
         {
             result.StatusCode.ShouldEqual(201);
         }
 
-        protected static void is_303()
+		protected static void is_303()
         {
             result.StatusCode.ShouldEqual(303);
         }
 
-        protected static void is_304()
+		protected static void is_304()
         {
             result.StatusCode.ShouldEqual(304);
         }
 
-        protected static void is_301(string location)
+		protected static void is_301(string location)
         {
             result.StatusCode.ShouldEqual(301);
             has_location_header(location);
@@ -238,6 +254,39 @@ namespace Snooze.MSpec
             header.First().ShouldEqual(value);
         }
 
+		protected static HtmlDocument conneg_texthtml()
+		{
+			var httpContext = FakeHttpContext.Root();
+			var request = new HttpRequestForViewExecution(new[]{"text/html"},lasturi);
+			httpContext.SetRequest(request);
+
+			result.ExecuteResult(new ControllerContext(
+				new RequestContext(httpContext,GetRouteData(lasturi)),GetController()));
+
+			httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
+
+			var doc = new HtmlDocument();
+			doc.Load(httpContext.Response.OutputStream);
+			return doc;
+		}
+
 
     }
+
+	public class HttpRequestForViewExecution : FakeHttpRequest
+	{
+		string[] acceptTypes;
+		public HttpRequestForViewExecution(string[] acceptTypes,string uri) : base(uri,null,null)
+		{
+			this.acceptTypes = acceptTypes;
+		}
+
+		public override string[] AcceptTypes
+		{
+			get { return acceptTypes; }
+		}
+	}
+
+
+
 }

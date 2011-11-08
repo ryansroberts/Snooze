@@ -54,6 +54,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -75,6 +79,7 @@
   <ItemGroup>
     <Compile Include="FutureActionSpecs.cs" />
     <Compile Include="InputFacts.cs" />
+    <Compile Include="RenderingViews.cs" />
     <Compile Include="RequiredInputFacts.cs" />
     <Compile Include="ResourceControllerSpecs.cs" />
     <Compile Include="RoutingDiscoverySpec.cs" />
@@ -103,6 +108,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SampleApplication\SampleApplication.csproj">
+      <Project>{F849E911-21E6-4EF5-993B-C26354B55BBA}</Project>
+      <Name>SampleApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snooze.Mspecc\Snooze.Mspec.csproj">
+      <Project>{AF46C37B-4A86-4AD9-A076-6599413DD8EF}</Project>
+      <Name>Snooze.Mspec</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snooze\Snooze.csproj">
       <Project>{290C5812-2A16-4BA3-9A40-0DF6E0E63288}</Project>
       <Name>Snooze</Name>
