@@ -2,11 +2,25 @@
 
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Glue;
 
 #endregion
 
 namespace Snooze
 {
+
+	public class ProjectingJsonSerialiser<L,R>
+	{
+		readonly L model;
+		readonly R projection;
+
+		public ProjectingJsonSerialiser(L model, R projection)
+		{
+			this.model = model;
+			this.projection = projection;
+		}
+	}
+
     public class JsonFormatter : IResourceFormatter
     {
         #region IResourceFormatter Members

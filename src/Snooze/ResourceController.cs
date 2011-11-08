@@ -15,75 +15,75 @@ namespace Snooze
         }
 
 
-        public virtual ResourceResult OK(object resource)
+        public virtual ResourceResult<T> OK<T>(T resource)
         {
-            return new ResourceResult(200, resource);
+            return new ResourceResult<T>(200, resource);
         }
 
 
-        public virtual ResourceResult Created(Url url, object informationResource)
+		public virtual ResourceResult<T> Created<T>(Url url, T informationResource)
         {
-            return new ResourceResult(201, informationResource).WithHeader("Location", url.ToString());
+            return new ResourceResult<T>(201, informationResource).WithHeader("Location", url.ToString());
         }
 
 
-        public virtual ResourceResult NoContent()
+        public virtual ResourceResult<object> NoContent()
         {
-            return new ResourceResult(204, null);
+            return new ResourceResult<object>(204, null);
         }
 
 
-        public virtual ResourceResult ResetContent()
+        public virtual ResourceResult<object> ResetContent()
         {
-            return new ResourceResult(205, null);
+            return new ResourceResult<object>(205, null);
         }
 
-        public virtual ResourceResult MovedPermenently(Url url)
+        public virtual ResourceResult<object> MovedPermenently(Url url)
         {
-            return new ResourceResult(301, null).WithHeader("Location", url.ToString());
+            return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
         }
 
-        public virtual ResourceResult MovedPermenently(string url)
+        public virtual ResourceResult<object> MovedPermenently(string url)
         {
-            return new ResourceResult(301, null).WithHeader("Location", url);
+            return new ResourceResult<object>(301, null).WithHeader("Location", url);
         }
 
-        public virtual ResourceResult MovedPermanently(Url url)
+        public virtual ResourceResult<object> MovedPermanently(Url url)
         {
-            return new ResourceResult(301, null).WithHeader("Location", url.ToString());
-        }
-
-
-        public virtual ResourceResult MovedPermanently(string url)
-        {
-            return new ResourceResult(301, null).WithHeader("Location", url);
-        }
-
-        public virtual ResourceResult Found(Url url)
-        {
-            return new ResourceResult(302, null).WithHeader("Location", url.ToString());
+            return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
         }
 
 
-        public virtual ResourceResult Found(string url)
+        public virtual ResourceResult<object> MovedPermanently(string url)
         {
-            return new ResourceResult(302, null).WithHeader("Location", url);
+            return new ResourceResult<object>(301, null).WithHeader("Location", url);
         }
 
-        public virtual ResourceResult SeeOther(Url url)
+        public virtual ResourceResult<object> Found(Url url)
         {
-            return new ResourceResult(303, null).WithHeader("Location", url.ToString());
+            return new ResourceResult<object>(302, null).WithHeader("Location", url.ToString());
         }
 
 
-        public virtual ResourceResult SeeOther(string url)
+        public virtual ResourceResult<object> Found(string url)
         {
-            return new ResourceResult(303, null).WithHeader("Location", url);
+            return new ResourceResult<object>(302, null).WithHeader("Location", url);
         }
 
-        public virtual ResourceResult NotModified()
+        public virtual ResourceResult<object> SeeOther(Url url)
         {
-            return new ResourceResult(304, null);
+            return new ResourceResult<object>(303, null).WithHeader("Location", url.ToString());
+        }
+
+
+        public virtual ResourceResult<object> SeeOther(string url)
+        {
+            return new ResourceResult<object>(303, null).WithHeader("Location", url);
+        }
+
+        public virtual ResourceResult<object> NotModified()
+        {
+            return new ResourceResult<object>(304, null);
         }
 
 
@@ -100,44 +100,44 @@ namespace Snooze
 
         public virtual ActionResult TemporaryRedirect(Url url)
         {
-            return new ResourceResult(307, url.ToString()).WithHeader("Location", url.ToString());
+            return new ResourceResult<string>(307, url.ToString()).WithHeader("Location", url.ToString());
         }
 
 
         public virtual ActionResult TemporaryRedirect(string url)
         {
-            return new ResourceResult(307, url).WithHeader("Location", url);
+            return new ResourceResult<string>(307, url).WithHeader("Location", url);
         }
 
-        public virtual ResourceResult BadRequest()
+        public virtual ResourceResult<object> BadRequest()
         {
-            return new ResourceResult(400, null);
+            return new ResourceResult<object>(400, null);
         }
 
-        public virtual ResourceResult BadRequest(object errorResource)
+        public virtual ResourceResult<object> BadRequest(object errorResource)
         {
-            return new ResourceResult(400, errorResource);
+			return new ResourceResult<object>(400, errorResource);
         }
 
-        public virtual ResourceResult Forbidden()
+		public virtual ResourceResult<object> Forbidden()
         {
-            return new ResourceResult(403, null);
+			return new ResourceResult<object>(403, null);
         }
 
-        public virtual ResourceResult Forbidden(object errorResource)
+		public virtual ResourceResult<object> Forbidden(object errorResource)
         {
-            return new ResourceResult(403, errorResource);
+			return new ResourceResult<object>(403, errorResource);
         }
 
-        public virtual ResourceResult NotFound()
+		public virtual ResourceResult<object> NotFound()
         {
-            return new ResourceResult(404, null);
+			return new ResourceResult<object>(404, null);
         }
 
 
-        public virtual ResourceResult NotFound(object errorResource)
+		public virtual ResourceResult<object> NotFound(object errorResource)
         {
-            return new ResourceResult(404, errorResource);
+			return new ResourceResult<object>(404, errorResource);
         }
 
 

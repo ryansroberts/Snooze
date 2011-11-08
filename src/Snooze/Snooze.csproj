@@ -56,6 +56,12 @@
     <Reference Include="DotNetOpenId">
       <HintPath>..\..\lib\DotNetOpenId.dll</HintPath>
     </Reference>
+    <Reference Include="Glue">
+      <HintPath>..\packages\glue.0.9\lib\Glue.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -152,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libraries\DotNetOpenId.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

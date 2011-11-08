@@ -10,56 +10,54 @@ using System.Web.Mvc;
 
 namespace Snooze
 {
-    public class ResourceResult : ActionResult
-    {
-        private readonly List<Action<HttpContextBase, HttpCachePolicyBase>> _cacheActions = new List<Action<HttpContextBase,HttpCachePolicyBase>>();
-        private readonly List<HttpCookie> _cookies = new List<HttpCookie>();
-        private readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
+	public abstract class ResourceResult : ActionResult
+	{
+		protected readonly List<Action<HttpContextBase, HttpCachePolicyBase>> _cacheActions = new List<Action<HttpContextBase,HttpCachePolicyBase>>();
+		readonly List<HttpCookie> _cookies = new List<HttpCookie>();
+		protected readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
+		protected bool _contentTypeExplicitlySet;
+		protected string _contentType;
+		public object Resource { get; set; }
 
-        public ResourceResult(int statusCode, object resource)
+		public ILookup<string, object> Headers
+		{
+			get { return _headers.ToLookup(k => k.Key, v => v.Value); }
+		}
+
+		public int StatusCode { get; set; }
+
+		public string ContentType
+		{
+			get { return _contentType; }
+			set
+			{
+				_contentType = value;
+				_contentTypeExplicitlySet = !string.IsNullOrEmpty(_contentType);
+			}
+		}
+
+		public IList<HttpCookie> Cookies
+		{
+			get { return _cookies; }
+		}
+
+		public IEnumerable<Action<HttpContextBase,HttpCachePolicyBase>> CacheActions
+		{
+			get { return _cacheActions; }
+		}
+	}
+
+	public class ResourceResult<T> : ResourceResult
+    {
+		public ResourceResult(int statusCode, object resource)
         {
             StatusCode = statusCode;
 
             Resource = resource;
         }
 
-        public ILookup<string, object> Headers
-        {
-            get { return _headers.ToLookup(k => k.Key, v => v.Value); }
-        }
 
-
-        public int StatusCode { get; set; }
-
-        public object Resource { get; set; }
-
-
-        private bool _contentTypeExplicitlySet;
-
-        protected string _contentType;
-
-        public string ContentType
-        {
-            get { return _contentType; }
-            set
-            {
-                _contentType = value;
-                _contentTypeExplicitlySet = !string.IsNullOrEmpty(_contentType);
-            }
-        }
-
-        public IList<HttpCookie> Cookies
-        {
-            get { return _cookies; }
-        }
-
-        public IEnumerable<Action<HttpContextBase,HttpCachePolicyBase>> CacheActions
-        {
-            get { return _cacheActions; }
-        }
-
-
-        public ResourceResult WithHeader(string name, Url value)
+		public ResourceResult<T> WithHeader(string name, Url value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -67,7 +65,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithHeader(string name, string value)
+        public ResourceResult<T> WithHeader(string name, string value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -75,7 +73,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithCookie(HttpCookie cookie)
+        public ResourceResult<T> WithCookie(HttpCookie cookie)
         {
             Cookies.Add(cookie);
 
