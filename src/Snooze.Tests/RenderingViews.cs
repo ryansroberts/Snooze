@@ -6,7 +6,7 @@ namespace Snooze
 {
 	public class RenderingViews : with_controller<HomeViewModel,HomeController>
 	{
-		Establish view_location = () => application_under_test_is_located("../SampleApplication");
+		Establish view_location = () => application_under_test_is_here("../SampleApplication");
 
 		Because of = () => get("");
 

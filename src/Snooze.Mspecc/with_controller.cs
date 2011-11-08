@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using HtmlAgilityPack;
@@ -21,10 +22,13 @@ namespace Snooze.MSpec
         private static ResourceResult result;
     	static string pathToApplicationUnderTest;
 
-
-		protected static void application_under_test_is_located(string path)
+		protected static void application_under_test_is_here(string path)
 		{
-			pathToApplicationUnderTest = Path.Combine(Assembly.GetCallingAssembly().Location,path);
+
+			pathToApplicationUnderTest = new Uri((Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase)+ "\\..\\..\\" +  path).Replace("\\","/"))
+				.AbsoluteUri
+				.Replace("file:///","")
+				.Replace("/","\\");
 		}
 
 		Establish routing = with_routing<THandler>.enabled;
@@ -260,8 +264,11 @@ namespace Snooze.MSpec
 			var request = new HttpRequestForViewExecution(new[]{"text/html"},lasturi);
 			httpContext.SetRequest(request);
 
+
+			ApplicationHost.CreateApplicationHost(typeof (object), "/", pathToApplicationUnderTest);
+			
 			result.ExecuteResult(new ControllerContext(
-				new RequestContext(httpContext,GetRouteData(lasturi)),GetController()));
+				new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
 
 			httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
 
@@ -272,6 +279,24 @@ namespace Snooze.MSpec
 
 
     }
+
+	public class VirtualPathProviderForViewExecution : VirtualPathProvider
+	{
+		public override bool FileExists(string virtualPath)
+		{
+			return base.FileExists(virtualPath);
+		}
+
+		public override VirtualDirectory GetDirectory(string virtualDir)
+		{
+			return base.GetDirectory(virtualDir);
+		}
+
+		public override VirtualFile GetFile(string virtualPath)
+		{
+			return base.GetFile(virtualPath);
+		}
+	}
 
 	public class HttpRequestForViewExecution : FakeHttpRequest
 	{
