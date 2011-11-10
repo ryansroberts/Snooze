@@ -89,6 +89,7 @@
     <Compile Include="InputModelBinder.cs" />
     <Compile Include="IResourceFormatter.cs" />
     <Compile Include="JsonFormatter.cs" />
+    <Compile Include="LeftMappingConfigurator.cs" />
     <Compile Include="MimeTypes.cs" />
     <Compile Include="Modules\CompressionModule.cs" />
     <Compile Include="IEPngFixController.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="RequiredInput.cs" />
     <Compile Include="ResourceFormatters.cs" />
     <Compile Include="ResourceResult.cs" />
+    <Compile Include="RightConfigurator.cs" />
     <Compile Include="Routing\IRouteRegistration.cs" />
     <Compile Include="Routing\RoutingRegistrationDiscovery.cs" />
     <Compile Include="StaticFileController.cs" />
@@ -162,7 +164,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

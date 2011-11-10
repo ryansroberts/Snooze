@@ -4,7 +4,7 @@ using Glue;
 
 namespace Snooze
 {
-	public class RightConfigurator<TLeft, TRight>
+	public class RightConfigurator<TLeft, TRight> where TRight : class
 	{
 		readonly TRight right;
 		readonly TLeft left;
@@ -24,15 +24,18 @@ namespace Snooze
 
 		public void Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis); }
 
-		public TRight Run()
+		public TRight Item
 		{
-			foreach (var action in configuration)
-				action(mapping);
+			get
+			{
+				foreach (var action in configuration)
+					action(mapping);
 
-			if(right == null)
-				return mapping.Map(left);
+				if (right == null)
+					return mapping.Map(left);
 
-			return mapping.Map(left, right);
+				return mapping.Map(left, right);
+			}
 		}
 	}
 }

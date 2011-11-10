@@ -11,14 +11,14 @@ namespace Snooze
 			this.item = item; 
 		}
 
-		public RightConfigurator<TLeft, TRight> To<TRight>()
-		{
+		public RightConfigurator<TLeft, TRight> To<TRight>() where TRight : class {
 			return new RightConfigurator<TLeft, TRight>(item);	
 		}
 
-		public RightConfigurator<TLeft, TRight> To<TRight>(Func<TLeft,TRight> projection)
-		{
+		public RightConfigurator<TLeft, TRight> To<TRight>(Func<TLeft,TRight> projection) where TRight : class {
 			return new RightConfigurator<TLeft, TRight>(item,projection(item));
 		}
 	}
+
+
 }
