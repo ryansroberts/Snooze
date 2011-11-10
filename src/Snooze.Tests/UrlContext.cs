@@ -143,7 +143,7 @@ namespace Snooze
 
         Cleanup after_each =()=>
         {
-            RouteTable.Routes.Clear();
+            //RouteTable.Routes.Clear();
             ModelBinders.Binders.Clear();
         };
     }

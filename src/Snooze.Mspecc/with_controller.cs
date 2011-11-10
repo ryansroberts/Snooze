@@ -16,7 +16,23 @@ using MvcContrib.TestHelper.Fakes;
 
 namespace Snooze.MSpec
 {
-    public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
+	public class TestableSparkViewEngine : IViewEngine
+	{
+		public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
+		{
+			throw new NotImplementedException();
+		}
+		public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
+		{
+			throw new NotImplementedException();
+		}
+		public void ReleaseView(ControllerContext controllerContext, IView view)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
        where THandler : ResourceController
     {
         private static ResourceResult result;
@@ -24,6 +40,8 @@ namespace Snooze.MSpec
 
 		protected static void application_under_test_is_here(string path)
 		{
+			ViewEngines.Engines.Clear();
+			ViewEngines.Engines.Add(new TestableSparkViewEngine());
 
 			pathToApplicationUnderTest = new Uri((Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase)+ "\\..\\..\\" +  path).Replace("\\","/"))
 				.AbsoluteUri
