@@ -1,16 +1,12 @@
 ﻿using Moq;
-using StructureMap.AutoMocking;
+using Snooze.MSpec;
 
 namespace Snooze.Testing
 {
     public class with_nunit_auto_mocking<TUnderTest> where TUnderTest : class
     {
-        public static MoqAutoMocker<TUnderTest> autoMocker;
+		protected static MoqCastleAutoMocker<TUnderTest> autoMocker = new MoqCastleAutoMocker<TUnderTest>();
 
-        public with_nunit_auto_mocking()
-        {
-            autoMocker = new MoqAutoMocker<TUnderTest>();
-        }
 
         public static Mock<TInterface> Stub<TInterface>() where TInterface : class
         {
