@@ -1,19 +1,79 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using Glue;
 
 #endregion
 
 namespace Snooze
 {
-    public class ResourceController : Controller
+	public class LeftMappingConfigurator<TLeft>
+	{
+		TLeft item;
+
+		public LeftMappingConfigurator(TLeft item) 
+		{ 
+			this.item = item; 
+		}
+
+		public RightConfigurator<TLeft, TRight> To<TRight>() where TRight : class {
+			return new RightConfigurator<TLeft, TRight>(item);	
+		}
+
+		public RightConfigurator<TLeft, TRight> To<TRight>(Func<TLeft,TRight> projection) where TRight : class {
+			return new RightConfigurator<TLeft, TRight>(item,projection(item));
+		}
+	}
+
+	public class RightConfigurator<TLeft, TRight> where TRight : class
+	{
+		readonly TRight right;
+		readonly TLeft left;
+		Mapping<TLeft, TRight> mapping = new Mapping<TLeft, TRight>();
+		readonly IList<Action<Mapping<TLeft, TRight>>>  configuration = new List<Action<Mapping<TLeft, TRight>>>();
+
+		public RightConfigurator(TLeft left) 
+		{ 
+			this.left = left;
+			configuration.Add(m => m.AutoRelateEqualNames(true,true));
+		}
+
+		public RightConfigurator(TLeft left,TRight right) : this(left) 
+		{
+			this.right = right;
+		}
+
+		public void Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis); }
+
+		public TRight Item
+		{
+			get
+			{
+				foreach (var action in configuration)
+					action(mapping);
+
+				if (right == null)
+					return mapping.Map(left);
+
+				return mapping.Map(left, right);
+			}
+		}
+	}
+
+	public class ResourceController : Controller
     {
         public ResourceController()
         {
             ActionInvoker = new ResourceActionInvoker();
         }
 
+
+		protected LeftMappingConfigurator<T> Map<T>(T item)
+		{
+    		return new LeftMappingConfigurator<T>(item);
+		}
 
         public virtual ResourceResult<T> OK<T>(T resource)
         {
