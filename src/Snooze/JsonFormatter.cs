@@ -2,11 +2,14 @@
 
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Glue;
 
 #endregion
 
 namespace Snooze
 {
+
+
     public class JsonFormatter : IResourceFormatter
     {
         #region IResourceFormatter Members

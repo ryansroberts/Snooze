@@ -5,61 +5,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Glue;
 
 #endregion
 
 namespace Snooze
 {
-    public class ResourceResult : ActionResult
-    {
-        private readonly List<Action<HttpContextBase, HttpCachePolicyBase>> _cacheActions = new List<Action<HttpContextBase,HttpCachePolicyBase>>();
-        private readonly List<HttpCookie> _cookies = new List<HttpCookie>();
-        private readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
+	public abstract class ResourceResult : ActionResult
+	{
+		protected readonly List<Action<HttpContextBase, HttpCachePolicyBase>> _cacheActions = new List<Action<HttpContextBase,HttpCachePolicyBase>>();
+		readonly List<HttpCookie> _cookies = new List<HttpCookie>();
+		protected readonly List<KeyValuePair<string, object>> _headers = new List<KeyValuePair<string, object>>();
+		protected bool _contentTypeExplicitlySet;
+		protected string _contentType;
+		protected Func<object,object> projection = o => o; 
+		
+	
+		public object Resource { get; set; }
 
-        public ResourceResult(int statusCode, object resource)
+		public ILookup<string, object> Headers
+		{
+			get { return _headers.ToLookup(k => k.Key, v => v.Value); }
+		}
+
+		public int StatusCode { get; set; }
+
+		public string ContentType
+		{
+			get { return _contentType; }
+			set
+			{
+				_contentType = value;
+				_contentTypeExplicitlySet = !string.IsNullOrEmpty(_contentType);
+			}
+		}
+
+		public IList<HttpCookie> Cookies
+		{
+			get { return _cookies; }
+		}
+
+		public IEnumerable<Action<HttpContextBase,HttpCachePolicyBase>> CacheActions
+		{
+			get { return _cacheActions; }
+		}
+	}
+
+	public class ResourceResult<T> : ResourceResult
+    {
+		public ResourceResult(int statusCode, object resource)
         {
             StatusCode = statusCode;
 
             Resource = resource;
         }
 
-        public ILookup<string, object> Headers
-        {
-            get { return _headers.ToLookup(k => k.Key, v => v.Value); }
-        }
 
-
-        public int StatusCode { get; set; }
-
-        public object Resource { get; set; }
-
-
-        private bool _contentTypeExplicitlySet;
-
-        protected string _contentType;
-
-        public string ContentType
-        {
-            get { return _contentType; }
-            set
-            {
-                _contentType = value;
-                _contentTypeExplicitlySet = !string.IsNullOrEmpty(_contentType);
-            }
-        }
-
-        public IList<HttpCookie> Cookies
-        {
-            get { return _cookies; }
-        }
-
-        public IEnumerable<Action<HttpContextBase,HttpCachePolicyBase>> CacheActions
-        {
-            get { return _cacheActions; }
-        }
-
-
-        public ResourceResult WithHeader(string name, Url value)
+		public ResourceResult<T> WithHeader(string name, Url value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -67,7 +69,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithHeader(string name, string value)
+        public ResourceResult<T> WithHeader(string name, string value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -75,7 +77,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithCookie(HttpCookie cookie)
+        public ResourceResult<T> WithCookie(HttpCookie cookie)
         {
             Cookies.Add(cookie);
 
@@ -83,7 +85,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult WithCache(Action<HttpContextBase,HttpCachePolicyBase> action)
+        public ResourceResult<T> WithCache(Action<HttpContextBase,HttpCachePolicyBase> action)
         {
             _cacheActions.Add(action);
 
@@ -91,7 +93,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult AsJson()
+        public ResourceResult<T> AsJson()
         {
             ContentType = "application/json";
 
@@ -99,7 +101,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult AsXml()
+		public ResourceResult<T> AsXml()
         {
             ContentType = "text/xml";
 
@@ -107,21 +109,21 @@ namespace Snooze
         }
 
 
-        public ResourceResult AsText()
+		public ResourceResult<T> AsText()
         {
             ContentType = "text/plain";
 
             return this;
         }
 
-        public ResourceResult AsXhtml()
+		public ResourceResult<T> AsXhtml()
         {
             ContentType = "application/xhtml+xml";
 
             return this;
         }
 
-        public ResourceResult AsHtml()
+		public ResourceResult<T> AsHtml()
         {
             ContentType = "text/html";
 
@@ -129,7 +131,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult As(string type)
+		public ResourceResult<T> As(string type)
         {
             ContentType = type;
 
@@ -137,7 +139,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult AsFile(string type)
+		public ResourceResult<T> AsFile(string type)
         {
             ContentType = type;
 
@@ -145,14 +147,22 @@ namespace Snooze
         }
 
 
-        public ResourceResult AsFile(string type, string defaultFilename)
+		public ResourceResult<T> AsFile(string type, string defaultFilename)
         {
             ContentType = type;
 
-			
-	
             return WithHeader("Content-Disposition", "attachment; filename=" + defaultFilename);
         }
+
+		public ResourceResult<T> ProjectedTo<TOtherType>(Func<T,TOtherType> projection)
+		{
+			var mapping = new Mapping<T, TOtherType>();
+			mapping.AutoRelateEqualNames(true, true);
+
+			projection = mapping.Map;
+
+			return this;
+		}
 
 
         public override void ExecuteResult(ControllerContext context)
@@ -186,22 +196,19 @@ namespace Snooze
                 }
                 else
                 {
-                    if (_contentTypeExplicitlySet)
+                	if (_contentTypeExplicitlySet)
                     {
                         throw new HttpException(500,
                                                 string.Format(
                                                     "Mime type explicitly set to '{0}' but unable to find a view that can format this type.",
                                                     ContentType));
                     }
-                    else
-                    {
-                        context.HttpContext.Response.StatusCode = 406; // not acceptable
-                    }
+                	context.HttpContext.Response.StatusCode = 406; // not acceptable
                 }
-                return;
+            	return;
             }
 
-            formatter.Output(context, Resource, ContentType);
+            formatter.Output(context, projection(Resource), ContentType);
 
             ApplyCacheActions(context);
 

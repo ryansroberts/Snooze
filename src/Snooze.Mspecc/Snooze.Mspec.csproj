@@ -31,8 +31,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.2.5.4\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Fizzler">
+      <HintPath>..\..\Libraries\fizzler\Fizzler.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Machine.Specifications.0.4.24.0\lib\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.Contrib.0.3\lib\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.90.0\lib\MvcContrib.TestHelper.dll</HintPath>
+    </Reference>
     <Reference Include="nVentive.Umbrella">
       <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="SgmlReaderDll">
+      <HintPath>..\..\Libraries\fizzler\SgmlReaderDll.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,7 +73,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMock.Castle\AutoMockContainer.cs" />
+    <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
+    <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
+    <Compile Include="AutoMock.Castle\LazyLoader.cs" />
     <Compile Include="FakeCachePolicy.cs" />
+    <Compile Include="MoqContrib.AutoMock\AutoMockHelper.cs" />
+    <Compile Include="MoqContrib.AutoMock\IAutoMockContainer.cs" />
+    <Compile Include="MoqContrib.AutoMock\IAutoMocker.cs" />
+    <Compile Include="MoqContrib.AutoMock\IInstanceProvider.cs" />
+    <Compile Include="MoqContrib.AutoMock\ILatentMocker.cs" />
+    <Compile Include="MoqContrib.AutoMock\IMockGenerator.cs" />
+    <Compile Include="MoqContrib.AutoMock\IMockHeap.cs" />
+    <Compile Include="MoqContrib.AutoMock\MockGenerator.cs" />
+    <Compile Include="MoqContrib.AutoMock\MockHeap.cs" />
+    <Compile Include="MoqContrib.AutoMock\MockingUtilities.cs" />
+    <Compile Include="MoqContrib.AutoMock\UnmockableException.cs" />
     <Compile Include="with_controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="with_auto_mocking.cs" />
@@ -58,7 +100,10 @@
       <Name>Snooze</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

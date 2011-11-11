@@ -87,10 +87,6 @@ namespace Snooze
     }
 
 
-    
-
-
-
     public class ResourceTypeConventionViewFormatter : BaseViewFormatter
     {
         public ResourceTypeConventionViewFormatter(string targetMimeType) : base(targetMimeType)

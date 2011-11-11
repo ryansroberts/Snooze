@@ -53,7 +53,7 @@ namespace Snooze
                                                            IDictionary<string, object> parameters)
         {
             if (actionDescriptor is NoMethodActionDescriptor)
-                return new ResourceResult(400, ((NoMethodActionDescriptor) actionDescriptor).httpMethod);
+                return new ResourceResult<object>(400, ((NoMethodActionDescriptor) actionDescriptor).httpMethod);
 
             return Result = base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
         }
@@ -100,7 +100,7 @@ namespace Snooze
         {
             if (!(actionReturnValue is ActionResult))
             {
-                return new ResourceResult(200, actionReturnValue);
+                return new ResourceResult<object>(200, actionReturnValue);
             }
 
             return base.CreateActionResult(controllerContext, actionDescriptor, actionReturnValue);

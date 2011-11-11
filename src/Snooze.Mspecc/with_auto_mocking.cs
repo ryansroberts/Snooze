@@ -1,21 +1,30 @@
-﻿using Machine.Specifications;
+﻿using System;
+using System.Collections;
+using System.Reflection;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers;
+using Castle.Windsor;
+using Machine.Specifications;
 using Moq;
-using StructureMap.AutoMocking;
+using Snooze.Mspecc.AutoMock.Castle;
 
 namespace Snooze.MSpec
 {
+	
     public class with_auto_mocking<TUnderTest> where TUnderTest : class
     {
-        public static MoqAutoMocker<TUnderTest> autoMocker;
 
-        Establish automocking = () => autoMocker = new MoqAutoMocker<TUnderTest>();
+    	protected static AutoMockContainer<TUnderTest> autoMocker;
 
-        public static Mock<TInterface> Stub<TInterface>() where TInterface : class
-        {
-            var mocked = autoMocker.Get<TInterface>();
-            return Mock.Get(mocked);
-        }
+		Establish container = ()=> autoMocker = new AutoMockContainer<TUnderTest>();
 
-        protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
-    }
+		public static Mock<TInterface> Stub<TInterface>() where TInterface : class
+		{
+			var mocked = autoMocker.GetService<TInterface>();
+			return Mock.Get(mocked);
+		}
+
+		protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
+
+	}
 }

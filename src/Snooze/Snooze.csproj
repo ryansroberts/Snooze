@@ -53,6 +53,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glue">
+      <HintPath>..\packages\glue.0.9\lib\Glue.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -80,6 +86,7 @@
     <Compile Include="InputModelBinder.cs" />
     <Compile Include="IResourceFormatter.cs" />
     <Compile Include="JsonFormatter.cs" />
+    <Compile Include="LeftMappingConfigurator.cs" />
     <Compile Include="MimeTypes.cs" />
     <Compile Include="Modules\CompressionModule.cs" />
     <Compile Include="IEPngFixController.cs" />
@@ -92,6 +99,7 @@
     <Compile Include="RequiredInput.cs" />
     <Compile Include="ResourceFormatters.cs" />
     <Compile Include="ResourceResult.cs" />
+    <Compile Include="RightConfigurator.cs" />
     <Compile Include="Routing\IRouteRegistration.cs" />
     <Compile Include="Routing\RoutingRegistrationDiscovery.cs" />
     <Compile Include="StaticFileController.cs" />
@@ -148,11 +156,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\wraps\openwrap\build\OpenWrap.CSharp.targets" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

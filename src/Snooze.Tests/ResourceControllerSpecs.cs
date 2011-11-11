@@ -7,7 +7,6 @@ using Snooze.FutureActionTests;
 
 namespace Snooze
 {
-    
     public class ResourceControllerSpecs
     {
         public class RedirectingController : ResourceController

@@ -10,6 +10,7 @@ namespace SampleApplication.Controllers
     {
         public ActionResult Get(HomeUrl url)
         {
+
             return OK(new HomeViewModel
             {
                 BooksLink = new BooksUrl().ToString()
