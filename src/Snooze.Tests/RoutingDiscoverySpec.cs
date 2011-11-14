@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
+using Moq;
 using Snooze.Routing;
+using It = Machine.Specifications.It;
 
 namespace Snooze
 {
@@ -23,7 +27,40 @@ namespace Snooze
         It Should_have_converted = () => uri.ShouldNotBeNull();
     }
 
+    public class Excluding_properties_from_the_query_string
+    {
+        public class IdUrl : Url {
+            public string Id { get; set; }  
+        }
 
+        public class FakeController : ResourceController
+        {
+            public void Get(IdUrl url) {}
+        }
+
+        protected static Mock<HttpContextBase> httpContext;
+
+        static string s;
+
+        Establish context = () =>
+                                        {
+                                            RouteTable.Routes.Map<IdUrl>(u => "");
+                                            httpContext = new Mock<HttpContextBase>();
+                                            httpContext.SetupGet(h => h.Request.PathInfo).Returns("");
+                                            Url.DoNotMapToUrlWhere(p => p.Name == "Id");
+                                        };
+
+        Because of = () => s = (new IdUrl() {Id = "id"}).ToString();
+
+        It should_not_have_id_in_the_query_string = () => 
+            s.Contains("?").ShouldBeFalse();
+
+        Cleanup after_each = () =>
+        {
+            RouteTable.Routes.Clear();
+            ModelBinders.Binders.Clear();
+        };
+    }
 
     [Subject("Convention based route discovery")]
     public class RoutingDiscoverySpec

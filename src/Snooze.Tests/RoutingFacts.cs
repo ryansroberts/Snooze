@@ -52,11 +52,26 @@ namespace Snooze
         [Subject(typeof(Url))]
         public class When_routing_a_wildcard : RoutingContext
         {
-            Because of = () => RoutingTo("~/content/foo/bar.xml");
+            private Because of = () =>
+                                     {
+                                         RoutingTo("~/content/foo/bar.xml");
+                                     };
 
             Behaves_like<Route> mvcroute;
 
 			It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
+        }
+    }
+
+    [Subject("Optional Url Property Mapping Specifications")]
+    public class OptionalProperties
+    {
+        public class Should_only_map_selected_properties : RoutingContext
+        {
+            Because of = () => RoutingTo("~/customers/42");
+
+            It should_not_capture_specified_value =
+                () => routeData.Values.ContainsKey("CustomerId").ShouldBeFalse();
         }
     }
 
