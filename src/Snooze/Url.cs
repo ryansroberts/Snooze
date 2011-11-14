@@ -27,11 +27,13 @@ namespace Snooze
 
         readonly IEnumerable<Action<Url, RouteValueDictionary>> _propertyPushers;
 
+        readonly static IList<Func<PropertyInfo, bool>> _preventMapping = new List<Func<PropertyInfo, bool>>();
+
+
         public Url()
         {
             _propertyPushers = GetOrCreatePropertyPushers(GetType());
         }
-
 
         #region IXmlSerializable Members
 
@@ -52,6 +54,11 @@ namespace Snooze
 
         #endregion
 
+        public static void DoNotMapToUrlWhere(Func<PropertyInfo, bool> predicate)
+        {
+            _preventMapping.Add(predicate);
+        }
+
         static IEnumerable<Action<Url, RouteValueDictionary>> GetOrCreatePropertyPushers(Type urlType)
         {
             IEnumerable<Action<Url, RouteValueDictionary>> propertyGetters = null;
@@ -69,12 +76,19 @@ namespace Snooze
             return propertyGetters;
         }
 
+        public static Func<PropertyInfo, bool> And<T>(IEnumerable<Func<PropertyInfo, bool>> predicates)
+        {
+            return item => predicates.All(predicate => predicate(item));
+        }
+
         static IEnumerable<Action<Url, RouteValueDictionary>> CreatePropertyPushers(Type urlType)
         {
             //mm: removed the 'declared only' binding flag and added a filter to exclude properties of type Url ( for sub urls ) 
             var properties = urlType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => !p.PropertyType.IsSubclassOf(typeof(Url)));
 
-            //var properties = urlType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            //exclude properties from the route values where they match rules
+
+            properties = properties.Where(p => !_preventMapping.Any(v => v(p)));
 
             var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
 
@@ -94,10 +108,6 @@ namespace Snooze
                 // need to box the value type.
                 getPropertyValue = Expression.TypeAs(getPropertyValue, typeof (object));
             }
-
-// TODO: put an 'if' in here somewhere to only add if it hasnt been added already
- 
-
 
             var addValue = Expression.Call(values, addMethod, Expression.Constant(property.Name, typeof (string)),
                                            getPropertyValue);
