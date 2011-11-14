@@ -40,6 +40,9 @@
     <Reference Include="Fizzler">
       <HintPath>..\..\Libraries\fizzler\Fizzler.dll</HintPath>
     </Reference>
+    <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
+      <HintPath>..\Snooze.Testing\packages\glue.0.9\lib\Glue.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -52,6 +55,9 @@
     <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.90.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Snooze.Testing\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nVentive.Umbrella">
       <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
     </Reference>
@@ -60,6 +66,10 @@
     </Reference>
     <Reference Include="SgmlReaderDll">
       <HintPath>..\..\Libraries\fizzler\SgmlReaderDll.dll</HintPath>
+    </Reference>
+    <Reference Include="Snooze, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Snooze.Testing\packages\Snooze.1.0.5.0\lib\net40\Snooze.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -93,12 +103,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="with_auto_mocking.cs" />
     <Compile Include="with_routing.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Snooze\Snooze.csproj">
-      <Project>{290C5812-2A16-4BA3-9A40-0DF6E0E63288}</Project>
-      <Name>Snooze</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

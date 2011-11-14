@@ -13,7 +13,6 @@ namespace Snooze.MSpec
 	
     public class with_auto_mocking<TUnderTest> where TUnderTest : class
     {
-
     	protected static AutoMockContainer<TUnderTest> autoMocker;
 
 		Establish container = ()=> autoMocker = new AutoMockContainer<TUnderTest>();
