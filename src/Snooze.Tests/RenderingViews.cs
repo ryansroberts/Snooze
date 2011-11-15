@@ -11,6 +11,7 @@ namespace Snooze
 		Because of = () => get("");
 
 		It content_negotiates_texthtml = () => conneg_texthtml()
-			.DocumentNode.ShouldNotBeNull();
+			.DocumentNode
+			.ShouldNotBeNull();
 	}
 }

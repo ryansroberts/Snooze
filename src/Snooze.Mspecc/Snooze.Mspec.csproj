@@ -71,6 +71,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Snooze.Testing\packages\Snooze.1.0.5.0\lib\net40\Snooze.dll</HintPath>
     </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -87,6 +90,8 @@
     <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
     <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\LazyLoader.cs" />
+    <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
+    <Compile Include="ViewTesting\TestSparkSettings.cs" />
     <Compile Include="FakeCachePolicy.cs" />
     <Compile Include="MoqContrib.AutoMock\AutoMockHelper.cs" />
     <Compile Include="MoqContrib.AutoMock\IAutoMockContainer.cs" />
@@ -99,6 +104,7 @@
     <Compile Include="MoqContrib.AutoMock\MockHeap.cs" />
     <Compile Include="MoqContrib.AutoMock\MockingUtilities.cs" />
     <Compile Include="MoqContrib.AutoMock\UnmockableException.cs" />
+    <Compile Include="ViewTesting\TestSparkView.cs" />
     <Compile Include="with_controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="with_auto_mocking.cs" />

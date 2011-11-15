@@ -11,27 +11,13 @@ using System.Web.Routing;
 using HtmlAgilityPack;
 using Machine.Specifications;
 using Moq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using nVentive.Umbrella.Extensions;
 using MvcContrib.TestHelper.Fakes;
 
 namespace Snooze.MSpec
 {
-	public class TestableSparkViewEngine : IViewEngine
-	{
-		public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
-		{
-			throw new NotImplementedException();
-		}
-		public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
-		{
-			throw new NotImplementedException();
-		}
-		public void ReleaseView(ControllerContext controllerContext, IView view)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
 	public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
        where THandler : ResourceController
     {
@@ -41,12 +27,11 @@ namespace Snooze.MSpec
 		protected static void application_under_test_is_here(string path)
 		{
 			ViewEngines.Engines.Clear();
-			ViewEngines.Engines.Add(new TestableSparkViewEngine());
-
-			pathToApplicationUnderTest = new Uri((Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase)+ "\\..\\..\\" +  path).Replace("\\","/"))
+			pathToApplicationUnderTest = new Uri((Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
 				.AbsoluteUri
-				.Replace("file:///","")
-				.Replace("/","\\");
+				.Replace("file:///", "")
+				.Replace("/", "\\");
+			ViewEngines.Engines.Add(new TestableSparkViewEngine(pathToApplicationUnderTest));
 		}
 
 		Establish routing = with_routing<THandler>.enabled;
@@ -276,15 +261,26 @@ namespace Snooze.MSpec
             header.First().ShouldEqual(value);
         }
 
-		protected static HtmlDocument conneg_texthtml()
+		protected static JObject conneg_json(string accept = "application/json")
 		{
 			var httpContext = FakeHttpContext.Root();
-			var request = new HttpRequestForViewExecution(new[]{"text/html"},lasturi);
+			var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
 			httpContext.SetRequest(request);
 
+			result.ExecuteResult(new ControllerContext(
+				new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
 
-			ApplicationHost.CreateApplicationHost(typeof (object), "/", pathToApplicationUnderTest);
-			
+			httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
+
+			return JObject.Load(new JsonTextReader(new StreamReader(httpContext.Response.OutputStream)));
+		}
+
+		protected static HtmlDocument conneg_html(string accept = "text/html")
+		{
+			var httpContext = FakeHttpContext.Root();
+			var request = new HttpRequestForViewExecution(new[]{accept},lasturi);
+			httpContext.SetRequest(request);
+
 			result.ExecuteResult(new ControllerContext(
 				new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
 
@@ -298,23 +294,6 @@ namespace Snooze.MSpec
 
     }
 
-	public class VirtualPathProviderForViewExecution : VirtualPathProvider
-	{
-		public override bool FileExists(string virtualPath)
-		{
-			return base.FileExists(virtualPath);
-		}
-
-		public override VirtualDirectory GetDirectory(string virtualDir)
-		{
-			return base.GetDirectory(virtualDir);
-		}
-
-		public override VirtualFile GetFile(string virtualPath)
-		{
-			return base.GetFile(virtualPath);
-		}
-	}
 
 	public class HttpRequestForViewExecution : FakeHttpRequest
 	{
