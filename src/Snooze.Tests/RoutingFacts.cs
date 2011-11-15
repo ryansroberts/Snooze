@@ -63,18 +63,6 @@ namespace Snooze
         }
     }
 
-    [Subject("Optional Url Property Mapping Specifications")]
-    public class OptionalProperties
-    {
-        public class Should_only_map_selected_properties : RoutingContext
-        {
-            Because of = () => RoutingTo("~/customers/42");
-
-            It should_not_capture_specified_value =
-                () => routeData.Values.ContainsKey("CustomerId").ShouldBeFalse();
-        }
-    }
-
     public class RoutingContext
     {
         public class CustomersUrl : Url

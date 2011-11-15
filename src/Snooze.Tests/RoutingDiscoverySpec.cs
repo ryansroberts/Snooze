@@ -29,13 +29,14 @@ namespace Snooze
 
     public class Excluding_properties_from_the_query_string
     {
-        public class IdUrl : Url {
-            public string Id { get; set; }  
+        public class IdUrl : Url
+        {
+            public string Id { get; set; }
         }
 
         public class FakeController : ResourceController
         {
-            public void Get(IdUrl url) {}
+            public void Get(IdUrl url) { }
         }
 
         protected static Mock<HttpContextBase> httpContext;
@@ -47,12 +48,12 @@ namespace Snooze
                                             RouteTable.Routes.Map<IdUrl>(u => "");
                                             httpContext = new Mock<HttpContextBase>();
                                             httpContext.SetupGet(h => h.Request.PathInfo).Returns("");
-                                            Url.DoNotMapToUrlWhere(p => p.Name == "Id");
+                                            Url.DoNotMapToUrlWhere(p => p.Name == "Id" && p.DeclaringType == typeof(IdUrl));
                                         };
 
-        Because of = () => s = (new IdUrl() {Id = "id"}).ToString();
+        Because of = () => s = (new IdUrl() { Id = "id" }).ToString();
 
-        It should_not_have_id_in_the_query_string = () => 
+        It should_not_have_id_in_the_query_string = () =>
             s.Contains("?").ShouldBeFalse();
 
         Cleanup after_each = () =>
