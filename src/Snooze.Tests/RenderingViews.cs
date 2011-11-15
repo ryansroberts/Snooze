@@ -10,7 +10,7 @@ namespace Snooze
 
 		Because of = () => get("");
 
-		It content_negotiates_texthtml = () => conneg_texthtml()
+		It content_negotiates_texthtml = () => conneg_html()
 			.DocumentNode
 			.ShouldNotBeNull();
 	}

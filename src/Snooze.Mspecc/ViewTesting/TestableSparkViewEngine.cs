@@ -33,7 +33,6 @@ namespace Snooze.MSpec
 			       };
 		}
 
-
 		public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
 		{
 			throw new NotImplementedException();

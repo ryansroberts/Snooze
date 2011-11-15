@@ -14,14 +14,14 @@ namespace Snooze.MSpec
 
 		public DynamicViewDataDictionary(ViewDataDictionary viewDataThunk)
 		{
-			_viewDataThunk = viewDataThunk;
+			_viewDataThunk = () => viewDataThunk;
 		}
 
 		private ViewDataDictionary ViewData
 		{
 			get
 			{
-				ViewDataDictionary viewData = _viewDataThunk();
+				var viewData = _viewDataThunk();
 				return viewData;
 			}
 		}

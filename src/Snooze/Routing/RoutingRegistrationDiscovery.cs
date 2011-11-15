@@ -10,6 +10,7 @@ namespace Snooze.Routing
         public IEnumerable<IRouteRegistration> Scan(Assembly assembly)
         {
             return assembly.GetTypes()
+				.SelectMany(outer => Enumerable.Concat(new[]{outer}, outer.GetNestedTypes()))
                 .Where(IsConstructableRouteRegistration)
                 .Select(t => (IRouteRegistration)Activator.CreateInstance(t));
         }
