@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 #endregion
 
@@ -9,6 +10,8 @@ namespace Snooze
 {
 	public class ResourceController : Controller
     {
+		
+
         public ResourceController()
         {
             ActionInvoker = new ResourceActionInvoker();
