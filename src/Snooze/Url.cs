@@ -86,9 +86,9 @@ namespace Snooze
             //mm: removed the 'declared only' binding flag and added a filter to exclude properties of type Url ( for sub urls ) 
             var properties = urlType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => !p.PropertyType.IsSubclassOf(typeof(Url)));
 
-            //exclude properties from the route values where they match rules
+            //properties = properties.Where(p => !_preventMapping.Any(v => v(p)));
 
-            properties = properties.Where(p => !_preventMapping.Any(v => v(p)));
+            properties = _preventMapping.Aggregate(properties, (current, exclude) => current.Where(p => !exclude(p)));
 
             var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
 
