@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,21 +14,21 @@ using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using nVentive.Umbrella.Extensions;
 using MvcContrib.TestHelper.Fakes;
 
 namespace Snooze.MSpec
 {
 	public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
-       where THandler : ResourceController
-    {
-        private static ResourceResult result;
-    	static string pathToApplicationUnderTest;
+		where THandler : ResourceController
+	{
+		static ResourceResult result;
+		static string pathToApplicationUnderTest;
 
 		protected static void application_under_test_is_here(string path)
 		{
 			ViewEngines.Engines.Clear();
-			pathToApplicationUnderTest = new Uri((Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
+			pathToApplicationUnderTest = new Uri(
+				(Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
 				.AbsoluteUri
 				.Replace("file:///", "")
 				.Replace("/", "\\");
@@ -35,96 +36,110 @@ namespace Snooze.MSpec
 		}
 
 		Establish routing = with_routing<THandler>.enabled;
-    	[ThreadStatic] static string lasturi;
+		[ThreadStatic] static string lasturi;
 
-    	protected static  THandler GetController() { return autoMocker.ClassUnderTest; }
+		protected static THandler GetController() { return autoMocker.ClassUnderTest; }
 
-    	protected static TResource Resource
-        {
-            get { return (TResource)result.Resource; }
-        }
+		protected static TResource Resource
+		{
+			get { return (TResource) result.Resource; }
+		}
 
-        protected static ILookup<string, object> ResponseHeaders
-        {
-            get { return result.Headers; }
-        }
+		protected static ILookup<string, object> ResponseHeaders
+		{
+			get { return result.Headers; }
+		}
 
-        public static FakeCachePolicy cachepolicy
-        {
-            get
-            {
-                var policy = new FakeCachePolicy();
-                var context = new Mock<HttpContextBase>();
-                context.SetupGet(p => p.Response.ContentType)
-                    .Returns("test");
+		public static FakeCachePolicy cachepolicy
+		{
+			get
+			{
+				var policy = new FakeCachePolicy();
+				var context = new Mock<HttpContextBase>();
+				context.SetupGet(p => p.Response.ContentType)
+					.Returns("test");
 
-                foreach (var action in result.CacheActions)
-                    action(context.Object, policy);
+				foreach (var action in result.CacheActions)
+					action(context.Object, policy);
 
-                return policy;
-            }
-        }
+				return policy;
+			}
+		}
 
-        public static void public_cached()
-        {
-            cachepolicy.Cachability.ShouldEqual(HttpCacheability.Public);
-        }
+		public static void public_cached() { cachepolicy.Cachability.ShouldEqual(HttpCacheability.Public); }
 
-        public static void has_etag(string etag)
-        {
-            cachepolicy.Etag.ShouldEqual(etag);
-        }
+		public static void has_etag(string etag) { cachepolicy.Etag.ShouldEqual(etag); }
 
-        private static void InvokeAction(string httpMethod, RouteData route, object[] additionalParameters, NameValueCollection queryString)
-        {
-            var urlType = route.Route.GetType().GetGenericArguments()[0];
+		static void InvokeAction(string httpMethod,
+		                         RouteData route,
+		                         object[] additionalParameters,
+		                         NameValueCollection queryString)
+		{
+			var urlType = route.Route.GetType().GetGenericArguments()[0];
 
-            var methods =
-                from m in typeof(THandler).GetMethods()
-                where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
-                let parameters = m.GetParameters()
-                where parameters.Length > 0
-                      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
-                select m;
+			var methods =
+				from m in typeof (THandler).GetMethods()
+				where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
+				let parameters = m.GetParameters()
+				where parameters.Length > 0
+				      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
+				select m;
 
-            if (methods.Count() == 0)
-                throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
+			if (methods.Count() == 0)
+				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
-            var args = new List<object>(new[] { FromContext(route, queryString) });
-            args.AddRange(additionalParameters);
+			var args = new List<object>(new[] {FromContext(route, queryString)});
+			args.AddRange(additionalParameters);
 
-            result = (ResourceResult)methods.First().Invoke(autoMocker.ClassUnderTest,
-                                            args.ToArray());
+			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest,
+				args.ToArray());
 
-        }
+		}
 
-        protected static Url FromContext(RouteData data, NameValueCollection queryString)
-        {
+		protected static Url FromContext(RouteData data, NameValueCollection queryString)
+		{
 
-            var url = Activator.CreateInstance(data.Route.GetType().GetGenericArguments()[0]);
+			var url = Activator.CreateInstance(data.Route.GetType().GetGenericArguments()[0]);
 
-            AssignParentUrl(url, data, queryString);
+			AssignParentUrl(url, data, queryString);
 
-            AssignUrlProperties(data, url, queryString);
-            return (Url)url;
-        }
+			AssignUrlProperties(data, url, queryString);
+			return (Url) url;
+		}
 
-        static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)
+
+		protected static object Convert(object value, Type type)
+		{
+			if (value != null)
+			{
+				if (value.GetType() == type)
+					return value;
+				var converter1 = TypeDescriptor.GetConverter(value);
+				if (converter1 != null && converter1.CanConvertTo(type))
+					return  converter1.ConvertTo(value, type);
+				var converter2 = TypeDescriptor.GetConverter(type);
+				if (converter2 != null && converter2.CanConvertFrom(value.GetType()))
+					return converter2.ConvertFrom(value);
+			}
+			return null;
+		}
+	
+
+
+	static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)
         {
             foreach (var v in data.Values.Where(v => url.GetType().GetProperty(v.Key) != null))
             {
-
                 var pInfo = url.GetType().GetProperty(v.Key);
 
-                pInfo.SetValue(url, v.Value.Conversion().To(pInfo.PropertyType), null);
+                pInfo.SetValue(url, Convert(v.Value,pInfo.PropertyType), null);
             }
 
             foreach (var key in queryString.AllKeys.Where(k => url.GetType().GetProperty(k) != null))
             {
-
                 var pInfo = url.GetType().GetProperty(key);
-
-                pInfo.SetValue(url, queryString[key].Conversion().To(pInfo.PropertyType), null);
+				
+                pInfo.SetValue(url,  Convert(queryString[key],pInfo.PropertyType), null);
             }
         }
 
@@ -140,7 +155,7 @@ namespace Snooze.MSpec
 
                 AssignUrlProperties(data, parentUrl, queryString);
 
-                url.Reflection().Set("Parent", parentUrl);
+                url.SetPropertyValue("Parent", parentUrl);
 
                 url = parentUrl;
             }

@@ -58,8 +58,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Snooze.Testing\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="nVentive.Umbrella">
-      <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
+    <Reference Include="PGK.Extensions">
+      <HintPath>..\packages\dnpextensions.2011.6.0.0\lib\PGK.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>

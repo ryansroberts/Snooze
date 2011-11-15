@@ -85,7 +85,6 @@ namespace Snooze
     {
         public void Register(RouteCollection routes)
         {
-            throw new NotImplementedException();
         }
     }
 }

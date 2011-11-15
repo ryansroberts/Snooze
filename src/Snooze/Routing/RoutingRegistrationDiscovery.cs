@@ -7,26 +7,20 @@ using System.Web.Routing;
 namespace Snooze.Routing
 {
 
-	public delegate void RegisterRoute(RouteCollection route);
-
-
 	public class DelegatedRouteRegistration : IRouteRegistration
 	{
-		RegisterRoute registration;
-		public DelegatedRouteRegistration(RegisterRoute registration) { this.registration = registration; }
-		public void Register(RouteCollection routes) { registration(routes); }
+		Handler.Register registration;
+		public DelegatedRouteRegistration(Handler.Register registration) { this.registration = registration; }
+		public void Register(RouteCollection routes) { if(registration != null) registration(routes); }
 	}
 
     public class RoutingRegistrationDiscovery
     {
         public IEnumerable<IRouteRegistration> Scan(Assembly assembly)
         {
-        	return Enumerable.Concat(assembly.GetTypes()
+        	return assembly.GetTypes().SelectMany(t => Enumerable.Concat(new []{t},t.GetNestedTypes()))
         		.Where(IsConstructableRouteRegistration)
-        		.Select(t => (IRouteRegistration) Activator.CreateInstance(t)),
-        		assembly.GetTypes().SelectMany(t => t.GetNestedTypes())
-        		.Where(t => typeof(RegisterRoute).IsAssignableFrom(t))
-        		.Select(t => new DelegatedRouteRegistration((RegisterRoute) Activator.CreateInstance(t))));
+        		.Select(t => (IRouteRegistration) Activator.CreateInstance(t));
         }
 
         static bool IsConstructableRouteRegistration(Type t)

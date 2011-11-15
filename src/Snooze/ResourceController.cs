@@ -162,4 +162,11 @@ namespace Snooze
             base.OnResultExecuting(filterContext);
         }
     }
+
+
+	public abstract class Handler : ResourceController
+	{
+		public delegate void Register(RouteCollection collection);
+
+	}
 }
