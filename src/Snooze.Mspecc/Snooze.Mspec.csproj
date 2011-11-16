@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+      <HintPath>Packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
-      <HintPath>..\packages\Castle.Windsor.2.5.4\lib\net40\Castle.Windsor.dll</HintPath>
+      <HintPath>Packages\Castle.Windsor.2.5.4\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Fizzler">
       <HintPath>..\..\Libraries\fizzler\Fizzler.dll</HintPath>
@@ -75,6 +75,7 @@
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -86,7 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMock.Castle\AutoMockContainer.cs" />
+    <Compile Include="AutoMock.Castle\MoqAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
     <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\LazyLoader.cs" />

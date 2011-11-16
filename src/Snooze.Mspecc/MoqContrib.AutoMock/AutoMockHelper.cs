@@ -124,6 +124,9 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
 		public void MockMyDependencies(Type service)
 		{
 			var ctor = service.GetConstructors().OrderByDescending(x => x.GetParameters().Length).First();
+			if (!(service.IsAbstract && service.IsInterface) && !Container.Kernel.HasComponent(service))
+				Container.Register(Component.For(service));
+			
 			foreach (var param in ctor.GetParameters())
 			{
 				//Register concrete  type if..concrete

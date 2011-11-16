@@ -15,7 +15,7 @@ namespace Snooze.MSpec
     {
     	protected static AutoMockContainer<TUnderTest> autoMocker;
 
-		Establish container = ()=> autoMocker = new AutoMockContainer<TUnderTest>();
+		Establish container = () => autoMocker = new AutoMockContainer<TUnderTest>();
 
 		public static Mock<TInterface> Stub<TInterface>() where TInterface : class
 		{
