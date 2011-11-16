@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Glue;
 using HtmlAgilityPack;
 using Machine.Specifications;
 using Moq;
@@ -88,12 +89,48 @@ namespace Snooze.MSpec
 			if (methods.Count() == 0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
+			if (methods.First().GetParameters().Count() > 1)
+			{
+				InvokeUrlAndModel(route, additionalParameters, queryString, methods);
+			}
+			else
+			{
+				InvokeCommand(route, additionalParameters, queryString, methods);
+			}
+
+		}
+
+		static void InvokeCommand(RouteData route,
+								  object[] additionalParameters,
+								  NameValueCollection queryString,
+								  IEnumerable<MethodInfo> methods)
+		{
+			var command = FromContext(route, queryString);
+
+			if(additionalParameters.Any())
+			{
+				foreach (var prop in additionalParameters.First().GetType().GetProperties())
+				{
+					command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
+				}
+			}
+
+			var args = new List<object>(new[] { command });
+
+			result = (ResourceResult)methods.First().Invoke(autoMocker.ClassUnderTest,
+				args.ToArray());
+		}
+
+		static void InvokeUrlAndModel(RouteData route,
+		                              object[] additionalParameters,
+		                              NameValueCollection queryString,
+		                              IEnumerable<MethodInfo> methods)
+		{
 			var args = new List<object>(new[] {FromContext(route, queryString)});
 			args.AddRange(additionalParameters);
 
 			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest,
 				args.ToArray());
-
 		}
 
 		protected static Url FromContext(RouteData data, NameValueCollection queryString)

@@ -7,6 +7,9 @@ namespace Snooze
 {
 	public class RoutableHandler : Handler
 	{
+		readonly ConcreteDependency dependency;
+		public RoutableHandler(ConcreteDependency dependency) { this.dependency = dependency; }
+
 		Register route = r => r.Map<Command>(u => "commandhandler");
 
 		public class Command : Url {}
@@ -20,7 +23,6 @@ namespace Snooze
 
 		It is_routable = is_200;
 	}
-
 
 	public class RenderingViews : with_controller<HomeViewModel,HomeController>
 	{

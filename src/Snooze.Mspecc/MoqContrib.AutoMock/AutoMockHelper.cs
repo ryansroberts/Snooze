@@ -130,10 +130,15 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
 			foreach (var param in ctor.GetParameters())
 			{
 				//Register concrete  type if..concrete
-				if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface)  && !Container.Kernel.HasComponent(param.ParameterType))
-					Container.Register(Component.For(param.ParameterType));
-				else
-					Get(param.ParameterType);
+				if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
+				{
+					if (!Container.Kernel.HasComponent(param.ParameterType))
+					{
+						Container.Register(Component.For(param.ParameterType));
+					}
+					
+				}
+				else Get(param.ParameterType);
 			}
 		}
 
