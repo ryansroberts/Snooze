@@ -90,7 +90,7 @@ namespace Snooze.Routing
             foreach (var routeRegistration in disco.Scan(typeof(TRef).Assembly))
             {
                 routeRegistration.Register(routes);
-            }         
+            }
         }
 
         static Type GetSubResourceType<TUrl>() where TUrl : Url

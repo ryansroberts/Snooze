@@ -37,10 +37,19 @@ namespace Snooze.MSpec
 		{
 			throw new NotImplementedException();
 		}
+
+
+
 		public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
 		{
-			throw new NotImplementedException();
+			if(HasView(viewName))
+				return new ViewEngineResult(null,null);
+
+			return new ViewEngineResult(ViewFolders);
 		}
+
+		bool HasView(string viewName) { return false; }
+
 		public void ReleaseView(ControllerContext controllerContext, IView view)
 		{
 			throw new NotImplementedException();

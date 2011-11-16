@@ -18,7 +18,6 @@ namespace Snooze
 	{
 		Because of = () => get("commandhandler");
 
-
 		It is_routable = is_200;
 	}
 
