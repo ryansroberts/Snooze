@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using System.Web.Routing;
+using Castle.DynamicProxy;
 
 namespace Snooze.Routing
 {
@@ -34,23 +35,15 @@ namespace Snooze.Routing
 					assembly.GetTypes().Where(t => typeof (Handler).IsAssignableFrom(t))
 						.Select(t => new DelegatedRouteRegistration(
 							(Handler.Register) t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => typeof (Handler.Register).IsAssignableFrom(f.FieldType))
-							.Select(f => f.GetValue(FormatterServices.GetSafeUninitializedObject(t)))
+							.Select(f => f.GetValue(CreateDerivedClassWithParameterlessConstructor(t)))
 							.FirstOrDefault())
 						));
 	    }
 
-		static object CreateDerivedClassWithParameterlessConstructor(Type t) 
-		{ 
-			var asmName = new AssemblyName("SnoozeRoutingDiscovery" + Guid.NewGuid());
+		private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
-			var asmBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(asmName,AssemblyBuilderAccess.RunAndSave);
 
-			var moduleBuilder = asmBuilder.DefineDynamicModule(t.FullName);
-
-			var typeBuilder = moduleBuilder.DefineType(t.Name + "RouteBuild",TypeAttributes.Class);
-
-			return null;
-		}
+		static object CreateDerivedClassWithParameterlessConstructor(Type t) { return _generator.CreateClassProxy(t); }
 
         static bool IsConstructableRouteRegistration(Type t)
         {

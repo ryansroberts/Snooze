@@ -24,6 +24,14 @@ namespace Snooze
 
 		public void Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis); }
 
+		public void Run()
+		{
+			foreach (var action in configuration)
+				action(mapping);
+
+			if (right == null) mapping.Map(left); else mapping.Map(left, right);
+		}
+
 		public TRight Item
 		{
 			get
@@ -31,10 +39,7 @@ namespace Snooze
 				foreach (var action in configuration)
 					action(mapping);
 
-				if (right == null)
-					return mapping.Map(left);
-
-				return mapping.Map(left, right);
+				return right == null ? mapping.Map(left) : mapping.Map(left, right);
 			}
 		}
 	}

@@ -18,7 +18,7 @@ namespace Snooze
         }
 
 
-		protected LeftMappingConfigurator<T> Map<T>(T item)
+		public LeftMappingConfigurator<T> Map<T>(T item)
 		{
     		return new LeftMappingConfigurator<T>(item);
 		}
