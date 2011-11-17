@@ -34,16 +34,12 @@ namespace Snooze.Routing
 						.Select(t => (IRouteRegistration) Activator.CreateInstance(t)),
 					assembly.GetTypes().Where(t => typeof (Handler).IsAssignableFrom(t))
 						.Select(t => new DelegatedRouteRegistration(
-							(Handler.Register) t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => typeof (Handler.Register).IsAssignableFrom(f.FieldType))
-							.Select(f => f.GetValue(CreateDerivedClassWithParameterlessConstructor(t)))
+							(Handler.Register) t.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Where(f => typeof (Handler.Register).IsAssignableFrom(f.FieldType))
+							.Select(f => f.GetValue(null))
 							.FirstOrDefault())
 						));
 	    }
 
-		private static readonly ProxyGenerator _generator = new ProxyGenerator();
-
-
-		static object CreateDerivedClassWithParameterlessConstructor(Type t) { return _generator.CreateClassProxy(t); }
 
         static bool IsConstructableRouteRegistration(Type t)
         {

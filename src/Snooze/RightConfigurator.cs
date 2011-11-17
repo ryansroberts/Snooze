@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Glue;
+using Glue.Converters;
 
 namespace Snooze
 {
@@ -21,6 +22,13 @@ namespace Snooze
 		{
 			this.right = right;
 		}
+
+		public RightConfigurator<TLeft,TRight> Convert<TProperty,TDest>(Func<TProperty,TDest> convertor)
+		{
+			mapping.AddConverter(new QuickConverter<TProperty,TDest>(convertor));
+			return this;
+		}
+
 
 		public void Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis); }
 

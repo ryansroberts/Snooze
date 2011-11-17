@@ -17,7 +17,6 @@ namespace Snooze
             ActionInvoker = new ResourceActionInvoker();
         }
 
-
 		public LeftMappingConfigurator<T> Map<T>(T item)
 		{
     		return new LeftMappingConfigurator<T>(item);

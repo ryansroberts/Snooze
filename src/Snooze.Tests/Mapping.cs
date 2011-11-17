@@ -4,9 +4,13 @@ using Machine.Specifications;
 namespace Snooze
 {
 
+
+
 	public class SourceType
 	{
 		public string Mapped { get; set; }
+
+		public Guid Convertable { get; set; }
 
 		public string NotMapped { get; set; }
 	}
@@ -15,6 +19,7 @@ namespace Snooze
 	{
 		public string Mapped { get;  set; }
 
+		public string Convertable { get; set; }
 	}
 
 	public class MappingController : ResourceController
@@ -28,7 +33,7 @@ namespace Snooze
 
 		public SelfMappingType(Func<SourceType, LeftMappingConfigurator<SourceType>> map, SourceType sourceType)
 		{
-			var result = map(sourceType).To(s => this).Item;
+			map(sourceType).To(s => this).Run();
 		}
 	}
 
@@ -45,10 +50,14 @@ namespace Snooze
 	{
 		static DestType mapped;
 		Because of = () => mapped = new MappingController()
-			.Map(new SourceType(){Mapped = "Mapped",})
-			.To<DestType>().Item;
+			.Map(new SourceType(){Mapped = "Mapped",Convertable = Guid.NewGuid()})
+			.To<DestType>()
+			.Convert<Guid,string>(g => g.ToString())
+			.Item;
 
 		It has_mapped = () => mapped.Mapped.ShouldEqual("Mapped");
+
+		It has_converted = () => mapped.Convertable.ShouldNotBeNull();
 	}
 
 
@@ -62,6 +71,8 @@ namespace Snooze
 			.To(s => instance = new DestType()).Item;
 
 		It has_mapped = () => mapped.Mapped.ShouldEqual("Mapped");
+
+
 
 		It is_same_object = () => instance.ShouldBeTheSameAs(instance);
 	}

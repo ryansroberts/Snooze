@@ -10,7 +10,7 @@ namespace Snooze
 		readonly ConcreteDependency dependency;
 		public RoutableHandler(ConcreteDependency dependency) { this.dependency = dependency; }
 
-		Register route = r => r.Map<Command>(u => "commandhandler");
+		static Register route = r => r.Map<Command>(u => "commandhandler");
 
 		public class Command : Url {}
 
