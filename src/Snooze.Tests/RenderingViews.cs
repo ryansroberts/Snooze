@@ -7,9 +7,6 @@ namespace Snooze
 {
 	public class RoutableHandler : Handler
 	{
-		readonly ConcreteDependency dependency;
-		public RoutableHandler(ConcreteDependency dependency) { this.dependency = dependency; }
-
 		static Register route = r => r.Map<Command>(u => "commandhandler");
 
 		public class Command : Url {}

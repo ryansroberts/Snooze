@@ -29,7 +29,7 @@ namespace Snooze
 
 	public class SelfMappingType
 	{
-		public string Mapped { get; set; }
+		public string Mapped { get; protected set; }
 
 		public SelfMappingType(Func<SourceType, LeftMappingConfigurator<SourceType>> map, SourceType sourceType)
 		{

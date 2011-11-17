@@ -30,7 +30,9 @@ namespace Snooze
 		}
 
 
-		public void Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis); }
+		public RightConfigurator<TLeft, TRight> Configure(Action<Mapping<TLeft, TRight>> dothis) { configuration.Add(dothis);
+			return this;
+		}
 
 		public void Run()
 		{
