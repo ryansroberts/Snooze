@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Machine.Specifications;
 
 namespace Snooze
@@ -41,7 +43,8 @@ namespace Snooze
 	public class self_mapping_type
 	{
 		static SelfMappingType instance;
-		Because of = () => instance = new SelfMappingType(new MappingController().Map, new SourceType() {Mapped = "Mapped"});
+		Because of = () => instance = new SelfMappingType(
+			new MappingController().Map, new SourceType() {Mapped = "Mapped"});
 
 		It has_mapped_property = () => instance.Mapped.ShouldEqual("Mapped");
 	}

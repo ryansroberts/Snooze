@@ -7,16 +7,31 @@ namespace Snooze
 {
 	public class RoutableHandler : Handler
 	{
-		static Register route = r => r.Map<Command>(u => "commandhandler");
 
-		public class Command : Url {}
+		static Register route = r => r.Map<Command>(u => "commandhandler/" + u.stupid)
+			;
+
+		public class StupidType
+		{
+			public string Value { get; set; }
+		}
+
+		public class Command : Url
+		{
+			public StupidType stupid { get; set; }
+		}
 
 		public ResourceResult Get(Command cmd) { return OK(cmd); }
 	}
 
 	public class handlers_are_routable : with_controller<RoutableHandler.Command, RoutableHandler>
 	{
-		Because of = () => get("commandhandler");
+		Establish context = () =>
+		                    {
+
+		                    };
+
+		Because of = () => get("commandhandler/stupid");
 
 		It is_routable = is_200;
 	}
