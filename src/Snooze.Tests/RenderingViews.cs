@@ -36,14 +36,25 @@ namespace Snooze
 		It is_routable = is_200;
 	}
 
-	public class RenderingViews : with_controller<HomeViewModel,HomeController>
+	public class content_negotiate_texthtml : with_controller<HomeViewModel,HomeController>
 	{
 		Establish view_location = () => application_under_test_is_here("../SampleApplication");
 
 		Because of = () => get("");
 
 		It content_negotiates_texthtml = () => conneg_html()
-			.DocumentNode
-			.ShouldNotBeNull();
+				.DocumentNode.InnerText.ShouldContain("HELLO");
+
+		It has_no_parse_errors = () => conneg_html().ShouldBeValidAccordingToDTD();
+	}
+
+
+	public class content_negotiate_json : with_controller<HomeViewModel, HomeController>
+	{
+		Establish view_location = () => application_under_test_is_here("../SampleApplication");
+
+		Because of = () => get("");
+
+		It content_negotiates_json = () => conneg_json().ShouldNotBeEmpty();
 	}
 }

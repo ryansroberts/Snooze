@@ -22,7 +22,7 @@ namespace Snooze
 
         public override object Execute(ControllerContext controllerContext, IDictionary<string, object> parameters)
         { 
-            throw new NotImplementedException();
+            throw new HttpException(405,"No handler for method " + httpMethod);
         }
 
         public override ParameterDescriptor[] GetParameters()

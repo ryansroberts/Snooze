@@ -49,6 +49,10 @@
     <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Machine.Specifications.0.4.24.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.Contrib.0.3\lib\Moq.dll</HintPath>
     </Reference>
@@ -74,6 +78,9 @@
     <Reference Include="Spark">
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\packages\Spark.Web.Mvc3.1.6\lib\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -85,12 +92,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\SparkWebMvc.cs" />
     <Compile Include="AutoMock.Castle\MoqAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
     <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\LazyLoader.cs" />
+    <Compile Include="ValidatorExtension.cs" />
     <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
     <Compile Include="ViewTesting\TestSparkSettings.cs" />
     <Compile Include="FakeCachePolicy.cs" />
@@ -113,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Views\Shared\_global.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

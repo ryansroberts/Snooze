@@ -15,9 +15,10 @@ namespace SampleApplication.Controllers
             {
                 BooksLink = new BooksUrl().ToString()
             });
-
             
         }
+
+
     }
 
     public class HomeViewModel
