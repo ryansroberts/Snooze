@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Snooze</id>
-    <version>$version$</version>
+    <version>1.0.2.2</version>
     <title>Snooze MVC</title>
     <authors>NHS Evidence</authors>
     <owners>NHS Evidence</owners>
