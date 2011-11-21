@@ -16,6 +16,6 @@
 	<file src="bin\Release\Glue.dll" target="lib\net40" /> 
 	<file src="bin\Release\Fizzler.dll" target="lib\net40" /> 
 	<file src="bin\Release\HtmlAgilityPack.dll" target="lib\net40" /> 
-	<file src="bin\Release\Snooze.MSpec.dll" target="lib\net40" /> 
+	<file src="bin\Release\Snooze.MSpecc.dll" target="lib\net40" /> 
   </files>
 </package>
