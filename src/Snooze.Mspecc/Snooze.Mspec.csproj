@@ -41,7 +41,8 @@
       <HintPath>..\..\Libraries\fizzler\Fizzler.dll</HintPath>
     </Reference>
     <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
-      <HintPath>..\Snooze.Testing\packages\glue.0.9\lib\Glue.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\net40\Glue.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
@@ -102,6 +103,11 @@
     <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
     <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\LazyLoader.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ValidatorExtension.cs" />
     <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
     <Compile Include="ViewTesting\TestSparkSettings.cs" />
@@ -124,6 +130,14 @@
     <Compile Include="with_routing.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="dtd\xhtml1-frameset.dtd" />
+    <EmbeddedResource Include="dtd\xhtml1-strict.dtd" />
+    <EmbeddedResource Include="dtd\xhtml1-transitional.dtd" />
+    <EmbeddedResource Include="dtd\xhtml11.dtd" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Views\Shared\_global.spark" />
   </ItemGroup>

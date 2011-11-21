@@ -58,7 +58,7 @@
     </Reference>
     <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\glue\Glue.dll</HintPath>
+      <HintPath>..\lib\net40\Glue.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
