@@ -9,6 +9,23 @@ using It = Machine.Specifications.It;
 
 namespace Snooze
 {
+	public class ConventionController : ResourceController
+	{
+		public class UrlOne : Url {}
+		public class UrlTwo : Url { }
+
+		public ResourceResult Get(UrlOne one) { return null; }
+
+		public ResourceResult Get(UrlTwo one) { return null; }
+	}
+
+	public class routing_by_convention
+	{
+		Establish context = () => RouteTable.Routes.MapByConvention((turl,tcontroller) => );
+
+
+	}
+
     [Subject("Routing specifications")]
     public class RoutingSpec
     {

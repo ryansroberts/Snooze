@@ -7,9 +7,7 @@ namespace Snooze
 {
 	public class RoutableHandler : Handler
 	{
-
-		static Register route = r => r.Map<Command>(u => "commandhandler/" + u.stupid)
-			;
+		static Register route = r => r.Map<Command>(u => "commandhandler/" + u.stupid);
 
 		public class StupidType
 		{
@@ -27,9 +25,8 @@ namespace Snooze
 	public class handlers_are_routable : with_controller<RoutableHandler.Command, RoutableHandler>
 	{
 		Establish context = () =>
-		                    {
-
-		                    };
+		{
+		};
 
 		Because of = () => get("commandhandler/stupid");
 
