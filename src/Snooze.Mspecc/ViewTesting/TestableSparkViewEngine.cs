@@ -140,27 +140,17 @@ namespace Snooze.MSpec
 			                           	{"basePath", p}
 			                           }
 					             }),
-				Namespaces(),
-				Assemblies());
+				Namespaces,
+				Assemblies);
 				
 			return setttings;
 		}
 
-		public IEnumerable<string> ViewFolders { get; private set; }
+		public static IEnumerable<string> ViewFolders { get;  set; }
 
-		static IEnumerable<string> Namespaces()
-		{
-			return new string[] {};
-		}
+		public static IEnumerable<string> Namespaces { get; set; }
 
-		static IEnumerable<string> Assemblies()
-		{
-			return new []
-			       {
-			       	typeof(string).Assembly.FullName,
-			       	typeof(Controller).Assembly.FullName,
-			       };
-		}
+		public static IEnumerable<string> Assemblies { get; set; }
 
 		public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
 		{

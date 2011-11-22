@@ -59,5 +59,101 @@ namespace Snooze.Mspecc.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///   Extensible HTML version 1.0 Frameset DTD
+        ///
+        ///   This is the same as HTML 4 Frameset except for
+        ///   changes due to the differences between XML and SGML.
+        ///
+        ///   Namespace = http://www.w3.org/1999/xhtml
+        ///
+        ///   For further information, see: http://www.w3.org/TR/xhtml1
+        ///
+        ///   Copyright (c) 1998-2002 W3C (MIT, INRIA, Keio),
+        ///   All Rights Reserved. 
+        ///
+        ///   This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+        ///
+        ///   PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot;
+        ///   SYSTEM &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-fr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string xhtml1_frameset {
+            get {
+                return ResourceManager.GetString("xhtml1_frameset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///   Extensible HTML version 1.0 Strict DTD
+        ///
+        ///   This is the same as HTML 4 Strict except for
+        ///   changes due to the differences between XML and SGML.
+        ///
+        ///   Namespace = http://www.w3.org/1999/xhtml
+        ///
+        ///   For further information, see: http://www.w3.org/TR/xhtml1
+        ///
+        ///   Copyright (c) 1998-2002 W3C (MIT, INRIA, Keio),
+        ///   All Rights Reserved. 
+        ///
+        ///   This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+        ///
+        ///   PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+        ///   SYSTEM &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.d [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string xhtml1_strict {
+            get {
+                return ResourceManager.GetString("xhtml1_strict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///   Extensible HTML version 1.0 Transitional DTD
+        ///
+        ///   This is the same as HTML 4 Transitional except for
+        ///   changes due to the differences between XML and SGML.
+        ///
+        ///   Namespace = http://www.w3.org/1999/xhtml
+        ///
+        ///   For further information, see: http://www.w3.org/TR/xhtml1
+        ///
+        ///   Copyright (c) 1998-2002 W3C (MIT, INRIA, Keio),
+        ///   All Rights Reserved. 
+        ///
+        ///   This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+        ///
+        ///   PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+        ///   SYSTEM &quot;http://www.w3.org/TR/xhtml1/D [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string xhtml1_transitional {
+            get {
+                return ResourceManager.GetString("xhtml1_transitional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!-- ....................................................................... --&gt;
+        ///&lt;!-- XHTML 1.1 DTD  ........................................................ --&gt;
+        ///&lt;!-- file: xhtml11.dtd
+        ///--&gt;
+        ///
+        ///&lt;!-- XHTML 1.1 DTD
+        ///
+        ///     This is XHTML, a reformulation of HTML as a modular XML application.
+        ///
+        ///     The Extensible HyperText Markup Language (XHTML)
+        ///     Copyright 1998-2008 World Wide Web Consortium
+        ///        (Massachusetts Institute of Technology, European Research Consortium
+        ///         for Informatics and Math [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string xhtml11 {
+            get {
+                return ResourceManager.GetString("xhtml11", resourceCulture);
+            }
+        }
     }
 }

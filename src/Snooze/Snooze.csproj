@@ -96,11 +96,6 @@
     <Compile Include="Modules\CompressionModule.cs" />
     <Compile Include="IEPngFixController.cs" />
     <Compile Include="PartialRequestExtensions.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="RequiredInput.cs" />
     <Compile Include="ResourceFormatters.cs" />
     <Compile Include="ResourceResult.cs" />
@@ -135,10 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\blank.gif" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\iepngfix.htc" />
@@ -166,6 +157,10 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Resources\xhtml1-frameset.dtd" />
+    <None Include="Resources\xhtml1-strict.dtd" />
+    <None Include="Resources\xhtml1-transitional.dtd" />
+    <None Include="Resources\xhtml11.dtd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

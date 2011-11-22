@@ -21,8 +21,7 @@ namespace Snooze
 
 	public class routing_by_convention
 	{
-		Establish context = () => RouteTable.Routes.MapByConvention((turl,tcontroller) => );
-
+	
 
 	}
 
