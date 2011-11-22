@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using Fizzler.Systems.HtmlAgilityPack;
+using Machine.Specifications;
 using SampleApplication.Controllers;
 using Snooze.MSpec;
 using Snooze.Routing;
@@ -42,7 +43,9 @@ namespace Snooze
 		It content_negotiates_texthtml = () => conneg_html()
 				.DocumentNode.InnerText.ShouldContain("HELLO");
 
-		It has_no_parse_errors = () => conneg_html().ShouldBeValidAccordingToDTD();
+		It has_html_element = () => conneg_html().DocumentNode.QuerySelectorAll("html").ShouldNotBeEmpty();
+
+		It has_no_parse_errors = () => markup_is_valid_according_to_dtd();
 	}
 
 

@@ -5,11 +5,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI;
+using System.Xml;
+using System.Xml.Resolvers;
 using Glue;
 using HtmlAgilityPack;
 using Machine.Specifications;
@@ -289,6 +292,35 @@ namespace Snooze.MSpec
 			return doc;
 		}
 
+		public static void markup_is_valid_according_to_dtd(string accept = "text/html")
+		{
+			var items = new List<string>();
+			var settings = new XmlReaderSettings();
+			settings.ValidationEventHandler += (s, e) => items.Add(e.Message);
+			settings.ValidationType = ValidationType.DTD;
+			settings.DtdProcessing = DtdProcessing.Parse;
+			settings.XmlResolver = new XmlPreloadedResolver();
+
+			var httpContext = Render(accept);
+
+			using (var reader = XmlReader.Create(new StringReader( ((HttpResponseForViewExecution) httpContext.Response).Content()),settings))
+			{
+				while (reader.Read()) {}
+			}
+
+			if(items.Any())
+				throw new SpecificationException("Markup is invalid\r\n" + items
+				                                                           	.Aggregate(new StringBuilder(),
+				                                                           		(s, r) =>
+				                                                           		{
+				                                                           			s.Append(r);
+				                                                           			s.Append("\r\n");
+				                                                           			return s;
+				                                                           		},
+				                                                           		s => s.ToString()));
+
+		}
+	
 		static FakeHttpContext Render(string accept)
 		{
 			var httpContext = FakeHttpContext.Root();

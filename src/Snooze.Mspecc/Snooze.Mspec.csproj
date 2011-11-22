@@ -109,12 +109,6 @@
     <Compile Include="AutoMock.Castle\AutoMockHelper.cs" />
     <Compile Include="AutoMock.Castle\IAutoMockContainer.cs" />
     <Compile Include="AutoMock.Castle\LazyLoader.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ValidatorExtension.cs" />
     <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
     <Compile Include="ViewTesting\TestSparkSettings.cs" />
     <Compile Include="FakeCachePolicy.cs" />
@@ -136,14 +130,6 @@
     <Compile Include="with_routing.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="dtd\xhtml1-frameset.dtd" />
-    <EmbeddedResource Include="dtd\xhtml1-strict.dtd" />
-    <EmbeddedResource Include="dtd\xhtml1-transitional.dtd" />
-    <EmbeddedResource Include="dtd\xhtml11.dtd" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Views\Shared\_global.spark" />
   </ItemGroup>

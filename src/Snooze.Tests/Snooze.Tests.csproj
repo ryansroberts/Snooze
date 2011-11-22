@@ -60,6 +60,9 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.2.5.4\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="Fizzler.Systems.HtmlAgilityPack">
+      <HintPath>..\..\lib\net40\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
     </Reference>
