@@ -52,6 +52,8 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
     	/// </summary>
     	public IWindsorContainer Container { get; set; }
 
+    	public void UseContainer(IWindsorContainer container) { Container = container; }
+
     	#region IAutoMockContainer Members
 
     	/// <summary>
