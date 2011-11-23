@@ -19,6 +19,9 @@ namespace Snooze
 			
 		}
 
+		public override void AppendHeader(string name, string value)
+		{
+		}
 		public override void AppendCookie(HttpCookie cookie)
 		{
 		}
