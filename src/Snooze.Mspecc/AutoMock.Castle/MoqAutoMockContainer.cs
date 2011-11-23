@@ -16,9 +16,12 @@ namespace Snooze.Mspecc.AutoMock.Castle
         internal protected IAutoMocker _helper;
 		private ILatentMocker _latentMocker;
 
-		public IWindsorContainer Container { get { return _helper.Container; } 
+    	public IWindsorContainer Container
+    	{
+    		get { return _helper.Container; }
+    	}
 
-		public void UseContainer(IWindsorContainer container ) { _helper.UseContainer(container); }
+    	public  void UseContainer(IWindsorContainer container ) { _helper.UseContainer(container); }
 
         /// <summary>
         /// For unit testing. I can't think of why we need this for anything else
