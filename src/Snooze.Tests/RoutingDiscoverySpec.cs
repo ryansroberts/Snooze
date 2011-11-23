@@ -32,6 +32,7 @@ namespace Snooze
         public class IdUrl : Url
         {
             public string Id { get; set; }
+            public string Oppsy { get; set; }
         }
 
         public class FakeController : ResourceController
@@ -45,16 +46,19 @@ namespace Snooze
 
         Establish context = () =>
                                         {
-                                            RouteTable.Routes.Map<IdUrl>(u => "");
+                                            RouteTable.Routes.Map<IdUrl>(u => "resource/" + u.Id);
                                             httpContext = new Mock<HttpContextBase>();
                                             httpContext.SetupGet(h => h.Request.PathInfo).Returns("");
-                                            Url.DoNotMapToUrlWhere(p => p.Name == "Id" && p.DeclaringType == typeof(IdUrl));
+                                            Url.DoNotMapToUrlWhere(p => p.Name != "Id" 
+                                                && p.DeclaringType.IsAssignableFrom(typeof(IdUrl)));
                                         };
 
-        Because of = () => s = (new IdUrl() { Id = "id" }).ToString();
+        Because of = () => s = (new IdUrl() { Id = "longidstring" , Oppsy = "not default"}).ToString();
 
         It should_not_have_id_in_the_query_string = () =>
             s.Contains("?").ShouldBeFalse();
+
+        It should_have_correct_url = () => s.ShouldEqual("/resource/longidstring");
 
         Cleanup after_each = () =>
         {
