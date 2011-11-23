@@ -294,7 +294,6 @@ namespace Snooze.MSpec
 
 		public static void markup_is_valid_according_to_dtd(string accept = "text/html")
 		{
-			autoMocker
 
 			var items = new List<string>();
 			var settings = new XmlReaderSettings();
