@@ -1,4 +1,5 @@
 ﻿using System;
+using Castle.Windsor;
 using Moq;
 using Moq.Language.Flow;
 using System.Linq.Expressions;
@@ -331,5 +332,12 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
     	/// for</param>
     	/// <param name="instance"></param>
     	void RegisterInstance(Type[] services, object instance);
+
+    	/// <summary>
+    	/// This is required to be set before 
+    	/// </summary>
+    	IWindsorContainer Container { get; set; }
+
+    	void UseContainer(IWindsorContainer container);
     }
 }

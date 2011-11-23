@@ -294,6 +294,7 @@ namespace Snooze.MSpec
 
 		public static void markup_is_valid_according_to_dtd(string accept = "text/html")
 		{
+
 			var items = new List<string>();
 			var settings = new XmlReaderSettings();
 			settings.ValidationEventHandler += (s, e) => items.Add(e.Message);
