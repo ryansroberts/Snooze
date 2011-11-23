@@ -337,5 +337,7 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
     	/// This is required to be set before 
     	/// </summary>
     	IWindsorContainer Container { get; set; }
+
+    	void UseContainer(IWindsorContainer container);
     }
 }

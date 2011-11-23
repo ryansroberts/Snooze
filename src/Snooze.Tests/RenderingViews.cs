@@ -43,7 +43,6 @@ namespace Snooze
 		It content_negotiates_texthtml = () => conneg_html()
 				.DocumentNode.InnerText.ShouldContain("HELLO");
 
-
 		It has_html_element = () => conneg_html().DocumentNode.QuerySelectorAll("html").ShouldNotBeEmpty();
 
 		It has_no_parse_errors = () => markup_is_valid_according_to_dtd();
