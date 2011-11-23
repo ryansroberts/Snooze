@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Specialized;
 using System.Web;
 
 #endregion
@@ -12,5 +13,22 @@ namespace Snooze
         {
             return virtualPath;
         }
+
+		public override void AddHeader(string name, string value)
+		{
+			
+		}
+
+		public override void AppendCookie(HttpCookie cookie)
+		{
+		}
+
+		public override NameValueCollection Headers
+		{
+			get
+			{
+				return new NameValueCollection();
+			}
+		}
     }
 }

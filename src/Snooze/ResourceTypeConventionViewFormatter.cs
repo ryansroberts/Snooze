@@ -48,7 +48,8 @@ namespace Snooze
                     );
             }
 
-            result.ViewEngine.ReleaseView(context, result.View);
+			if(result.ViewEngine != null)
+				result.ViewEngine.ReleaseView(context, result.View);
         }
 
         private void SetContentType(ControllerContext context, string contentType)
