@@ -7,17 +7,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.UI;
 using System.Xml;
 using System.Xml.Resolvers;
-using Glue;
 using HtmlAgilityPack;
 using Machine.Specifications;
 using Moq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using MvcContrib.TestHelper.Fakes;
 
@@ -54,6 +50,11 @@ namespace Snooze.MSpec
 		{
 			get { return result.Headers; }
 		}
+
+	    protected static IList<HttpCookie> ResponseCookies
+	    {
+            get { return result.Cookies; }
+	    }
 
 		public static FakeCachePolicy cachepolicy
 		{

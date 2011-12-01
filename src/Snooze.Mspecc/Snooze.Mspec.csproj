@@ -79,10 +79,6 @@
     <Reference Include="SgmlReaderDll">
       <HintPath>..\..\Libraries\fizzler\SgmlReaderDll.dll</HintPath>
     </Reference>
-    <Reference Include="Snooze, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Snooze.Testing\packages\Snooze.1.0.5.0\lib\net40\Snooze.dll</HintPath>
-    </Reference>
     <Reference Include="Spark">
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
@@ -135,6 +131,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Views\Shared\_global.spark" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Snooze\Snooze.csproj">
+      <Project>{290C5812-2A16-4BA3-9A40-0DF6E0E63288}</Project>
+      <Name>Snooze</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
