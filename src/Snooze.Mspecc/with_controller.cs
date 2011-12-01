@@ -61,6 +61,8 @@ namespace Snooze.MSpec
 			{
 				var policy = new FakeCachePolicy();
 				var context = new Mock<HttpContextBase>();
+
+
 				context.SetupGet(p => p.Response.ContentType)
 					.Returns("test");
 
