@@ -7,7 +7,7 @@ namespace Snooze.Testing
 {
     public class with_nunit_auto_mocking<TUnderTest>  where TUnderTest : class
     {
-		protected static AutoMockContainer<TUnderTest> autoMocker = new AutoMockContainer<TUnderTest>();;
+		protected static AutoMockContainer<TUnderTest> autoMocker = new AutoMockContainer<TUnderTest>();
 
 		public static Mock<TInterface> Stub<TInterface>() where TInterface : class
 		{

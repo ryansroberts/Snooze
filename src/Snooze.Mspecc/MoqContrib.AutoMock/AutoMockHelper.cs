@@ -532,7 +532,8 @@ namespace Snooze.Mspecc.MoqContrib.AutoMock
     	/// <param name="instance"></param>
     	public virtual void RegisterInstance(Type type, object instance)
     	{
-    		Container.Register(Component.For(type).Instance(instance));
+			if(!Container.Kernel.HasComponent(type))
+    			Container.Register(Component.For(type).Instance(instance));
     	}
 
     	/// <summary>

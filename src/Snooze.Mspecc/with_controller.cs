@@ -62,7 +62,6 @@ namespace Snooze.MSpec
 				var policy = new FakeCachePolicy();
 				var context = new Mock<HttpContextBase>();
 
-
 				context.SetupGet(p => p.Response.ContentType)
 					.Returns("test");
 
@@ -346,6 +345,14 @@ namespace Snooze.MSpec
 		public HttpRequestForViewExecution(string[] acceptTypes,string uri) : base(uri,null,null)
 		{
 			this.acceptTypes = acceptTypes;
+		}
+
+		public override NameValueCollection QueryString
+		{
+			get
+			{
+				return new NameValueCollection();
+			}
 		}
 
 		public override string[] AcceptTypes
