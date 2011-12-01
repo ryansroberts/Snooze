@@ -381,6 +381,11 @@ namespace Snooze.MSpec
 		}
 
 		public override string ContentType { get; set; }
+		public override void AddHeader(string name, string value)
+		{
+			
+		}
+
 
 		public override TextWriter Output
 		{

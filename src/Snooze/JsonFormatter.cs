@@ -25,6 +25,7 @@ namespace Snooze
 			var s = new JavaScriptSerializer();
 			s.RegisterConverters(new[] { new UrlConverter() });
 			var json = s.Serialize(resource);
+
 	
 			if(context.HttpContext.Request.QueryString["callback"] != null)
 			{
@@ -34,6 +35,8 @@ namespace Snooze
 			}
 			else
 			{
+				context.HttpContext.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Accept");
+				context.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
 				context.HttpContext.Response.ContentType = "application/json";
 				context.HttpContext.Response.Output.Write(json);	
 			}
