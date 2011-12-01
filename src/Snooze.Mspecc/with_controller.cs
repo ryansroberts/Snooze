@@ -55,6 +55,11 @@ namespace Snooze.MSpec
 			get { return result.Headers; }
 		}
 
+	    protected static IList<HttpCookie> ResponseCookies
+	    {
+            get { return result.Cookies; }
+	    }
+
 		public static FakeCachePolicy cachepolicy
 		{
 			get
