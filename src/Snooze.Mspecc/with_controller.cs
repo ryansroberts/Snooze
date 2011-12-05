@@ -92,6 +92,8 @@ namespace Snooze.MSpec
 				      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
 				select m;
 
+            autoMocker.ClassUnderTest.HttpVerb = (HttpVerbs)Enum.Parse(typeof(HttpVerbs), httpMethod, true);
+
 			if (methods.Count() == 0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
@@ -106,10 +108,10 @@ namespace Snooze.MSpec
 
 		}
 
-		static void InvokeCommand(RouteData route,
-		                          object[] additionalParameters,
-		                          NameValueCollection queryString,
-		                          IEnumerable<MethodInfo> methods)
+		static void InvokeCommand(
+            RouteData route, object[] additionalParameters, 
+            NameValueCollection queryString, 
+            IEnumerable<MethodInfo> methods)
 		{
 			var command = FromContext(route, queryString);
 
@@ -127,10 +129,9 @@ namespace Snooze.MSpec
 				args.ToArray());
 		}
 
-		static void InvokeUrlAndModel(RouteData route,
-		                              object[] additionalParameters,
-		                              NameValueCollection queryString,
-		                              IEnumerable<MethodInfo> methods)
+		static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, 
+            NameValueCollection queryString, 
+            IEnumerable<MethodInfo> methods)
 		{
 			var args = new List<object>(new[] {FromContext(route, queryString)});
 			args.AddRange(additionalParameters);

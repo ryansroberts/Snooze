@@ -17,6 +17,20 @@ namespace Snooze
             ActionInvoker = new ResourceActionInvoker();
         }
 
+
+	    HttpVerbs? _httpVerb = null;
+	    public HttpVerbs HttpVerb
+	    {
+	        get
+	        {
+                if (_httpVerb.HasValue) return (HttpVerbs)_httpVerb;
+                if (HttpContext != null)
+                    return (HttpVerbs) Enum.Parse(typeof (HttpVerbs), HttpContext.Request.HttpMethod);
+                throw new ArgumentException("HttpVerb not set and HttpContext is null");
+	        } 
+            set { _httpVerb = value; }
+	    }
+
 		public LeftMappingConfigurator<T> Map<T>(T item)
 		{
     		return new LeftMappingConfigurator<T>(item);

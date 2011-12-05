@@ -1,4 +1,5 @@
-﻿using Fizzler.Systems.HtmlAgilityPack;
+﻿using System.Web.Mvc;
+using Fizzler.Systems.HtmlAgilityPack;
 using Machine.Specifications;
 using SampleApplication.Controllers;
 using Snooze.MSpec;
@@ -32,6 +33,8 @@ namespace Snooze
 		Because of = () => get("commandhandler/stupid");
 
 		It is_routable = is_200;
+
+	    It method_is_set = () => class_under_test.HttpVerb.ShouldEqual(HttpVerbs.Get);
 	}
 
 	public class content_negotiate_texthtml : with_controller<HomeViewModel,HomeController>
