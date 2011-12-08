@@ -25,7 +25,7 @@ namespace Snooze
 	        {
                 if (_httpVerb.HasValue) return (HttpVerbs)_httpVerb;
                 if (HttpContext != null)
-                    return (HttpVerbs) Enum.Parse(typeof (HttpVerbs), HttpContext.Request.HttpMethod);
+                    return (HttpVerbs) Enum.Parse(typeof (HttpVerbs), HttpContext.Request.HttpMethod,true);
                 throw new ArgumentException("HttpVerb not set and HttpContext is null");
 	        } 
             set { _httpVerb = value; }
