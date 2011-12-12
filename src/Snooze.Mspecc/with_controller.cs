@@ -16,6 +16,7 @@ using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json.Linq;
 using MvcContrib.TestHelper.Fakes;
+using Spark;
 
 namespace Snooze.MSpec
 {
@@ -25,7 +26,12 @@ namespace Snooze.MSpec
 		static ResourceResult result;
 		static string pathToApplicationUnderTest;
 
-		protected static void application_under_test_is_here(string path)
+        protected static void application_under_test_is_here(string path)
+        {
+            application_under_test_is_here(path, null);
+        }
+
+	    protected static void application_under_test_is_here(string path, ISparkSettings sparkSettings)
 		{
 			ViewEngines.Engines.Clear();
 			pathToApplicationUnderTest = new Uri(
@@ -33,7 +39,8 @@ namespace Snooze.MSpec
 				.AbsoluteUri
 				.Replace("file:///", "")
 				.Replace("/", "\\");
-			ViewEngines.Engines.Add(new TestableSparkViewEngine(pathToApplicationUnderTest));
+			ViewEngines.Engines.Add(
+                new TestableSparkViewEngine(pathToApplicationUnderTest, sparkSettings));
 		}
 
 		Establish routing = with_routing<THandler>.enabled;
