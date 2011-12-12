@@ -4,7 +4,7 @@ using System.Linq;
 using Moq;
 using System.Reflection;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     internal class MockGenerator : MoqContrib.AutoMock.IMockGenerator
     {

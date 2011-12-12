@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using Snooze.Mspecc.AutoMock.Castle;
+using Snooze.AutoMock.Castle;
 
 namespace Snooze
 {

@@ -4,7 +4,7 @@ using Moq;
 using Moq.Language.Flow;
 using System.Linq.Expressions;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// Provides access to easily work with mocks. 

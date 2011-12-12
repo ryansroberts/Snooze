@@ -1,7 +1,7 @@
 ﻿using System;
 using Moq;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// Keeps track of all mock instances that are generated

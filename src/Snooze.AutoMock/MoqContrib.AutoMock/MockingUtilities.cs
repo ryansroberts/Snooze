@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// tidbits of functionality that are useful internally

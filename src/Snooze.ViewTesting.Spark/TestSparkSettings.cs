@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Spark;
 using Spark.FileSystem;
 
-namespace Snooze.MSpec
+namespace Snooze.ViewTesting.Spark
 {
 	public class TestSparkSettings : ISparkSettings
 	{

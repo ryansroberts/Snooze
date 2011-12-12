@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Web;
@@ -8,7 +6,7 @@ using System.Web.Mvc;
 using Spark;
 using Spark.Web.Mvc.Wrappers;
 
-namespace Snooze.MSpec
+namespace Snooze.ViewTesting.Spark
 {
 	public class DynamicViewDataDictionary : DynamicObject
 	{

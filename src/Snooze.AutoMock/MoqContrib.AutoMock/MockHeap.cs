@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Moq;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// Like a container, but keeps track of mocks instead of objects.

@@ -11,7 +11,7 @@ using Spark.FileSystem;
 using Spark.Parser;
 using Spark.Parser.Syntax;
 
-namespace Snooze.MSpec
+namespace Snooze.ViewTesting.Spark
 {
 	public class BuildDescriptorParams
     {
@@ -122,9 +122,9 @@ namespace Snooze.MSpec
 		readonly string path;
 		SparkViewEngine engine;
 
-		public TestableSparkViewEngine(string path, ISparkSettings sparkSettings) {
+		public TestableSparkViewEngine(string path) {
 			this.path = path;
-			engine = new SparkViewEngine(sparkSettings ?? Settings());
+			engine = new SparkViewEngine(Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 

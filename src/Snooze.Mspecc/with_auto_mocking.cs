@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Reflection;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.Resolvers;
-using Castle.Windsor;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using Moq;
-using Snooze.Mspecc.AutoMock.Castle;
+using Snooze.AutoMock.Castle;
 
 namespace Snooze.MSpec
-{
-	
+{	
     public class with_auto_mocking<TUnderTest> where TUnderTest : class
     {
     	protected static AutoMockContainer<TUnderTest> autoMocker;

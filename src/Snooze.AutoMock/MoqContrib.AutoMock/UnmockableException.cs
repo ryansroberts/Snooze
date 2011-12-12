@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
 	/// <summary>
 	/// Indicates that we couldn't generate a mock for the given service. This is

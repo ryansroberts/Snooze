@@ -8,9 +8,8 @@ using Castle.Windsor;
 using Moq;
 using System.Linq.Expressions;
 using Moq.Language.Flow;
-using Snooze.Mspecc.AutoMock.Castle;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// The central access point for functionality common accross all containers. This class

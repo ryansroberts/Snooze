@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// Internal interface that simply gets and sets simple instances

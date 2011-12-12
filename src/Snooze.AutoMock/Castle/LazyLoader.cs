@@ -1,9 +1,9 @@
 ﻿using System;
 using Castle.MicroKernel.Resolvers;
 using Castle.MicroKernel.Registration;
-using Snooze.Mspecc.MoqContrib.AutoMock;
+using Snooze.AutoMock.Castle.MoqContrib.AutoMock;
 
-namespace Snooze.Mspecc.AutoMock.Castle
+namespace Snooze.AutoMock.Castle
 {
 	class LazyLoader : ILazyComponentLoader
 	{

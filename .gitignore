@@ -14,3 +14,7 @@ _ReSharper.*
 *.cache
 ~$*
 *_cache
+*crunchproject.local.xml
+src/packages
+src/Snooze.Package.Solution/packages
+src/Snooze.Testing.Package.Solution/packages

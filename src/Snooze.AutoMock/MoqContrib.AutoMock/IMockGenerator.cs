@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snooze.Mspecc.MoqContrib.AutoMock
+namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 {
     /// <summary>
     /// Creates generic mocks without using compile-time generic parameters

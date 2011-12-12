@@ -1,6 +1,6 @@
 ﻿using Castle.Windsor;
 
-namespace Snooze.Mspecc.AutoMock.Castle
+namespace Snooze.AutoMock.Castle
 {
     /// <summary>
     /// Interface for an auto-mocking Castle.Windsor container

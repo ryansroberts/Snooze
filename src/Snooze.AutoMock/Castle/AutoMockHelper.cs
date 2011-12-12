@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
 using Castle.Windsor;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel;
-using Castle.Core;
 
-namespace Snooze.Mspecc.AutoMock.Castle
+namespace Snooze.AutoMock.Castle
 {
 	public interface IAutoMockHelper {
 		/// <summary>
