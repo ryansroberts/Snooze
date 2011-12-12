@@ -122,9 +122,10 @@ namespace Snooze.ViewTesting.Spark
 		readonly string path;
 		SparkViewEngine engine;
 
-		public TestableSparkViewEngine(string path) {
+		public TestableSparkViewEngine(string path, ISparkSettings sparkSettings)
+		{
 			this.path = path;
-			engine = new SparkViewEngine(Settings());
+			engine = new SparkViewEngine(sparkSettings ?? Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 

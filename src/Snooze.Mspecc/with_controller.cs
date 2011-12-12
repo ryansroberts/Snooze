@@ -17,31 +17,32 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using MvcContrib.TestHelper.Fakes;
 using Snooze.ViewTesting.Spark;
+using Spark;
 
 namespace Snooze.MSpec
 {
-	public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
-		where THandler : ResourceController
-	{
-		static ResourceResult result;
-		static string pathToApplicationUnderTest;
+    public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
+        where THandler : ResourceController
+    {
+        static ResourceResult result;
+        static string pathToApplicationUnderTest;
 
         protected static void application_under_test_is_here(string path)
         {
             application_under_test_is_here(path, null);
         }
 
-	    protected static void application_under_test_is_here(string path, ISparkSettings sparkSettings)
-		{
-			ViewEngines.Engines.Clear();
-			pathToApplicationUnderTest = new Uri(
-				(Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
-				.AbsoluteUri
-				.Replace("file:///", "")
-				.Replace("/", "\\");
-			ViewEngines.Engines.Add(
+        protected static void application_under_test_is_here(string path, ISparkSettings sparkSettings)
+        {
+            ViewEngines.Engines.Clear();
+            pathToApplicationUnderTest = new Uri(
+                (Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
+                .AbsoluteUri
+                .Replace("file:///", "")
+                .Replace("/", "\\");
+            ViewEngines.Engines.Add(
                 new TestableSparkViewEngine(pathToApplicationUnderTest, sparkSettings));
-		}
+        }
 
 		Establish routing = with_routing<THandler>.enabled;
 		[ThreadStatic] static string lasturi;

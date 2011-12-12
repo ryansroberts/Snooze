@@ -1,20 +1,23 @@
-﻿using Machine.Specifications;
-using Moq;
-using Snooze.MSpec;
-using Snooze.Mspecc.AutoMock.Castle;
+﻿using Moq;
+using Snooze.AutoMock.Castle;
 
-namespace Snooze.Testing
-{
-    public class with_nunit_auto_mocking<TUnderTest>  where TUnderTest : class
+namespace Snooze.Nunit
+{﻿
+    public class with_nunit_auto_mocking<TUnderTest> : with_auto_mocking<TUnderTest>
+        where TUnderTest : class
+    {        
+    }
+
+    public class with_auto_mocking<TUnderTest> where TUnderTest : class
     {
-		protected static AutoMockContainer<TUnderTest> autoMocker = new AutoMockContainer<TUnderTest>();
+        protected static AutoMockContainer<TUnderTest> autoMocker = new AutoMockContainer<TUnderTest>();
 
-		public static Mock<TInterface> Stub<TInterface>() where TInterface : class
-		{
-			var mocked = autoMocker.GetService<TInterface>();
-			return Mock.Get(mocked);
-		}
+        public static Mock<TInterface> Stub<TInterface>() where TInterface : class
+        {
+            var mocked = autoMocker.GetService<TInterface>();
+            return Mock.Get(mocked);
+        }
 
-		protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
+        protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
     }
 }
