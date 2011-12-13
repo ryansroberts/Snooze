@@ -20,9 +20,5 @@
     <file src="bin\Release\HtmlAgilityPack.dll" target="lib\net40" />
     <file src="bin\Release\nVentive.Umbrella.dll" target="lib\net40" />
     <file src="bin\Release\SgmlReaderDll.dll" target="lib\net40" />
-    <file src="bin\Release\Snooze.AutoMock.dll" target="lib\net40" />
-    <file src="bin\Release\Snooze.Mspecc.dll" target="lib\net40" />
-    <file src="bin\Release\Snooze.NUnit.dll" target="lib\net40" />
-    <file src="bin\Release\Snooze.ViewTesting.Spark.dll" target="lib\net40" />
   </files>
 </package>
