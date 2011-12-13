@@ -122,30 +122,35 @@ namespace Snooze.ViewTesting.Spark
 		readonly string path;
 		SparkViewEngine engine;
 
-		public TestableSparkViewEngine(string path, ISparkSettings sparkSettings)
+		public TestableSparkViewEngine(string path)
 		{
 			this.path = path;
-			engine = new SparkViewEngine(sparkSettings ?? Settings());
+		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path, "Views", SearchOption.AllDirectories);
+			engine = new SparkViewEngine(Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 
-		ISparkSettings Settings()
+	    static ISparkSettings Settings()
 		{
-			var setttings = new TestSparkSettings(
-				Directory.GetDirectories(path, "Views", SearchOption.AllDirectories)
-					.Select(p => new ViewFolderElement()
-					             {
-					             	FolderType = ViewFolderType.FileSystem,
-									Parameters =  new Dictionary<string, string>
-			                           {
-			                           	{"basePath", p}
-			                           }
-					             }),
+            var setttings = new TestSparkSettings(
+                CreateViewFolders(ViewFolders),
 				Namespaces,
 				Assemblies);
 				
 			return setttings;
 		}
+
+        static IEnumerable<IViewFolderSettings> CreateViewFolders(IEnumerable<string> viewFolders)
+        {
+            return viewFolders.Select(p => new ViewFolderElement()
+                {
+                    FolderType = ViewFolderType.FileSystem,
+                    Parameters = new Dictionary<string, string>
+                        {
+                            {"basePath", p}
+                        }
+                });
+        }
 
 		public static IEnumerable<string> ViewFolders { get;  set; }
 
