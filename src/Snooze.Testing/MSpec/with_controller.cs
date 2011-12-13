@@ -16,6 +16,7 @@ using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json.Linq;
 using MvcContrib.TestHelper.Fakes;
+using Snooze.Testing;
 using Snooze.ViewTesting.Spark;
 using Spark;
 

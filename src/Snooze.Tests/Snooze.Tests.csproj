@@ -137,13 +137,9 @@
       <Project>{F849E911-21E6-4EF5-993B-C26354B55BBA}</Project>
       <Name>SampleApplication</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snooze.AutoMock\Snooze.AutoMock.csproj">
-      <Project>{8204DE9D-35F1-46A8-9C10-A70A757FE9B2}</Project>
-      <Name>Snooze.AutoMock</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Snooze.Mspecc\Snooze.Mspec.csproj">
-      <Project>{AF46C37B-4A86-4AD9-A076-6599413DD8EF}</Project>
-      <Name>Snooze.Mspec</Name>
+    <ProjectReference Include="..\Snooze.Testing\Snooze.Testing.csproj">
+      <Project>{FF2AE14E-22E3-4812-8655-ED050E666145}</Project>
+      <Name>Snooze.Testing</Name>
     </ProjectReference>
     <ProjectReference Include="..\Snooze\Snooze.csproj">
       <Project>{290C5812-2A16-4BA3-9A40-0DF6E0E63288}</Project>

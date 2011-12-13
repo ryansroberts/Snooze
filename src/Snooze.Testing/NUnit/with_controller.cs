@@ -18,6 +18,7 @@ using Moq;
 using nVentive.Umbrella.Extensions;
 using MvcContrib.TestHelper.Fakes;
 ﻿using Should;
+﻿using Snooze.Testing;
 ﻿using Snooze.ViewTesting.Spark;
 ﻿using Spark;
 
