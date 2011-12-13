@@ -90,7 +90,7 @@ namespace Snooze.ViewTesting.Spark
 				_viewData = viewData;
 			}
 
-			protected virtual void SetViewBag(DynamicViewDataDictionary viewBag)
+			protected virtual void SetViewBag(dynamic viewBag)
 			{
 				_viewBag = viewBag;
 			}
@@ -157,6 +157,7 @@ namespace Snooze.ViewTesting.Spark
 				var wrappedViewContext = new ViewContextWrapper(viewContext, this);
 
 				ViewData = wrappedViewContext.ViewData;
+			    SetViewBag(viewContext.Controller.ViewBag);
 				ViewContext = wrappedViewContext;
 
 				var outerView = ViewContext.View as TestSparkView;

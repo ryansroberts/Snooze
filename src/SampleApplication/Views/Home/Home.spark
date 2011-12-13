@@ -2,6 +2,8 @@
 <html>
 	<head><title>HI</title></head>
 	<body>
-		HELLO
+		HELLO ${ViewBag.Stuff}
+
+
 	</body>
 </html>
