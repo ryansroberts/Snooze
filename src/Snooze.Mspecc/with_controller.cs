@@ -228,8 +228,38 @@ namespace Snooze.MSpec
 				throw new ApplicationException("Uris in specs should not start with /");
 
 			lasturi = uri;
-
+			CallValidatorsOn(@params);
 			InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
+		}
+
+		private static void CallValidatorsOn(object[] @params)
+		{
+			if (!@params.Any()) return;
+			var metadata = ModelMetadataProviders.Current.GetMetadataForType(() => @params[0], @params[0].GetType());
+			var controllerContext = ControllerContext();
+
+			var validators = ModelValidatorProviders.Providers.GetValidators(metadata, controllerContext);
+
+			foreach (var error in 
+								  from p in @params.Where(p => p != null) 
+								  from validator in validators 
+								  from error in validator.Validate(p) 
+								  select error) 
+			{
+				class_under_test.ModelState.AddModelError(error.MemberName, error.Message);
+			}
+			
+		}
+
+		static ControllerContext ControllerContext(string accept  = "*/*")
+		{
+			var httpContext = FakeHttpContext.Root();
+			var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
+			var reponse = new HttpResponseForViewExecution();
+			httpContext.SetRequest(request);
+			httpContext.SetResponse(reponse);
+			var controllerContext = new ControllerContext(new RequestContext(httpContext, GetRouteData(lasturi)), GetController());
+			return controllerContext;
 		}
 
 		protected static void get(string uri) { FauxHttp("GET", uri, new object[] {}); }
@@ -326,16 +356,11 @@ namespace Snooze.MSpec
 	
 		static FakeHttpContext Render(string accept)
 		{
-			var httpContext = FakeHttpContext.Root();
-			var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
-			var reponse = new HttpResponseForViewExecution();
-			httpContext.SetRequest(request);
-			httpContext.SetResponse(reponse);
-			result.ExecuteResult(new ControllerContext(
-				new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
+			var controllerContext = ControllerContext(accept);
+			result.ExecuteResult(controllerContext);
 
-			httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
-			return httpContext;
+			controllerContext.HttpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
+			return (FakeHttpContext) controllerContext.HttpContext;
 		}
 	}
 
