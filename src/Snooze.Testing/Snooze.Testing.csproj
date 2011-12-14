@@ -139,6 +139,16 @@
     <Compile Include="Automocking\MoqContrib.AutoMock\MockHeap.cs" />
     <Compile Include="Automocking\MoqContrib.AutoMock\MockingUtilities.cs" />
     <Compile Include="Automocking\MoqContrib.AutoMock\UnmockableException.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\ExpressionTreeBasedDelegateBuilder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryArguments.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryParameter.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryParametersStore.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\IDelegateBuilder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\LightweightFactory.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\LightweightFactoryFacility.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\NoUniqueComponentException.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\ParametersBinder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\Tokens.cs" />
     <Compile Include="FakeCachePolicy.cs" />
     <Compile Include="MSpec\with_auto_mocking.cs" />
     <Compile Include="MSpec\with_controller.cs" />

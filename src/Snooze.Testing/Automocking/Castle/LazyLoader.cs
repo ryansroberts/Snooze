@@ -18,6 +18,11 @@ namespace Snooze.AutoMock.Castle
 
 		public IRegistration Load(string key, Type service, System.Collections.IDictionary arguments)
 		{
+			if (typeof(MulticastDelegate).IsAssignableFrom(service))
+			{
+				return null;
+			}
+
 			// if we've gotten this far, the container definitely doesn't have the component
 			if (service.IsInterface || service.IsAbstract)
 				return Component.For(service).Instance(_helper.CreateUnregisteredMock(service).Object);

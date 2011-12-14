@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/kkozmic/!svn/ver/82/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory
+END
+LightweightFactoryFacility.cs
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/kkozmic/!svn/ver/80/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/LightweightFactoryFacility.cs
+END
+FactoryArguments.cs
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/kkozmic/!svn/ver/81/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/FactoryArguments.cs
+END
+ExpressionTreeBasedDelegateBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/kkozmic/!svn/ver/81/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/ExpressionTreeBasedDelegateBuilder.cs
+END
+Castle.Facilities.LightweighFactory.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/kkozmic/!svn/ver/81/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/Castle.Facilities.LightweighFactory.csproj
+END
+Tokens.cs
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/kkozmic/!svn/ver/82/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/Tokens.cs
+END
+NoUniqueComponentException.cs
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/kkozmic/!svn/ver/80/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/NoUniqueComponentException.cs
+END
+LightweightFactory.cs
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/kkozmic/!svn/ver/80/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/LightweightFactory.cs
+END
+ParametersBinder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/kkozmic/!svn/ver/82/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/ParametersBinder.cs
+END
+FactoryParameter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/kkozmic/!svn/ver/77/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/FactoryParameter.cs
+END
+FactoryParametersStore.cs
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/kkozmic/!svn/ver/81/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/FactoryParametersStore.cs
+END
+IDelegateBuilder.cs
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/kkozmic/!svn/ver/62/Garage/Castle.LightweightFactoryFacility/src/Castle.Facilities.LightweighFactory/IDelegateBuilder.cs
+END

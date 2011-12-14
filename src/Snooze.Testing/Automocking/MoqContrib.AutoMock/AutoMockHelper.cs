@@ -125,21 +125,24 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 		public void MockMyDependencies(Type service)
 		{
 			var ctor = service.GetConstructors().OrderByDescending(x => x.GetParameters().Length).First();
-			if (!(service.IsAbstract && service.IsInterface) && !Container.Kernel.HasComponent(service))
+			if (!(service.IsAbstract && service.IsInterface && typeof(MulticastDelegate).IsAssignableFrom(service)) && !Container.Kernel.HasComponent(service))
 				Container.Register(Component.For(service));
 			
 			foreach (var param in ctor.GetParameters())
 			{
-				//Register concrete  type if..concrete
-				if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
+				if (!typeof(MulticastDelegate).IsAssignableFrom(param.ParameterType))
 				{
-					if (!Container.Kernel.HasComponent(param.ParameterType))
+					//Register concrete  type if..concrete 
+					if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
 					{
-						Container.Register(Component.For(param.ParameterType));
+						if (!Container.Kernel.HasComponent(param.ParameterType))
+						{
+							Container.Register(Component.For(param.ParameterType));
+						}
+
 					}
-					
+					else Get(param.ParameterType);
 				}
-				else Get(param.ParameterType);
 			}
 		}
 

@@ -1,4 +1,6 @@
-﻿using Castle.Windsor;
+﻿using Castle.Core.Configuration;
+using Castle.Facilities.LightweighFactory;
+using Castle.Windsor;
 using Castle.MicroKernel.Resolvers;
 using Castle.MicroKernel.Registration;
 using Snooze.AutoMock.Castle.MoqContrib.AutoMock;
@@ -33,6 +35,8 @@ namespace Snooze.AutoMock.Castle
 			_helper = helper;
 			_latentMocker = latentMocker;
 			Initialize();
+
+
 		}
 
         private AutoMockContainer(AutoMockHelper helper)
@@ -44,8 +48,23 @@ namespace Snooze.AutoMock.Castle
 			Initialize();
         }
 
+		public static readonly string FactoryKey = "lightweight-factory";
+		public static readonly string DelegateBuilderKey = "lightweight-factory-delegate-builder";
+
+		
 		private void Initialize()
 		{
+			Kernel.Resolver.AddSubResolver(new ParametersBinder());
+			if (!Kernel.HasComponent(FactoryKey))
+			{
+				Kernel.AddComponent(FactoryKey, typeof(ILazyComponentLoader), typeof(LightweightFactory));
+			}
+			if (!Kernel.HasComponent(DelegateBuilderKey))
+			{
+				Kernel.AddComponent(DelegateBuilderKey, typeof(IDelegateBuilder),
+									typeof(ExpressionTreeBasedDelegateBuilder));
+			}
+	
 			Register(Component.For<ILazyComponentLoader>().Instance(new LazyLoader(_latentMocker)));
 		}
 

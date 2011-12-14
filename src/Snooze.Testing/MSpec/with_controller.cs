@@ -101,6 +101,15 @@ namespace Snooze.MSpec
 			if (methods.Count() == 0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
+			var actionDict = new Dictionary<string, object>();
+
+			for(var i = 0;i != additionalParameters.Length; i++)
+			{
+				actionDict[methods.First().GetParameters()[i].Name] = additionalParameters[i];
+			}
+
+			CallActionExecuting(httpMethod, actionDict, methods);
+
 			if (methods.First().GetParameters().Count() > 1)
 			{
 				InvokeUrlAndModel(route, additionalParameters, queryString, methods);
@@ -110,9 +119,30 @@ namespace Snooze.MSpec
 				InvokeCommand(route, additionalParameters, queryString, methods);
 			}
 
+			CallActionExecuted(httpMethod, actionDict, methods);
+
 		}
 
-		static void InvokeCommand(
+    	static void CallActionExecuted(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods) {
+			var executingContext = new ActionExecutedContext(ControllerContext(),
+					new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))),
+					actionDict
+					);
+
+			class_under_test.InvokeMethod("OnActionExecuting", new[] { executingContext });
+		}
+
+    	static void CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
+    	{
+    		var executingContext = new ActionExecutingContext(ControllerContext(),
+    			new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof (THandler))),
+    			actionDict
+    			);
+
+    		class_under_test.InvokeMethod("OnActionExecuted", new[] {executingContext});
+    	}
+
+    	static void InvokeCommand(
             RouteData route, object[] additionalParameters, 
             NameValueCollection queryString, 
             IEnumerable<MethodInfo> methods)
@@ -233,6 +263,8 @@ namespace Snooze.MSpec
 				throw new ApplicationException("Uris in specs should not start with /");
 
 			lasturi = uri;
+
+		
 
 			InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
 		}
