@@ -41,7 +41,8 @@ namespace Snooze.MSpec
         }
 
 		Establish routing = with_routing<THandler>.enabled;
-		[ThreadStatic] static string lasturi;
+
+		static string lasturi;
 
 		protected static THandler GetController() { return autoMocker.ClassUnderTest; }
 
@@ -118,20 +119,9 @@ namespace Snooze.MSpec
 			{
 				InvokeCommand(route, additionalParameters, queryString, methods);
 			}
-
-			CallActionExecuted(httpMethod, actionDict, methods);
-
 		}
 
-    	static void CallActionExecuted(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods) {
-			var executingContext = new ActionExecutedContext(ControllerContext(),
-					new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))),
-					actionDict
-					);
-
-			class_under_test.InvokeMethod("OnActionExecuting", new[] { executingContext });
-		}
-
+    	
     	static void CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
     	{
     		var executingContext = new ActionExecutingContext(ControllerContext(),
@@ -139,7 +129,11 @@ namespace Snooze.MSpec
     			actionDict
     			);
 
-    		class_under_test.InvokeMethod("OnActionExecuted", new[] {executingContext});
+    		typeof (THandler).InvokeMember("OnActionExecuting",
+    			BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
+    			null,
+    			class_under_test,
+    			new[] {executingContext});
     	}
 
     	static void InvokeCommand(
@@ -264,9 +258,28 @@ namespace Snooze.MSpec
 
 			lasturi = uri;
 
-		
+			CallValidatorsOn(@params);
 
 			InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
+		}
+
+		private static void CallValidatorsOn(object[] @params)
+		{
+			if (!@params.Any()) return;
+			var metadata = ModelMetadataProviders.Current.GetMetadataForType(() => @params[0], @params[0].GetType());
+			var controllerContext = ControllerContext();
+
+			var validators = ModelValidatorProviders.Providers.GetValidators(metadata, controllerContext);
+
+			foreach (var error in
+								  from p in @params.Where(p => p != null)
+								  from validator in validators
+								  from error in validator.Validate(p)
+								  select error)
+			{
+				class_under_test.ModelState.AddModelError(error.MemberName, error.Message);
+			}
+
 		}
 
 		protected static void get(string uri) { FauxHttp("GET", uri, new object[] {}); }
@@ -363,18 +376,24 @@ namespace Snooze.MSpec
 	
 		static FakeHttpContext Render(string accept)
 		{
-			var httpContext = FakeHttpContext.Root();
-			var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
-			var reponse = new HttpResponseForViewExecution();
-			httpContext.SetRequest(request);
-			httpContext.SetResponse(reponse);
-			result.ExecuteResult(new ControllerContext(
-				new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
+			var controllerContext = ControllerContext(accept);
 
-			httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
-			return httpContext;
+			result.ExecuteResult(controllerContext);
+
+			controllerContext.HttpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
+			return (FakeHttpContext) controllerContext.HttpContext;
 		}
-	}
+
+    	static ControllerContext ControllerContext(string accept = "*/*")
+    	{
+    		var httpContext = FakeHttpContext.Root();
+    		var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
+    		var reponse = new HttpResponseForViewExecution();
+    		httpContext.SetRequest(request);
+    		httpContext.SetResponse(reponse);
+    		return  new ControllerContext(new RequestContext(httpContext, GetRouteData(lasturi)), GetController());
+    	}
+    }
 
 
 	public class HttpRequestForViewExecution : FakeHttpRequest
