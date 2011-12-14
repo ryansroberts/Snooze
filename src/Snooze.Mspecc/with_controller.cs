@@ -16,25 +16,28 @@ using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json.Linq;
 using MvcContrib.TestHelper.Fakes;
+using Snooze.ViewTesting.Spark;
+using Spark;
 
 namespace Snooze.MSpec
 {
-	public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
-		where THandler : ResourceController
-	{
-		static ResourceResult result;
-		static string pathToApplicationUnderTest;
+    public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
+        where THandler : ResourceController
+    {
+        static ResourceResult result;
+        static string pathToApplicationUnderTest;
 
-		protected static void application_under_test_is_here(string path)
-		{
-			ViewEngines.Engines.Clear();
-			pathToApplicationUnderTest = new Uri(
-				(Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
-				.AbsoluteUri
-				.Replace("file:///", "")
-				.Replace("/", "\\");
-			ViewEngines.Engines.Add(new TestableSparkViewEngine(pathToApplicationUnderTest));
-		}
+        protected static void application_under_test_is_here(string path)
+        {
+            ViewEngines.Engines.Clear();
+            pathToApplicationUnderTest = new Uri(
+                (Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
+                .AbsoluteUri
+                .Replace("file:///", "")
+                .Replace("/", "\\");
+            ViewEngines.Engines.Add(
+                new TestableSparkViewEngine(pathToApplicationUnderTest));
+        }
 
 		Establish routing = with_routing<THandler>.enabled;
 		[ThreadStatic] static string lasturi;
@@ -92,6 +95,8 @@ namespace Snooze.MSpec
 				      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
 				select m;
 
+            autoMocker.ClassUnderTest.HttpVerb = (HttpVerbs)Enum.Parse(typeof(HttpVerbs), httpMethod, true);
+
 			if (methods.Count() == 0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
@@ -106,10 +111,10 @@ namespace Snooze.MSpec
 
 		}
 
-		static void InvokeCommand(RouteData route,
-		                          object[] additionalParameters,
-		                          NameValueCollection queryString,
-		                          IEnumerable<MethodInfo> methods)
+		static void InvokeCommand(
+            RouteData route, object[] additionalParameters, 
+            NameValueCollection queryString, 
+            IEnumerable<MethodInfo> methods)
 		{
 			var command = FromContext(route, queryString);
 
@@ -127,10 +132,9 @@ namespace Snooze.MSpec
 				args.ToArray());
 		}
 
-		static void InvokeUrlAndModel(RouteData route,
-		                              object[] additionalParameters,
-		                              NameValueCollection queryString,
-		                              IEnumerable<MethodInfo> methods)
+		static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, 
+            NameValueCollection queryString, 
+            IEnumerable<MethodInfo> methods)
 		{
 			var args = new List<object>(new[] {FromContext(route, queryString)});
 			args.AddRange(additionalParameters);

@@ -1,4 +1,6 @@
-﻿using Fizzler.Systems.HtmlAgilityPack;
+﻿using System.Linq;
+using System.Web.Mvc;
+using Fizzler.Systems.HtmlAgilityPack;
 using Machine.Specifications;
 using SampleApplication.Controllers;
 using Snooze.MSpec;
@@ -32,7 +34,29 @@ namespace Snooze
 		Because of = () => get("commandhandler/stupid");
 
 		It is_routable = is_200;
+
+	    It method_is_set = () => class_under_test.HttpVerb.ShouldEqual(HttpVerbs.Get);
 	}
+
+    
+    public class access_viewbag : with_controller<HomeViewModel, HomeController>
+    {
+        Establish view_location = () =>
+        {
+            application_under_test_is_here("../SampleApplication");
+            class_under_test.ViewBag.Stuff = "stuff";
+        };
+
+        Because of = () => get("");
+
+        It content_negotiates_texthtml = () => conneg_html()
+                .DocumentNode.InnerText.ShouldContain("HELLO");
+
+        private It has_viewbag_content =
+            () => conneg_html().DocumentNode.QuerySelectorAll("html").First().InnerText.ShouldContain("stuff");
+
+        It has_no_parse_errors = () => markup_is_valid_according_to_dtd();
+    }
 
 	public class content_negotiate_texthtml : with_controller<HomeViewModel,HomeController>
 	{
