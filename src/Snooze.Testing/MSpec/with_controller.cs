@@ -140,24 +140,40 @@ namespace Snooze.MSpec
             RouteData route, object[] additionalParameters, 
             NameValueCollection queryString, 
             IEnumerable<MethodInfo> methods)
-		{
-			var command = FromContext(route, queryString);
+    	{
+
+    		object command; 
 
 			if (additionalParameters.Any())
-			{
-				foreach (var prop in additionalParameters.First().GetType().GetProperties())
-				{
-					command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
-				}
-			}
-
-			var args = new List<object>(new[] {command});
+				command = CreateCommandFromAdditionalParameters(route, additionalParameters, queryString);
+			else
+				command = CreateCommandFromUri(route, additionalParameters, queryString);
+	
+    		var args = new List<object>(new[] {command});
 
 			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest,
 				args.ToArray());
 		}
 
-		static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, 
+    	static object CreateCommandFromUri(RouteData route, object[] additionalParameters, NameValueCollection queryString)
+    	{
+    		object command;
+    		command = FromContext(route, queryString);
+    		return command;
+    	}
+
+    	static object CreateCommandFromAdditionalParameters(RouteData route,
+    	                                                    object[] additionalParameters,
+    	                                                    NameValueCollection queryString)
+    	{
+    		object command;
+    		command = additionalParameters.First();
+    		foreach (var prop in FromContext(route, queryString).GetType().GetProperties())
+    			command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
+    		return command;
+    	}
+
+    	static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, 
             NameValueCollection queryString, 
             IEnumerable<MethodInfo> methods)
 		{
@@ -170,7 +186,6 @@ namespace Snooze.MSpec
 
 		protected static Url FromContext(RouteData data, NameValueCollection queryString)
 		{
-
 			var url = Activator.CreateInstance(data.Route.GetType().GetGenericArguments()[0]);
 
 			AssignParentUrl(url, data, queryString);
@@ -195,7 +210,6 @@ namespace Snooze.MSpec
 			}
 			return null;
 		}
-
 
 
 		static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)

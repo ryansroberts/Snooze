@@ -27,15 +27,23 @@ namespace Snooze
 
 	public class handlers_are_routable : with_controller<RoutableHandler.Command, RoutableHandler>
 	{
-		Establish context = () =>
-		{
-		};
 
 		Because of = () => get("commandhandler/stupid");
 
 		It is_routable = is_200;
 
 	    It method_is_set = () => class_under_test.HttpVerb.ShouldEqual(HttpVerbs.Get);
+	}
+
+	public class handlers_preserve_command_identity : with_controller<RoutableHandler.Command, RoutableHandler>
+	{
+		static RoutableHandler.Command cmd;
+
+		Because of = () => get("commandhandler/stupid", cmd = new RoutableHandler.Command());
+
+		It is_routable = is_200;
+
+		It command_is_passed_object = () => cmd.ShouldBeTheSameAs(Resource);
 	}
 
     
