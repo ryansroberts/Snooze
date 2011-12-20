@@ -28,16 +28,15 @@ namespace Snooze.Routing
 		/// <returns></returns>
         public IEnumerable<IRouteRegistration> Scan(Assembly assembly)
 		{
-			return Enumerable.Concat(
-				    assembly.GetTypes().SelectMany(t => Enumerable.Concat(new[] {t}, t.GetNestedTypes()))
-						.Where(IsConstructableRouteRegistration)
-						.Select(t => (IRouteRegistration) Activator.CreateInstance(t)),
-					assembly.GetTypes().Where(t => typeof (Handler).IsAssignableFrom(t))
-						.Select(t => new DelegatedRouteRegistration(
-							(Handler.Register) t.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Where(f => typeof (Handler.Register).IsAssignableFrom(f.FieldType))
-							.Select(f => f.GetValue(null))
-							.FirstOrDefault())
-						));
+            return Enumerable.Concat(
+                    assembly.GetTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetNestedTypes()))
+                        .Where(IsConstructableRouteRegistration)
+                        .Select(t => (IRouteRegistration)Activator.CreateInstance(t)),
+                    assembly.GetTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
+                        .SelectMany(t => t.GetFields(BindingFlags.NonPublic | BindingFlags.Static)
+                            .Where(f => typeof(Handler.Register).IsAssignableFrom(f.FieldType))
+                            .Select(f => new DelegatedRouteRegistration((Handler.Register)f.GetValue(null)))
+                        ));
 	    }
 
 
