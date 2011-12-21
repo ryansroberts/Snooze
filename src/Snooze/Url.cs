@@ -135,6 +135,10 @@ namespace Snooze
             {
                 return GetType().Name + "-NotConfigured";
             }
+			if(vp == null)
+			{
+				return "No route for " + GetType().Name + " name: " + name + " values: " + string.Join(",", values.Keys.ToArray());
+			}
 
             return vp.VirtualPath;
         }

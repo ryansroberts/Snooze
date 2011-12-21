@@ -271,7 +271,6 @@ namespace Snooze.MSpec
 				throw new ApplicationException("Uris in specs should not start with /");
 
 			lasturi = uri;
-
 			CallValidatorsOn(@params);
 
 			InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
@@ -293,7 +292,6 @@ namespace Snooze.MSpec
 			{
 				class_under_test.ModelState.AddModelError(error.MemberName, error.Message);
 			}
-
 		}
 
 		protected static void get(string uri) { FauxHttp("GET", uri, new object[] {}); }
