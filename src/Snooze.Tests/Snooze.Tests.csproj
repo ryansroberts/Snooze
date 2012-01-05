@@ -105,6 +105,7 @@
     <Compile Include="FutureActionSpecs.cs" />
     <Compile Include="InputFacts.cs" />
     <Compile Include="Mapping.cs" />
+    <Compile Include="MspecMockingSpecs.cs" />
     <Compile Include="RenderingViews.cs" />
     <Compile Include="RequiredInputFacts.cs" />
     <Compile Include="ResourceControllerSpecs.cs" />

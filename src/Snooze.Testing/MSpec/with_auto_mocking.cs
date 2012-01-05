@@ -12,9 +12,19 @@ namespace Snooze.MSpec
 
 		public static Mock<TInterface> Stub<TInterface>() where TInterface : class
 		{
-			var mocked = autoMocker.GetService<TInterface>();
-			return Mock.Get(mocked);
+		    return autoMocker.CreateMock<TInterface>();
 		}
+
+
+        public static T Inject<T>(T instance)
+        {
+            return autoMocker.Inject(instance);
+        }
+
+        //protected static void InjectArray<T>(T[] objects)
+        //{
+        //    autoMocker.InjectArray(objects);
+        //}
 
 		protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
 

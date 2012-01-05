@@ -4,6 +4,7 @@ using System.Linq;
 using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Moq;
 using System.Linq.Expressions;
@@ -46,7 +47,21 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
             _generator = generator;
         }
 
-    	/// <summary>
+        public void RegisterInstances(Type type, object[] instances)
+        {
+            if(instances==null||instances.Length==0)
+                return;
+
+            
+            Container.Kernel.Resolver.AddSubResolver(new ArrayResolver(Container.Kernel));
+            
+            foreach (var instance in instances)
+            {
+                Container.Register(Component.For(type).Instance(instance));
+            }
+        }
+
+        /// <summary>
     	/// This is required to be set before 
     	/// </summary>
     	public IWindsorContainer Container { get; set; }
@@ -132,17 +147,17 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 			{
 				if (!typeof(MulticastDelegate).IsAssignableFrom(param.ParameterType))
 				{
-					//Register concrete  type if..concrete 
-					if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
-					{
-						if (!Container.Kernel.HasComponent(param.ParameterType))
-						{
-							Container.Register(Component.For(param.ParameterType));
-						}
-
-					}
-					else Get(param.ParameterType);
+				    if (!Container.Kernel.HasComponent(param.ParameterType))
+				    {
+				        //Register concrete  type if..concrete 
+				        if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
+				            Container.Register(Component.For(param.ParameterType));
+				        
+				    }
+				    else
+				        Get(param.ParameterType);
 				}
+
 			}
 		}
 

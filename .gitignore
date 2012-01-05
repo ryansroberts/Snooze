@@ -18,3 +18,4 @@ _ReSharper.*
 src/packages
 src/Snooze.Package.Solution/packages
 src/Snooze.Testing.Package.Solution/packages
+/src/Snooze.sln.DotSettings.user

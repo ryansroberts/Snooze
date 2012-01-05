@@ -3,6 +3,7 @@ using Castle.Facilities.LightweighFactory;
 using Castle.Windsor;
 using Castle.MicroKernel.Resolvers;
 using Castle.MicroKernel.Registration;
+using Moq;
 using Snooze.AutoMock.Castle.MoqContrib.AutoMock;
 
 namespace Snooze.AutoMock.Castle
@@ -86,6 +87,24 @@ namespace Snooze.AutoMock.Castle
 			internal set { _helper = value; }
         }
 
+        public Mock<T> CreateMock<T>() where T : class
+        {
+            return _helper.Get<T>();
+        }
+
+        public T Inject<T>(T instance)
+        {
+            _helper.RegisterInstance(typeof(T), instance);
+            return instance;
+        }
+
+        //public void InjectArray<T>(T[] objects)
+        //{
+        //    if(objects==null)
+        //        return;
+        //    _helper.RegisterInstances(typeof(T),objects.Cast<object>().ToArray());
+        //}
+
         #endregion
     }
 
@@ -93,15 +112,12 @@ namespace Snooze.AutoMock.Castle
 	{
 		protected TUnderTest classUnderTest;
 
-		public T Inject<T>(T instance) { 
-			_helper.RegisterInstance(typeof(T), instance);
-			return instance;
-		}
-
 
 		public TUnderTest ClassUnderTest
 		{
 			get { return classUnderTest ?? (classUnderTest = _helper.CreateTestSubject<TUnderTest>()); }
 		}
+
+	    
 	}
 }

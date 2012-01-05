@@ -333,6 +333,9 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
     	/// <param name="instance"></param>
     	void RegisterInstance(Type[] services, object instance);
 
+
+        void RegisterInstances(Type type, object[] instances);
+
     	/// <summary>
     	/// This is required to be set before 
     	/// </summary>
