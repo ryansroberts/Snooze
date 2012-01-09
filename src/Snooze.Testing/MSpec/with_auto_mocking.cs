@@ -28,5 +28,7 @@ namespace Snooze.MSpec
 
 		protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
 
+        protected static TUnderTest Service { get { return class_under_test; } }
+
 	}
 }
