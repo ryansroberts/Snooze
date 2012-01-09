@@ -21,10 +21,10 @@ namespace Snooze.MSpec
             return autoMocker.Inject(instance);
         }
 
-        //protected static void InjectArray<T>(T[] objects)
-        //{
-        //    autoMocker.InjectArray(objects);
-        //}
+        protected static void InjectArray<T>(T[] objects)
+        {
+            autoMocker.InjectArray(objects);
+        }
 
 		protected static TUnderTest class_under_test { get { return autoMocker.ClassUnderTest; } }
 

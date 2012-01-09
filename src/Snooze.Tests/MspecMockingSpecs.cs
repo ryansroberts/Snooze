@@ -5,27 +5,44 @@ namespace Snooze
 {
     public class MspecMockingSpecs
     {
-        //[Ignore("This is tricky!.... ")]
-        //public class when_injecting_an_array : with_auto_mocking<ArrayReturner>
-        //{
-        //    static ISomethingInterface[] result;
+        [Subject(typeof(with_auto_mocking<ArrayReturner>))]
+        public class when_injecting_an_array : with_auto_mocking<ArrayReturner>
+        {
+            static ISomethingInterface[] result;
 
-        //    Establish context = () => InjectArray(new ISomethingInterface[] {new MyClassWithVirtuals {something = "something"}, new MyClassWithVirtuals2 {something = "something else"}});
+            Establish context = () => InjectArray(new ISomethingInterface[] { new MyClassWithVirtuals { something = "something" }, new MyClassWithVirtuals2 { something = "something else" } });
 
-        //    Because of = () => result = class_under_test.ReturnArray();
+            Because of = () => result = class_under_test.ReturnArray();
 
-        //    It should_return_something = () => result.ShouldNotBeNull();
+            It should_return_something = () => result.ShouldNotBeNull();
 
-        //    It should_have_two_elements = () => result.Length.ShouldEqual(2);
+            It should_have_two_elements = () => result.Length.ShouldEqual(2);
 
-        //    It should_return_them_in_the_input_order = () => result[1].something.ShouldEqual("something else");
-
-
-        //}
+            It should_return_them_in_the_input_order = () => result[1].something.ShouldEqual("something else");
 
 
+        }
+
+        [Subject(typeof(with_auto_mocking<ArrayReturner>))]
+        public class when_depending_on_an_array_not_injected : with_auto_mocking<ArrayReturner>
+        {
+            static ISomethingInterface[] result;
+
+            Establish context = () => InjectArray(new ISomethingInterface[] { new MyClassWithVirtuals { something = "something" }, new MyClassWithVirtuals2 { something = "something else" } });
+
+            Because of = () => result = class_under_test.ReturnArray();
+
+            It should_return_something = () => result.ShouldNotBeNull();
+
+            It should_have_two_elements = () => result.Length.ShouldEqual(2);
+
+            It should_return_them_in_the_input_order = () => result[1].something.ShouldEqual("something else");
 
 
+        }
+
+
+        [Subject(typeof(with_auto_mocking<Depender>))]
         public class depender_when_injecting : with_auto_mocking<Depender>
         {
             static ISomethingInterface result;
@@ -41,7 +58,7 @@ namespace Snooze
 
         }
 
-
+        [Subject(typeof(with_auto_mocking<Depender>))]
         public class depender_when_not_injecting : with_auto_mocking<Depender>
         {
             static ISomethingInterface result;
@@ -57,7 +74,7 @@ namespace Snooze
 
 
 
-
+        [Subject(typeof(with_auto_mocking<Returner>))]
         public class returner_when_injecting : with_auto_mocking<Returner>
         {
             static MyClassWithVirtuals result;
@@ -73,7 +90,7 @@ namespace Snooze
 
         }
 
-
+        [Subject(typeof(with_auto_mocking<Returner>))]
         public class returner_when_not_injecting : with_auto_mocking<Returner>
         {
             static MyClassWithVirtuals result;
@@ -88,7 +105,7 @@ namespace Snooze
         }
 
 
-
+        [Subject(typeof(with_auto_mocking<Returner>))]
         public class when_stubbing_a_virtual_with_auto_mockery : with_auto_mocking<Returner>
         {
             static MyClassWithVirtuals result;
@@ -122,14 +139,14 @@ namespace Snooze
 
         public class ArrayReturner
         {
-            protected readonly MyClassWithVirtuals[] inputs;
+            protected readonly ISomethingInterface[] inputs;
 
-            public ArrayReturner(MyClassWithVirtuals[] inputs)
+            public ArrayReturner(ISomethingInterface[] inputs)
             {
                 this.inputs = inputs;
             }
 
-            public MyClassWithVirtuals[] ReturnArray()
+            public ISomethingInterface[] ReturnArray()
             {
                 return inputs;
             }

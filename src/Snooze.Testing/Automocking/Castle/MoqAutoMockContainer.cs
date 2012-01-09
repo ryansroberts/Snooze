@@ -1,5 +1,6 @@
 ﻿using Castle.Core.Configuration;
 using Castle.Facilities.LightweighFactory;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Castle.MicroKernel.Resolvers;
 using Castle.MicroKernel.Registration;
@@ -56,6 +57,7 @@ namespace Snooze.AutoMock.Castle
 		private void Initialize()
 		{
 			Kernel.Resolver.AddSubResolver(new ParametersBinder());
+            Kernel.Resolver.AddSubResolver(new ArrayResolver(Kernel, true));
 			if (!Kernel.HasComponent(FactoryKey))
 			{
 				Kernel.AddComponent(FactoryKey, typeof(ILazyComponentLoader), typeof(LightweightFactory));
@@ -98,12 +100,12 @@ namespace Snooze.AutoMock.Castle
             return instance;
         }
 
-        //public void InjectArray<T>(T[] objects)
-        //{
-        //    if(objects==null)
-        //        return;
-        //    _helper.RegisterInstances(typeof(T),objects.Cast<object>().ToArray());
-        //}
+        public void InjectArray<T>(T[] objects)
+        {
+            if (objects == null)
+                return;
+            _helper.RegisterInstances(typeof(T), objects.Cast<object>().ToArray());
+        }
 
         #endregion
     }

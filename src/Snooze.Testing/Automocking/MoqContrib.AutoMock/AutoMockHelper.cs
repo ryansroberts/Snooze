@@ -52,9 +52,6 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
             if(instances==null||instances.Length==0)
                 return;
 
-            
-            Container.Kernel.Resolver.AddSubResolver(new ArrayResolver(Container.Kernel));
-            
             foreach (var instance in instances)
             {
                 Container.Register(Component.For(type).Instance(instance));
@@ -147,6 +144,11 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 			{
 				if (!typeof(MulticastDelegate).IsAssignableFrom(param.ParameterType))
 				{
+                    if(param.ParameterType.IsArray)
+                    {
+                        continue;
+                    }
+
 				    if (!Container.Kernel.HasComponent(param.ParameterType))
 				    {
 				        //Register concrete  type if..concrete 
