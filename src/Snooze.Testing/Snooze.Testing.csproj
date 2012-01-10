@@ -52,7 +52,7 @@
       <HintPath>..\lib\fizzler\Fizzler.Systems.XmlNodeQuery.dll</HintPath>
     </Reference>
     <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
-      <HintPath>..\packages\Snooze.1.0.43.0\lib\net40\Glue.dll</HintPath>
+      <HintPath>..\packages\Snooze.1.0.77.0\lib\net40\Glue.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\lib\fizzler\HtmlAgilityPack.dll</HintPath>
@@ -71,8 +71,9 @@
     <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.91.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
@@ -98,9 +99,9 @@
     <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Should.1.1.12.0\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="Snooze, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Snooze, Version=1.0.77.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Snooze.1.0.43.0\lib\net40\Snooze.dll</HintPath>
+      <HintPath>..\packages\Snooze.1.0.77.0\lib\net40\Snooze.dll</HintPath>
     </Reference>
     <Reference Include="Spark, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
