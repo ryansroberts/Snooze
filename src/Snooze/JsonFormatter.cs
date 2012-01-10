@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Glue;
+using Newtonsoft.Json;
 
 #endregion
 
@@ -22,10 +23,8 @@ namespace Snooze
 
         public void Output(ControllerContext context, object resource, string contentType)
         {
-			var s = new JavaScriptSerializer();
-			s.RegisterConverters(new[] { new UrlConverter() });
-			var json = s.Serialize(resource);
 
+            var json = JsonConvert.SerializeObject(resource, new JsonConverter[]{new UrlConverter()});
 	
 			if(context.HttpContext.Request.QueryString["callback"] != null)
 			{

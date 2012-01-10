@@ -13,6 +13,7 @@ namespace SampleApplication.Controllers
 
             return OK(new HomeViewModel
             {
+                Login = new LoginUrl(),
                 BooksLink = new BooksUrl().ToString()
             });
             

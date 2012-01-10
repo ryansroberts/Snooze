@@ -146,8 +146,17 @@ namespace Snooze
 	{
 		Establish view_location = () => application_under_test_is_here("../SampleApplication");
 
-		Because of = () => get("");
+	    static string json;
+
+	    Because of = () =>
+	        {
+	            get("");
+
+	            json = conneg_json().ToString();
+	        };
 
 		It content_negotiates_json = () => conneg_json().ShouldNotBeEmpty();
+
+	    It json_has_custom_url_serialised = () => conneg_json().ToString().ShouldContain("value");
 	}
 }
