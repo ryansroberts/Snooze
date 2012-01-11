@@ -15,10 +15,8 @@ using HtmlAgilityPack;
 using Machine.Specifications;
 using Moq;
 using Newtonsoft.Json.Linq;
-using MvcContrib.TestHelper.Fakes;
 using Snooze.Testing;
 using Snooze.ViewTesting.Spark;
-using Spark;
 
 namespace Snooze.MSpec
 {
@@ -256,7 +254,7 @@ namespace Snooze.MSpec
 		{
 			var path = new Uri("http://local.com/" + uri).AbsolutePath;
 			var qs = new Uri("http://local.com/" + uri).Query;
-			var context = new FakeHttpContext("~" + path, null, null, HttpUtility.ParseQueryString(qs), null, null);
+		    var context = new FakeHttpContext(new FakeHttpRequest(path) { _queryString = HttpUtility.ParseQueryString(qs)});
 
 			var routeData = RouteTable.Routes.GetRouteData(context);
 
@@ -337,8 +335,7 @@ namespace Snooze.MSpec
 
 		protected static void has_location_header(string value)
 		{
-			var header = result.Headers.Where(h => h.Key.Equals("location", StringComparison.InvariantCultureIgnoreCase))
-				.FirstOrDefault();
+			var header = result.Headers.FirstOrDefault(h => h.Key.Equals("location", StringComparison.InvariantCultureIgnoreCase));
 
 			header.ShouldNotBeNull();
 			header.First().ShouldEqual(value);
@@ -348,7 +345,7 @@ namespace Snooze.MSpec
 		{
 			var httpContext = Render(accept);
 
-			return JObject.Parse(((HttpResponseForViewExecution) httpContext.Response).Content());
+            return JObject.Parse(httpContext._response.ResponseOutput);
 		}
 
 		protected static HtmlDocument conneg_html(string accept = "text/html")
@@ -356,8 +353,8 @@ namespace Snooze.MSpec
 			var httpContext = Render(accept);
 
 			var doc = new HtmlDocument();
-		
-			doc.LoadHtml(((HttpResponseForViewExecution) httpContext.Response).Content());
+
+            doc.LoadHtml(httpContext._response.ResponseOutput);
 			return doc;
 		}
 
@@ -373,7 +370,7 @@ namespace Snooze.MSpec
 
 			var httpContext = Render(accept);
 
-			using (var reader = XmlReader.Create(new StringReader( ((HttpResponseForViewExecution) httpContext.Response).Content()),settings))
+			using (var reader = XmlReader.Create(new StringReader(httpContext._response.ResponseOutput),settings))
 			{
 				while (reader.Read()) {}
 			}
@@ -396,80 +393,20 @@ namespace Snooze.MSpec
 			var controllerContext = ControllerContext(accept);
 
 			result.ExecuteResult(controllerContext);
-
+            controllerContext.HttpContext.Response.Flush();
 			controllerContext.HttpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
 			return (FakeHttpContext) controllerContext.HttpContext;
 		}
 
     	static ControllerContext ControllerContext(string accept = "*/*")
     	{
-    		var httpContext = FakeHttpContext.Root();
-    		var request = new HttpRequestForViewExecution(new[] {accept}, lasturi);
-    		var reponse = new HttpResponseForViewExecution();
-    		httpContext.SetRequest(request);
-    		httpContext.SetResponse(reponse);
+            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi) { _acceptTypes = new[] { accept } });
     		return  new ControllerContext(new RequestContext(httpContext, GetRouteData(lasturi)), GetController());
     	}
     }
 
 
-	public class HttpRequestForViewExecution : FakeHttpRequest
-	{
-		string[] acceptTypes;
-		public HttpRequestForViewExecution(string[] acceptTypes,string uri) : base(uri,null,null)
-		{
-			this.acceptTypes = acceptTypes;
-		}
-
-		public override NameValueCollection QueryString
-		{
-			get
-			{
-				return new NameValueCollection();
-			}
-		}
-
-		public override string[] AcceptTypes
-		{
-			get { return acceptTypes; }
-		}
-	}
-
-	public class HttpResponseForViewExecution : FakeHttpResponse
-	{
-		public MemoryStream Buf = new MemoryStream();
-		public StreamWriter writer;
-
-		public override Stream OutputStream
-		{
-			get { return Buf; }
-		}
-
-		public string Content()
-		{
-			writer.Flush();
-			Buf.Seek(0, SeekOrigin.Begin);
-
-			return Buf.ReadToEnd();
-		}
-
-		public override string ContentType { get; set; }
-		public override void AddHeader(string name, string value)
-		{
-			
-		}
-
-
-		public override TextWriter Output
-		{
-			get
-			{
-				return  writer?? (writer = new StreamWriter(Buf));
-			}
-			set { throw new NotImplementedException(); }
-		}
-	}
-
+	
 
 
 }
