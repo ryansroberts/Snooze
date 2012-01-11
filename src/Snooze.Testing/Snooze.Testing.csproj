@@ -68,9 +68,6 @@
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.91.0\lib\MvcContrib.TestHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -89,9 +86,6 @@
     </Reference>
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="SgmlReaderDll">
       <HintPath>..\lib\fizzler\SgmlReaderDll.dll</HintPath>
@@ -151,6 +145,10 @@
     <Compile Include="Castle.Facilities.LightweighFactory\ParametersBinder.cs" />
     <Compile Include="Castle.Facilities.LightweighFactory\Tokens.cs" />
     <Compile Include="FakeCachePolicy.cs" />
+    <Compile Include="FakeHttpContext.cs" />
+    <Compile Include="FakeHttpFileCollection.cs" />
+    <Compile Include="FakeHttpRequest.cs" />
+    <Compile Include="FakeHttpResponse.cs" />
     <Compile Include="MSpec\with_auto_mocking.cs" />
     <Compile Include="MSpec\with_controller.cs" />
     <Compile Include="MSpec\with_routing.cs" />
