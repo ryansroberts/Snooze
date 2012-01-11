@@ -298,6 +298,11 @@ namespace Snooze.MSpec
 
 		protected static void get(string uri, params object[] @params) { FauxHttp("GET", uri, @params); }
 
+        protected static void copy(string uri) { FauxHttp("COPY", uri, new object[] { }); }
+
+        protected static void copy(string uri, params object[] @params) { FauxHttp("COPY", uri, @params); }
+
+
 		protected static void post(string uri, params object[] @params) { FauxHttp("POST", uri, @params); }
 
 		protected static void put(string uri, params object[] @params) { FauxHttp("PUT", uri, @params); }

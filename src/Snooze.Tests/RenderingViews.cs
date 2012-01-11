@@ -12,63 +12,6 @@ namespace Snooze
 {
 
 
-
-	public class modestatething  : Handler
-	{
-		public class Command : Url
-		{
-			readonly List<string> strings = new List<string>();
-
-   			public string  stupid { get; set; }
-
-			[Required]
-			public string requiredButIsnt { get; set; }
-
-			public IEnumerable<string> GetStrings() { return strings; }
-
-			public void Add(string error)
-			{
-				strings.Add(error);
-			}
-		}
-
-		static Register route = r => r.Map<Command>(u => "modestatething/" + u.stupid);
-
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
-		{
-			Command cmd = filterContext.ActionParameters.First().Value as Command;
-
-			foreach (var error in ModelState["requiredButIsnt"].Errors)
-				cmd.Add(error.ErrorMessage);
-
-			base.OnActionExecuting(filterContext);
-		}
-
-		public ResourceResult Get(Command cmd)
-		{
-
-			return OK(cmd);
-		}
-	}
-
-	public class modelstate_oddness : with_controller<modestatething.Command,modestatething>
-	{
-		Establish binder = () => { ModelValidatorProviders.Providers.Add(new DataAnnotationsModelValidatorProvider()); };
-
-		Because of = () => get("modestatething/1", new modestatething.Command()
-		{
-		});
-
-		It has_one_modelerrors = () => Resource.GetStrings().Count().ShouldEqual(1);
-	}
-
-	public class modelstate_oddness2 : with_controller<modestatething.Command, modestatething>
-	{
-		Because of = () => get("modestatething/1", new modestatething.Command());
-
-		It has_one_modelerrors = () => Resource.GetStrings().Count().ShouldEqual(1);
-	}
-
 	public class RoutableHandler : Handler
 	{
 		static Register route = r => r.Map<Command>(u => "commandhandler/" + u.stupid);
