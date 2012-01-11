@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using System.Web.Routing;
-using Castle.DynamicProxy;
 
 namespace Snooze.Routing
 {
