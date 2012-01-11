@@ -19,7 +19,7 @@ namespace Snooze.Testing
             _contentEncoding = Encoding.UTF8;
             _appPathModifier = string.Empty;
             _cachePolicy = new FakeCachePolicy();
-            Output = new StreamWriter(outputStream);
+            Output = new StreamWriter(outputStream, _contentEncoding);
         }
 
         
@@ -196,7 +196,7 @@ namespace Snooze.Testing
             if (outputStream != null)
                 outputStream.Close();
             outputStream = new MemoryStream();
-            Output = new StreamWriter(outputStream);
+            Output = new StreamWriter(outputStream, _contentEncoding);
         }
 
         public override void Flush()
