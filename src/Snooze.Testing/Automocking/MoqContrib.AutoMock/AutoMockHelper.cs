@@ -151,10 +151,10 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 
 				    if (!Container.Kernel.HasComponent(param.ParameterType))
 				    {
-				        //Register concrete  type if..concrete 
-				        if (!(param.ParameterType.IsAbstract && param.ParameterType.IsInterface))
+                        if (param.ParameterType.IsAbstract || param.ParameterType.IsInterface)
+                            Container.Register(Component.For(param.ParameterType).Instance(CreateUnregisteredMock(param.ParameterType).Object));
+                        else
 				            Container.Register(Component.For(param.ParameterType));
-				        
 				    }
 				    else
 				        Get(param.ParameterType);
