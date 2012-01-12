@@ -155,8 +155,8 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
                             Container.Register(Component.For(param.ParameterType).Instance(CreateUnregisteredMock(param.ParameterType).Object));
                         else
 				            Container.Register(Component.For(param.ParameterType));
-				    }
-				    else
+					}
+				    else if (!Container.Kernel.HasComponent(param.ParameterType))
 				        Get(param.ParameterType);
 				}
 
