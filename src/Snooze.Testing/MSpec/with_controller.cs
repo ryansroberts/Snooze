@@ -239,7 +239,8 @@ namespace Snooze.MSpec
 
 				AssignUrlProperties(data, parentUrl, queryString);
 
-				url.SetPropertyValue("Parent", parentUrl);
+				if(url.GetType().GetProperty("Parent") != null)
+					url.SetPropertyValue("Parent", parentUrl);
 
 				url = parentUrl;
 			}
