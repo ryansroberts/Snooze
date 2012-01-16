@@ -132,7 +132,7 @@ namespace Snooze.ViewTesting.Spark
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 
-		protected static Func<string, bool> ViewFilter { get; set; }
+		public static Func<string, bool> ViewFilter { get; set; }
 
 		static ISparkSettings Settings()
 		{
