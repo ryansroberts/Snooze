@@ -5,7 +5,8 @@ using Snooze.AutoMock.Castle;
 
 namespace Snooze.MSpec
 {	
-    public class with_auto_mocking<TUnderTest> where TUnderTest : class
+    public class 
+		with_auto_mocking<TUnderTest> where TUnderTest : class
     {
         protected static Exception err;
     	protected static AutoMockContainer<TUnderTest> autoMocker;

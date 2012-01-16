@@ -229,7 +229,6 @@ namespace Snooze.MSpec
 
 		static void AssignParentUrl(object url, RouteData data, NameValueCollection queryString)
 		{
-
 			while (url.GetType().BaseType.IsGenericType)
 			{
 				var parentType = url.GetType().BaseType

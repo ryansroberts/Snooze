@@ -54,7 +54,8 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 
             foreach (var instance in instances)
             {
-                Container.Register(Component.For(type).Instance(instance));
+                Container.Register(Component.For(type).Instance(instance)
+					.Named(Guid.NewGuid().ToString()));
             }
         }
 
