@@ -125,12 +125,16 @@ namespace Snooze.ViewTesting.Spark
 		public TestableSparkViewEngine(string path)
 		{
 			this.path = path;
-		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path, "Views", SearchOption.AllDirectories);
+			ViewFilter = s => s.Contains("Views");
+		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path, "Views", SearchOption.AllDirectories).
+				Where(ViewFilter);
 			engine = new SparkViewEngine(Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 
-	    static ISparkSettings Settings()
+		protected static Func<string, bool> ViewFilter { get; set; }
+
+		static ISparkSettings Settings()
 		{
             var setttings = new TestSparkSettings(
                 CreateViewFolders(ViewFolders),

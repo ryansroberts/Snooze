@@ -2,7 +2,7 @@
 <html>
 	<head><title>HI</title></head>
 	<body>
-		HELLO ${ViewBag.Stuff}
+		HELLO 
 
 
 	</body>
