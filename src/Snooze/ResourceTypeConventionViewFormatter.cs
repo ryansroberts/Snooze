@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 
 #endregion
@@ -65,7 +66,7 @@ namespace Snooze
             var viewName = GetViewName(resource);
             var result = ViewEngines.Engines.FindView(context, viewName, null);
             if(result.View == null)
-                Trace.WriteLine("Could not locate view with name " + viewName);
+                Trace.WriteLine("Could not locate view with name " + viewName + " looked in" + string.Join("\r\n",result.SearchedLocations.ToArray()));
             return result;
         }
 
