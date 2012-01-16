@@ -31,7 +31,7 @@ namespace Snooze
 
 
 	    SnoozeHttpVerbs? snoozeHttpVerb = null;
-	    public SnoozeHttpVerbs SnoozeHttpVerb
+	    public SnoozeHttpVerbs HttpVerb
 	    {
 	        get
 	        {

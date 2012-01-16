@@ -48,8 +48,6 @@ namespace Snooze.FutureActionTests
 
     }
 
-    
-
     [Subject("FutureAction")]
     public class FutureActionSpecs
     {
