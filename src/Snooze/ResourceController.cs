@@ -71,7 +71,7 @@ namespace Snooze
             return new ResourceResult<object>(205, null);
         }
 
-        public virtual ResourceResult<object> MovedPermenently(Url url)
+        public virtual ResourceResult MovedPermenently(Url url)
         {
             return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
         }
