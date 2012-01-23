@@ -364,7 +364,12 @@ namespace Snooze.ViewTesting.Spark
         private UseMasterGrammar _grammar;
         public ParseAction<string> ParseUseMaster { get { return _grammar.ParseUseMaster; } }
 
-        public string TrailingUseMasterName(SparkViewDescriptor descriptor)
+		public string Path
+		{
+			get { return path; }
+		}
+
+		public string TrailingUseMasterName(SparkViewDescriptor descriptor)
         {
             var lastTemplate = descriptor.Templates.Last();
             var sourceContext = AbstractSyntaxProvider.CreateSourceContext(lastTemplate, engine.ViewFolder);
