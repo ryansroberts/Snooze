@@ -126,7 +126,7 @@ namespace Snooze.ViewTesting.Spark
 		{
 			this.path = path;
 			ViewFilter = s => s.Contains("Views");
-		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path, "Views", SearchOption.AllDirectories).
+		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path,"*", SearchOption.AllDirectories).
 				Where(ViewFilter);
 			engine = new SparkViewEngine(Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
