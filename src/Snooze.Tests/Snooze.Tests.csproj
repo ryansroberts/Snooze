@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automockery.cs" />
+    <Compile Include="FakeHttpResponseSpecs.cs" />
     <Compile Include="FutureActionSpecs.cs" />
     <Compile Include="InputFacts.cs" />
     <Compile Include="Mapping.cs" />
