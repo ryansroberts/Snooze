@@ -75,7 +75,7 @@ namespace Snooze
 
             Behaves_like<Route> mvcroute;
 
-			It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
+			It Should_have_captured_the_path = () => v("ApplicationPath").ShouldEqual("foo/bar.xml");
         }
     }
 
