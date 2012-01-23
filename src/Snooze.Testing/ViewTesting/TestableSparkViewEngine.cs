@@ -125,7 +125,7 @@ namespace Snooze.ViewTesting.Spark
 		public TestableSparkViewEngine(string applicationPath)
 		{
 			this.applicationPath = applicationPath;
-			ViewFilter = s => s.Contains("Views");
+			ViewFilter = ViewFilter  ?? (s => s.Contains("Views"));
 		    ViewFolders = ViewFolders ?? Directory.GetDirectories(applicationPath,"*", SearchOption.AllDirectories).
 				Where(ViewFilter);
 			engine = new SparkViewEngine(Settings());
