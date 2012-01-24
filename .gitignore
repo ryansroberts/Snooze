@@ -12,6 +12,7 @@ _ReSharper.*
 *.ReSharper.user
 *.suo
 *.cache
+*.dotcover
 ~$*
 *_cache
 *crunchproject.local.xml

@@ -63,7 +63,7 @@
       <HintPath>..\packages\Castle.Windsor.2.5.1\lib\NET40\Castle.Facilities.Synchronize.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
-      <HintPath>..\packages\Castle.Windsor.2.5.1\lib\NET40\Castle.Windsor.dll</HintPath>
+      <HintPath>..\packages\Castle.Windsor.2.5.3\lib\NET40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Fizzler.Systems.HtmlAgilityPack">
       <HintPath>..\..\lib\net40\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automockery.cs" />
+    <Compile Include="FakeHttpResponseSpecs.cs" />
     <Compile Include="FutureActionSpecs.cs" />
     <Compile Include="InputFacts.cs" />
     <Compile Include="Mapping.cs" />

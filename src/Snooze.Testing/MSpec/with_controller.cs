@@ -95,7 +95,7 @@ namespace Snooze.MSpec
 				      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
 				select m;
 
-            autoMocker.ClassUnderTest.HttpVerb = (HttpVerbs)Enum.Parse(typeof(HttpVerbs), httpMethod, true);
+			autoMocker.ClassUnderTest.HttpVerb = (SnoozeHttpVerbs)Enum.Parse(typeof(SnoozeHttpVerbs), httpMethod, true);
 
 			if (methods.Count() == 0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
@@ -229,7 +229,6 @@ namespace Snooze.MSpec
 
 		static void AssignParentUrl(object url, RouteData data, NameValueCollection queryString)
 		{
-
 			while (url.GetType().BaseType.IsGenericType)
 			{
 				var parentType = url.GetType().BaseType
@@ -239,7 +238,8 @@ namespace Snooze.MSpec
 
 				AssignUrlProperties(data, parentUrl, queryString);
 
-				url.SetPropertyValue("Parent", parentUrl);
+				if(url.GetType().GetProperty("Parent") != null)
+					url.SetPropertyValue("Parent", parentUrl);
 
 				url = parentUrl;
 			}

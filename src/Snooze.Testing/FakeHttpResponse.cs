@@ -3,11 +3,10 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Text;
 using System.Web;
-using System.Web.UI;
 
 namespace Snooze.Testing
 {
-    public class FakeHttpResponse : HttpResponseBase, IDisposable
+    public class FakeHttpResponse : HttpResponseBase
     {
         public string _appPathModifier { get; set; }
         private MemoryStream outputStream = new MemoryStream();
@@ -19,6 +18,9 @@ namespace Snooze.Testing
             _contentEncoding = Encoding.UTF8;
             _appPathModifier = string.Empty;
             _cachePolicy = new FakeCachePolicy();
+            StatusCode = 200;
+            Status = "200 OK";
+            StatusDescription = "OK";
             Output = new StreamWriter(outputStream, _contentEncoding);
         }
 
@@ -30,7 +32,13 @@ namespace Snooze.Testing
             {
                 Output.Flush();
                 outputStream.Seek(0, SeekOrigin.Begin);
-                return outputStream.ReadToEnd();
+                var streamBytes = outputStream.ToArray();
+                outputStream.Seek(0, SeekOrigin.Begin);
+
+                using (var stream = new MemoryStream(streamBytes))
+                using (var reader = new StreamReader(stream,_contentEncoding))
+                    return reader.ReadToEnd();
+
             }
         }
 
@@ -204,14 +212,5 @@ namespace Snooze.Testing
             Output.Flush();
         }
 
-        public void Dispose()
-        {
-            if (outputStream != null)
-            {
-                if (outputStream.CanRead)
-                    outputStream.Close();
-                outputStream = null;
-            }
-        }
     }
 }

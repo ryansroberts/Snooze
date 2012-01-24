@@ -105,7 +105,7 @@ namespace Snooze.Nunit
                       && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
                 select m;
 
-            autoMocker.ClassUnderTest.HttpVerb = (HttpVerbs)Enum.Parse(typeof(HttpVerbs), httpMethod, true);
+			autoMocker.ClassUnderTest.HttpVerb = (SnoozeHttpVerbs)Enum.Parse(typeof(SnoozeHttpVerbs), httpMethod, true);
 
             if (methods.Count() == 0)
                 throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);

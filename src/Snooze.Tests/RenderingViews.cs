@@ -37,7 +37,7 @@ namespace Snooze
 
 		It is_routable = is_200;
 
-	    It method_is_set = () => class_under_test.HttpVerb.ShouldEqual(HttpVerbs.Get);
+	    It method_is_set = () => class_under_test.HttpVerb.ShouldEqual(SnoozeHttpVerbs.Get);
 	}
 
 	public class handlers_preserve_command_identity : with_controller<RoutableHandler.Command, RoutableHandler>

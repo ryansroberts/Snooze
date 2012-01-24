@@ -49,6 +49,93 @@ namespace Snooze
 		{
 			get { return _cacheActions; }
 		}
+
+		public ResourceResult WithHeader(string name, Url value)
+		{
+			_headers.Add(new KeyValuePair<string, object>(name, value));
+
+			return this;
+		}
+
+		public ResourceResult WithHeader(string name, string value)
+		{
+			_headers.Add(new KeyValuePair<string, object>(name, value));
+
+			return this;
+		}
+
+		public ResourceResult WithCookie(HttpCookie cookie)
+		{
+			Cookies.Add(cookie);
+
+			return this;
+		}
+
+		public ResourceResult WithCache(Action<HttpContextBase, HttpCachePolicyBase> action)
+		{
+			_cacheActions.Add(action);
+
+			return this;
+		}
+
+		public ResourceResult AsJson()
+		{
+			ContentType = "application/json";
+
+			return this;
+		}
+
+		public ResourceResult AsXml()
+		{
+			ContentType = "text/xml";
+
+			return this;
+		}
+
+		public ResourceResult AsText()
+		{
+			ContentType = "text/plain";
+
+			return this;
+		}
+
+		public ResourceResult AsXhtml()
+		{
+			ContentType = "application/xhtml+xml";
+
+			return this;
+		}
+
+		public ResourceResult AsHtml()
+		{
+			ContentType = "text/html";
+
+			return this;
+		}
+
+		public ResourceResult As(string type)
+		{
+			ContentType = type;
+
+			return this;
+		}
+
+		public ResourceResult AsFile(string type)
+		{
+			ContentType = type;
+
+			return this;
+		}
+
+		public ResourceResult AsFile(string type, string defaultFilename)
+		{
+			ContentType = type;
+
+			return WithHeader("Content-Disposition", "attachment; filename=" + defaultFilename);
+		}
+
+		
+
 	}
 
 	public class ResourceResult<T> : ResourceResult
@@ -61,7 +148,7 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> WithHeader(string name, Url value)
+		public new ResourceResult<T> WithHeader(string name, Url value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -69,7 +156,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult<T> WithHeader(string name, string value)
+        public new ResourceResult<T> WithHeader(string name, string value)
         {
             _headers.Add(new KeyValuePair<string, object>(name, value));
 
@@ -77,7 +164,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult<T> WithCookie(HttpCookie cookie)
+        public new ResourceResult<T> WithCookie(HttpCookie cookie)
         {
             Cookies.Add(cookie);
 
@@ -85,7 +172,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult<T> WithCache(Action<HttpContextBase,HttpCachePolicyBase> action)
+        public new ResourceResult<T> WithCache(Action<HttpContextBase,HttpCachePolicyBase> action)
         {
             _cacheActions.Add(action);
 
@@ -93,7 +180,7 @@ namespace Snooze
         }
 
 
-        public ResourceResult<T> AsJson()
+        public new ResourceResult<T> AsJson()
         {
             ContentType = "application/json";
 
@@ -101,7 +188,7 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> AsXml()
+		public new ResourceResult<T> AsXml()
         {
             ContentType = "text/xml";
 
@@ -109,21 +196,21 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> AsText()
+		public new ResourceResult<T> AsText()
         {
             ContentType = "text/plain";
 
             return this;
         }
 
-		public ResourceResult<T> AsXhtml()
+		public new ResourceResult<T> AsXhtml()
         {
             ContentType = "application/xhtml+xml";
 
             return this;
         }
 
-		public ResourceResult<T> AsHtml()
+		public new ResourceResult<T> AsHtml()
         {
             ContentType = "text/html";
 
@@ -131,7 +218,7 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> As(string type)
+		public new ResourceResult<T> As(string type)
         {
             ContentType = type;
 
@@ -139,7 +226,7 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> AsFile(string type)
+		public new ResourceResult<T> AsFile(string type)
         {
             ContentType = type;
 
@@ -147,7 +234,7 @@ namespace Snooze
         }
 
 
-		public ResourceResult<T> AsFile(string type, string defaultFilename)
+		public new ResourceResult<T> AsFile(string type, string defaultFilename)
         {
             ContentType = type;
 

@@ -119,18 +119,22 @@ namespace Snooze.ViewTesting.Spark
 
 	public class TestableSparkViewEngine : IViewEngine
 	{
-		readonly string path;
+		readonly string applicationPath;
 		SparkViewEngine engine;
 
-		public TestableSparkViewEngine(string path)
+		public TestableSparkViewEngine(string applicationPath)
 		{
-			this.path = path;
-		    ViewFolders = ViewFolders ?? Directory.GetDirectories(path, "Views", SearchOption.AllDirectories);
+			this.applicationPath = applicationPath;
+			ViewFilter = ViewFilter  ?? (s => s.Contains("Views"));
+		    ViewFolders = ViewFolders ?? Directory.GetDirectories(applicationPath,"*", SearchOption.AllDirectories).
+				Where(ViewFilter);
 			engine = new SparkViewEngine(Settings());
 			 _grammar = new UseMasterGrammar(engine.Settings.Prefix);
 		}
 
-	    static ISparkSettings Settings()
+		public static Func<string, bool> ViewFilter { get; set; }
+
+		static ISparkSettings Settings()
 		{
             var setttings = new TestSparkSettings(
                 CreateViewFolders(ViewFolders),
@@ -360,7 +364,12 @@ namespace Snooze.ViewTesting.Spark
         private UseMasterGrammar _grammar;
         public ParseAction<string> ParseUseMaster { get { return _grammar.ParseUseMaster; } }
 
-        public string TrailingUseMasterName(SparkViewDescriptor descriptor)
+		public string ApplicationPath
+		{
+			get { return applicationPath; }
+		}
+
+		public string TrailingUseMasterName(SparkViewDescriptor descriptor)
         {
             var lastTemplate = descriptor.Templates.Last();
             var sourceContext = AbstractSyntaxProvider.CreateSourceContext(lastTemplate, engine.ViewFolder);

@@ -54,7 +54,8 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
 
             foreach (var instance in instances)
             {
-                Container.Register(Component.For(type).Instance(instance));
+                Container.Register(Component.For(type).Instance(instance)
+					.Named(Guid.NewGuid().ToString()));
             }
         }
 
@@ -155,8 +156,8 @@ namespace Snooze.AutoMock.Castle.MoqContrib.AutoMock
                             Container.Register(Component.For(param.ParameterType).Instance(CreateUnregisteredMock(param.ParameterType).Object));
                         else
 				            Container.Register(Component.For(param.ParameterType));
-				    }
-				    else
+					}
+				    else if (!Container.Kernel.HasComponent(param.ParameterType))
 				        Get(param.ParameterType);
 				}
 

@@ -46,5 +46,39 @@ namespace Snooze
 		It has_supplied_factory = () => mocked.ClassUnderTest.factory.ShouldNotBeNull();
 	}
 
+	public interface IService
+	{}
+
+	public class service1 : IService
+	{
+		
+	}
+
+	public class service2 : IService
+	{
+		
+	}
+
+	public class component
+	{
+		public component(IService[] Services)
+		{
+			
+		}
+	}
+
+	public class automocking_array
+	{
+		static AutoMockContainer<component> mocked;
+
+		Establish context = () =>
+		                    {
+								mocked = new AutoMockContainer<component>();
+								mocked.InjectArray(new IService[] { new service1(), new service2() });
+		                    };
+
+		It has_built_object = () => mocked.ClassUnderTest.ShouldNotBeNull();
+
+	}
 
 }

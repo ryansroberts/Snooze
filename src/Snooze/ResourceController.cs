@@ -8,6 +8,18 @@ using System.Web.Routing;
 
 namespace Snooze
 {
+	[Flags]
+	public enum SnoozeHttpVerbs
+	{
+		Get = 0x01,
+		Post = 0x02,
+		Put = 0x04,
+		Delete = 0x08,
+		Head = 0x10,
+		Copy = 0x20,
+		Patch = 0x40
+	}
+
 	public class ResourceController : Controller
     {
 		
@@ -18,17 +30,17 @@ namespace Snooze
         }
 
 
-	    HttpVerbs? _httpVerb = null;
-	    public HttpVerbs HttpVerb
+	    SnoozeHttpVerbs? snoozeHttpVerb = null;
+	    public SnoozeHttpVerbs HttpVerb
 	    {
 	        get
 	        {
-                if (_httpVerb.HasValue) return (HttpVerbs)_httpVerb;
+                if (snoozeHttpVerb.HasValue) return (SnoozeHttpVerbs)snoozeHttpVerb;
                 if (HttpContext != null)
-                    return (HttpVerbs) Enum.Parse(typeof (HttpVerbs), HttpContext.Request.HttpMethod,true);
+                    return (SnoozeHttpVerbs) Enum.Parse(typeof (SnoozeHttpVerbs), HttpContext.Request.HttpMethod,true);
                 throw new ArgumentException("HttpVerb not set and HttpContext is null");
 	        } 
-            set { _httpVerb = value; }
+            set { snoozeHttpVerb = value; }
 	    }
 
 		public LeftMappingConfigurator<T> Map<T>(T item)
@@ -59,7 +71,7 @@ namespace Snooze
             return new ResourceResult<object>(205, null);
         }
 
-        public virtual ResourceResult<object> MovedPermenently(Url url)
+        public virtual ResourceResult MovedPermenently(Url url)
         {
             return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
         }
