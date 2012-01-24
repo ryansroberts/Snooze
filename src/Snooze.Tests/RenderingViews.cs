@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
@@ -96,10 +97,13 @@ namespace Snooze
 	            get("");
 
 	            json = conneg_json().ToString();
+
+                Console.WriteLine(json);
 	        };
 
 		It content_negotiates_json = () => conneg_json().ShouldNotBeEmpty();
 
 	    It json_has_custom_url_serialised = () => conneg_json().ToString().ShouldContain("value");
 	}
+
 }
