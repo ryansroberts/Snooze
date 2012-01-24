@@ -73,45 +73,45 @@ namespace Snooze
 
         public virtual ResourceResult MovedPermenently(Url url)
         {
-            return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
+			return new ResourceResult<object>(301, url).WithHeader("Location", url.ToString());
         }
 
         public virtual ResourceResult<object> MovedPermenently(string url)
         {
-            return new ResourceResult<object>(301, null).WithHeader("Location", url);
+			return new ResourceResult<object>(301, url).WithHeader("Location", url);
         }
 
         public virtual ResourceResult<object> MovedPermanently(Url url)
         {
-            return new ResourceResult<object>(301, null).WithHeader("Location", url.ToString());
+			return new ResourceResult<object>(301, url).WithHeader("Location", url.ToString());
         }
 
 
         public virtual ResourceResult<object> MovedPermanently(string url)
         {
-            return new ResourceResult<object>(301, null).WithHeader("Location", url);
+			return new ResourceResult<object>(301, url).WithHeader("Location", url);
         }
 
         public virtual ResourceResult<object> Found(Url url)
         {
-            return new ResourceResult<object>(302, null).WithHeader("Location", url.ToString());
+			return new ResourceResult<object>(302, url).WithHeader("Location", url.ToString());
         }
 
 
         public virtual ResourceResult<object> Found(string url)
         {
-            return new ResourceResult<object>(302, null).WithHeader("Location", url);
+			return new ResourceResult<object>(302, url).WithHeader("Location", url);
         }
 
         public virtual ResourceResult<object> SeeOther(Url url)
         {
-            return new ResourceResult<object>(303, null).WithHeader("Location", url.ToString());
+			return new ResourceResult<object>(303, url).WithHeader("Location", url.ToString());
         }
 
 
         public virtual ResourceResult<object> SeeOther(string url)
         {
-            return new ResourceResult<object>(303, null).WithHeader("Location", url);
+			return new ResourceResult<object>(303, url).WithHeader("Location", url);
         }
 
         public virtual ResourceResult<object> NotModified()

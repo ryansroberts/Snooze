@@ -65,8 +65,6 @@ namespace Snooze
         It content_negotiates_texthtml = () => conneg_html()
                 .DocumentNode.InnerText.ShouldContain("HELLO");
 
-        private It has_viewbag_content =
-            () => conneg_html().DocumentNode.QuerySelectorAll("html").First().InnerText.ShouldContain("stuff");
 
         It has_no_parse_errors = () => markup_is_valid_according_to_dtd();
     }

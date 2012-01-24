@@ -68,10 +68,7 @@ namespace Snooze
         [Subject(typeof(Url))]
         public class When_routing_a_wildcard : RoutingContext
         {
-            private Because of = () =>
-                                     {
-                                         RoutingTo("~/content/foo/bar.xml");
-                                     };
+            private Because of = () => RoutingTo("~/content/foo/bar.xml");
 
             Behaves_like<Route> mvcroute;
 
