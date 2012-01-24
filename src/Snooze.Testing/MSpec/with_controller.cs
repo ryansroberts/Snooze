@@ -341,6 +341,12 @@ namespace Snooze.MSpec
 			header.First().ShouldEqual(value);
 		}
 
+		protected static void resource_is_of_type<T>()
+		{
+			result.Resource.ShouldBeOfType<T>();
+		}
+
+
 		protected static JObject conneg_json(string accept = "application/json")
 		{
 			var httpContext = Render(accept);
