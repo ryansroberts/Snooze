@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -10,10 +11,10 @@ using Newtonsoft.Json;
 
 namespace Snooze
 {
-
-
     public class JsonFormatter : IResourceFormatter
     {
+        public static List<JsonConverter> JsonConverters = new List<JsonConverter> { new UrlConverter() };
+
         #region IResourceFormatter Members
 
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
@@ -24,7 +25,7 @@ namespace Snooze
         public void Output(ControllerContext context, object resource, string contentType)
         {
 
-            var json = JsonConvert.SerializeObject(resource, new JsonConverter[]{new UrlConverter()});
+            var json = JsonConvert.SerializeObject(resource, JsonConverters.ToArray());
 	
 			if(context.HttpContext.Request.QueryString["callback"] != null)
 			{
