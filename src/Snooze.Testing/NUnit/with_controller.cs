@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ using Newtonsoft.Json.Linq;
 using Should;
 using Snooze.Testing;
 using Snooze.ViewTesting.Spark;
-using Spark;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Snooze.Nunit
@@ -27,13 +27,13 @@ namespace Snooze.Nunit
     {
     }
 
-    public class with_controller<TResource, THandler> : with_nunit_auto_mocking<THandler>
+    public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
        where THandler : ResourceController
     {
         static ResourceResult result;
         static string pathToApplicationUnderTest;
 
-        protected static void application_under_test_is_here(string path, ISparkSettings sparkSettings)
+        protected static void application_under_test_is_here(string path)
         {
             ViewEngines.Engines.Clear();
             pathToApplicationUnderTest = new Uri(
@@ -50,7 +50,7 @@ namespace Snooze.Nunit
             with_routing<THandler>.enabled();
         }
 
-        [ThreadStatic] static string lasturi;
+        static string lasturi;
 
         protected static THandler GetController() { return autoMocker.ClassUnderTest; }
 
@@ -105,10 +105,19 @@ namespace Snooze.Nunit
                       && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
                 select m;
 
-			autoMocker.ClassUnderTest.HttpVerb = (SnoozeHttpVerbs)Enum.Parse(typeof(SnoozeHttpVerbs), httpMethod, true);
+            autoMocker.ClassUnderTest.HttpVerb = (SnoozeHttpVerbs)Enum.Parse(typeof(SnoozeHttpVerbs), httpMethod, true);
 
             if (methods.Count() == 0)
                 throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
+
+            var actionDict = new Dictionary<string, object>();
+
+            for (var i = 0; i != additionalParameters.Length; i++)
+            {
+                actionDict[methods.First().GetParameters()[i].Name] = additionalParameters[i];
+            }
+
+            CallActionExecuting(httpMethod, actionDict, methods);
 
             if (methods.First().GetParameters().Count() > 1)
             {
@@ -118,7 +127,21 @@ namespace Snooze.Nunit
             {
                 InvokeCommand(route, additionalParameters, queryString, methods);
             }
+        }
 
+
+        static void CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
+        {
+            var executingContext = new ActionExecutingContext(ControllerContext(),
+                new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))),
+                actionDict
+                );
+
+            typeof(THandler).InvokeMember("OnActionExecuting",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
+                null,
+                class_under_test,
+                new[] { executingContext });
         }
 
         static void InvokeCommand(
@@ -126,20 +149,36 @@ namespace Snooze.Nunit
             NameValueCollection queryString,
             IEnumerable<MethodInfo> methods)
         {
-            var command = FromContext(route, queryString);
+
+            object command;
 
             if (additionalParameters.Any())
-            {
-                foreach (var prop in additionalParameters.First().GetType().GetProperties())
-                {
-                    command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
-                }
-            }
+                command = CreateCommandFromAdditionalParameters(route, additionalParameters, queryString);
+            else
+                command = CreateCommandFromUri(route, additionalParameters, queryString);
 
             var args = new List<object>(new[] { command });
 
             result = (ResourceResult)methods.First().Invoke(autoMocker.ClassUnderTest,
                 args.ToArray());
+        }
+
+        static object CreateCommandFromUri(RouteData route, object[] additionalParameters, NameValueCollection queryString)
+        {
+            object command;
+            command = FromContext(route, queryString);
+            return command;
+        }
+
+        static object CreateCommandFromAdditionalParameters(RouteData route,
+                                                            object[] additionalParameters,
+                                                            NameValueCollection queryString)
+        {
+            object command;
+            command = additionalParameters.First();
+            foreach (var prop in FromContext(route, queryString).GetType().GetProperties())
+                command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
+            return command;
         }
 
         static void InvokeUrlAndModel(RouteData route, object[] additionalParameters,
@@ -155,7 +194,6 @@ namespace Snooze.Nunit
 
         protected static Url FromContext(RouteData data, NameValueCollection queryString)
         {
-
             var url = Activator.CreateInstance(data.Route.GetType().GetGenericArguments()[0]);
 
             AssignParentUrl(url, data, queryString);
@@ -182,7 +220,6 @@ namespace Snooze.Nunit
         }
 
 
-
         static void AssignUrlProperties(RouteData data, object url, NameValueCollection queryString)
         {
             foreach (var v in data.Values.Where(v => url.GetType().GetProperty(v.Key) != null))
@@ -202,7 +239,6 @@ namespace Snooze.Nunit
 
         static void AssignParentUrl(object url, RouteData data, NameValueCollection queryString)
         {
-
             while (url.GetType().BaseType.IsGenericType)
             {
                 var parentType = url.GetType().BaseType
@@ -212,7 +248,8 @@ namespace Snooze.Nunit
 
                 AssignUrlProperties(data, parentUrl, queryString);
 
-                url.SetPropertyValue("Parent", parentUrl);
+                if (url.GetType().GetProperty("Parent") != null)
+                    url.SetPropertyValue("Parent", parentUrl);
 
                 url = parentUrl;
             }
@@ -222,7 +259,6 @@ namespace Snooze.Nunit
 
 
         static NameValueCollection GetQueryString(string uri) { return HttpUtility.ParseQueryString(new Uri("http://local.com/" + uri).Query); }
-
 
         static RouteData GetRouteData(string uri)
         {
@@ -243,13 +279,71 @@ namespace Snooze.Nunit
                 throw new ApplicationException("Uris in specs should not start with /");
 
             lasturi = uri;
+            CallValidatorsOn(@params);
 
             InvokeAction(method, GetRouteData(uri), @params, GetQueryString(uri));
+        }
+
+        private static void CallValidatorsOn(object[] @params)
+        {
+            if (!@params.Any()) return;
+ 
+            /*
+            var metadata = ModelMetadataProviders.Current.GetMetadataForType(() => @params[0], @params[0].GetType());
+            var controllerContext = ControllerContext();
+
+            var validators = ModelValidatorProviders.Providers.GetValidators(metadata, controllerContext);
+
+            Console.WriteLine("validators " + validators);
+            Console.WriteLine("metadata " + metadata);
+
+            foreach(var p in @params.Where(p => p != null))
+            {
+                Console.WriteLine("Param: " + p);
+            }
+
+            foreach (var validator in validators)
+            {
+                Console.WriteLine("validator: " + validator);
+                foreach (var p in @params.Where(p => p != null))
+                {
+                    var error = validator.Validate(p);
+                    Console.WriteLine("error: " + error);
+                }          
+            }
+
+
+
+
+            foreach (var error in
+                                  from p in @params.Where(p => p != null)
+                                  from validator in validators
+                                  from error in validator.Validate(p)
+                                  select error)
+            {
+                class_under_test.ModelState.AddModelError(error.MemberName, error.Message);
+                Console.WriteLine("Adding: " + error.MemberName + " " + error.Message);
+            }
+            Console.WriteLine("no of errors: " + class_under_test.ModelState.Count);
+            */
+
+            var validationContext = new ValidationContext(@params[0], null, null);
+	        var validationResults = new List<ValidationResult>();
+            Validator.TryValidateObject(@params[0], validationContext, validationResults, true);
+	        foreach (var validationResult in validationResults)
+	        {
+                class_under_test.ModelState.AddModelError("", validationResult.ErrorMessage);
+	        }
         }
 
         protected static void get(string uri) { FauxHttp("GET", uri, new object[] { }); }
 
         protected static void get(string uri, params object[] @params) { FauxHttp("GET", uri, @params); }
+
+        protected static void copy(string uri) { FauxHttp("COPY", uri, new object[] { }); }
+
+        protected static void copy(string uri, params object[] @params) { FauxHttp("COPY", uri, @params); }
+
 
         protected static void post(string uri, params object[] @params) { FauxHttp("POST", uri, @params); }
 
@@ -287,24 +381,28 @@ namespace Snooze.Nunit
 
         protected static void has_location_header(string value)
         {
-            var header = result.Headers.Where(h => h.Key.Equals("location", StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault();
+            var header = result.Headers.FirstOrDefault(h => h.Key.Equals("location", StringComparison.InvariantCultureIgnoreCase));
 
             header.ShouldNotBeNull();
             header.First().ShouldEqual(value);
         }
 
+        protected static void resource_is_of_type<T>()
+        {
+            result.Resource.ShouldBeType<T>();
+        }
+
         protected void is_get(FutureAction futureAction)
         {
             futureAction.ShouldNotBeNull();
-            futureAction.Entity.ShouldBeType(typeof(FutureAction));
+            //futureAction.Entity.ShouldBeType(typeof(FutureAction));
             futureAction.Method.ShouldEqual("get");
         }
 
         protected void is_post(FutureAction futureAction)
         {
             futureAction.ShouldNotBeNull();
-            futureAction.Entity.ShouldBeType(typeof(FutureAction));
+            //futureAction.Entity.ShouldBeType(typeof(FutureAction));
             futureAction.Method.ShouldEqual("post");
         }
 
@@ -371,15 +469,19 @@ namespace Snooze.Nunit
 
         static FakeHttpContext Render(string accept)
         {
-            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi) { _acceptTypes = new[] { accept } });
-            result.ExecuteResult(new ControllerContext(
-                new RequestContext(httpContext, GetRouteData(lasturi)), GetController()));
+            var controllerContext = ControllerContext(accept);
 
-            httpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
-            return httpContext;
+            result.ExecuteResult(controllerContext);
+            controllerContext.HttpContext.Response.Flush();
+            controllerContext.HttpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
+            return (FakeHttpContext)controllerContext.HttpContext;
+        }
+
+        static ControllerContext ControllerContext(string accept = "*/*")
+        {
+            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi) { _acceptTypes = new[] { accept } });
+            return new ControllerContext(new RequestContext(httpContext, GetRouteData(lasturi)), GetController());
         }
     }
 
-
-   
 }
