@@ -281,17 +281,17 @@ namespace Snooze
                 {
                     context.HttpContext.Response.Output.Write(Resource);
                 }
-                else
-                {
-                	if (_contentTypeExplicitlySet)
-                    {
-                        throw new HttpException(500,
-                                                string.Format(
-                                                    "Mime type explicitly set to '{0}' but unable to find a view that can format this type.",
-                                                    ContentType));
-                    }
-                	context.HttpContext.Response.StatusCode = 406; // not acceptable
-                }
+				if (Resource is Url)
+					return;
+				if (_contentTypeExplicitlySet)
+				{
+					throw new HttpException(500,
+											string.Format(
+												"Mime type explicitly set to '{0}' but unable to find a view that can format this type.",
+												ContentType));
+				}
+				context.HttpContext.Response.StatusCode = 406; // not acceptable
+				
             	return;
             }
 
