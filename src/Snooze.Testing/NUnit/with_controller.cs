@@ -30,7 +30,7 @@ namespace Snooze.Nunit
     public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
        where THandler : ResourceController
     {
-        static ResourceResult result;
+        protected static ResourceResult result;
         static string pathToApplicationUnderTest;
 
         protected static void application_under_test_is_here(string path)
@@ -67,6 +67,11 @@ namespace Snooze.Nunit
         protected static IList<HttpCookie> ResponseCookies
         {
             get { return result.Cookies; }
+        }
+
+        protected static string ContentType
+        {
+            get { return result.ContentType; }
         }
 
         public static FakeCachePolicy cachepolicy
