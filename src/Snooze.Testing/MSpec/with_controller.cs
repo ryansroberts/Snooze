@@ -30,12 +30,14 @@ namespace Snooze.MSpec
         {
             ViewEngines.Engines.Clear();
             pathToApplicationUnderTest = new Uri(
-                (Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
+                (
+				 Path.GetDirectoryName(Assembly.GetCallingAssembly().CodeBase) + "\\..\\..\\" + path).Replace("\\", "/"))
                 .AbsoluteUri
                 .Replace("file:///", "")
                 .Replace("/", "\\");
+
             ViewEngines.Engines.Add(
-                new TestableSparkViewEngine(pathToApplicationUnderTest));
+                new TestableSparkViewEngine(HttpUtility.UrlDecode(pathToApplicationUnderTest)));
         }
 
 		Establish routing = with_routing<THandler>.enabled;
@@ -145,7 +147,7 @@ namespace Snooze.MSpec
 			if (additionalParameters.Any())
 				command = CreateCommandFromAdditionalParameters(route, additionalParameters, queryString);
 			else
-				command = CreateCommandFromUri(route, additionalParameters, queryString);
+				command = CreateCommandFromUri(route, queryString);
 	
     		var args = new List<object>(new[] {command});
 
@@ -153,7 +155,7 @@ namespace Snooze.MSpec
 				args.ToArray());
 		}
 
-    	static object CreateCommandFromUri(RouteData route, object[] additionalParameters, NameValueCollection queryString)
+    	static object CreateCommandFromUri(RouteData route, NameValueCollection queryString)
     	{
     		object command;
     		command = FromContext(route, queryString);
@@ -246,8 +248,7 @@ namespace Snooze.MSpec
 		}
 
 		protected static void has_expected_resource_type() { Resource.GetType().ShouldEqual(typeof (TResource)); }
-
-
+	
 		static NameValueCollection GetQueryString(string uri) { return HttpUtility.ParseQueryString(new Uri("http://local.com/" + uri).Query); }
 
 		static RouteData GetRouteData(string uri)
@@ -294,7 +295,10 @@ namespace Snooze.MSpec
 
 		protected static void get(string uri) { FauxHttp("GET", uri, new object[] {}); }
 
+		protected static void get<TUrl>(string uri) { FauxHttp("GET", uri, new object[] { }); }
+
 		protected static void get(string uri, params object[] @params) { FauxHttp("GET", uri, @params); }
+
 
         protected static void copy(string uri) { FauxHttp("COPY", uri, new object[] { }); }
 

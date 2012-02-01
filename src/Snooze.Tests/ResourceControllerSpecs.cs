@@ -62,6 +62,9 @@ namespace Snooze
             It throws_an_invalid_operation_exception = () => exception.ShouldBeOfType(typeof(InvalidOperationException));
         }
 
+
+
+
         [Subject(typeof(ResourceController))]
         public class When_FOUND_using_a_snooze_url
         {
