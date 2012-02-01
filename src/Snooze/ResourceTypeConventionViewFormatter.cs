@@ -109,6 +109,10 @@ namespace Snooze
             {
                 name = name.Substring(0, name.Length - "Model".Length);
             }
+            else if (name.EndsWith("Command"))
+            {
+                name = name.Substring(0, name.Length - "Command".Length);
+            }
             return name;
         }
     }
