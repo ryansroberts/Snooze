@@ -32,6 +32,7 @@ namespace Snooze.Testing
             _response._context = this;
             _cache = new Cache();
             _allErrors = new Exception[0];
+            _items = new Hashtable(); 
             User = new GenericPrincipal(new GenericIdentity(string.Empty),new string[0]);
         }
 
