@@ -271,6 +271,9 @@ namespace Snooze
                 return;
             }
 
+			if (IsRedirection()) return;
+
+
             var acceptTypes = ParseAcceptTypes(context.HttpContext.Request.AcceptTypes);
 
             var formatter = FindFormatter(context, acceptTypes);
@@ -301,8 +304,10 @@ namespace Snooze
 
         }
 
+		bool IsRedirection() { return StatusCode >= 300 && StatusCode < 400; }
 
-        private IEnumerable<string> ParseAcceptTypes(IEnumerable<string> types)
+
+		private IEnumerable<string> ParseAcceptTypes(IEnumerable<string> types)
         {
             // TODO process "q" and "level" options and sort accordingly by stealing code from openrasta
 
