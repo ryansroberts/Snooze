@@ -197,6 +197,7 @@ namespace Snooze.Testing
         public override void ClearHeaders()
         {
             _headers = new NameValueCollection();
+            _cookies = new HttpCookieCollection();
         }
 
         public override void ClearContent()
