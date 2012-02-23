@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -129,7 +130,12 @@ namespace Snooze
             VirtualPathData vp;
             try
             {
-                 vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
+                foreach (var value in values.ToList().Where(value => value.Value is string[]))
+                {
+                    values[value.Key] = String.Join(",", (string[])value.Value);
+                }
+
+                vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
             }
             catch (ArgumentException)
             {
