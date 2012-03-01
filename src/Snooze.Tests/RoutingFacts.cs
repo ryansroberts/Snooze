@@ -45,6 +45,7 @@ namespace Snooze
             It Should_have_captured_the_parameter = () => v("CustomerId").ShouldEqual("42");
         }
 
+
         [Subject(typeof(SubUrl<>))]
         public class When_routing_a_suburl : RoutingContext
         {

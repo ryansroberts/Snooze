@@ -126,6 +126,7 @@
     <Compile Include="UrlExtensions.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
     <Compile Include="ResourceTypeConventionViewFormatter.cs" />
+    <Compile Include="StringArrayModelBinder.cs" />
     <Compile Include="XmlFormatter.cs" />
   </ItemGroup>
   <ItemGroup>

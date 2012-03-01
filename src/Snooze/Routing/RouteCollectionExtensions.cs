@@ -23,6 +23,11 @@ namespace Snooze.Routing
         {
             var routeName = ResourceRoute.GetRouteNameFromUrlType(typeof (TUrl));
 
+            if (typeof(TUrl).Name.Contains("ViewDocumentCommand"))
+            {
+                
+            }
+
             if (typeof (TUrl).IsDefined(typeof (SubUrlAttribute), true))
             {
                 var routeType = GetSubResourceType<TUrl>();
@@ -32,16 +37,26 @@ namespace Snooze.Routing
                 {
                     routes.Add(routeName,  (RouteBase) Activator.CreateInstance(routeType, routeExpression,parentRoute));
                     ModelBinders.Binders.Add(typeof(TUrl), new SubUrlModelBinder());
+                    
                 });
 
                 // ModelBinders are not inherited, so we need to explicitly add the SubUrlModelBinder here.
                
             }
+            else if (typeof(TUrl).GetProperties().Any(p => p.PropertyType == typeof(string[])))
+            {
+                DoIfRouteIsNotRegistered<TUrl>(() =>
+                    {
+                        routes.Add(routeName, new ResourceRoute<TUrl>(routeExpression));
+                        ModelBinders.Binders.Add(typeof(TUrl), new StringArrayModelBinder());
+                    });
+            }
             else
             {
-                 DoIfRouteIsNotRegistered<TUrl>(()=>routes.Add(routeName, new ResourceRoute<TUrl>(routeExpression)));
+                DoIfRouteIsNotRegistered<TUrl>(() => routes.Add(routeName, new ResourceRoute<TUrl>(routeExpression)));
             }
         }
+
 
         static void DoIfRouteIsNotRegistered<TUrl>(Action action)
         {
