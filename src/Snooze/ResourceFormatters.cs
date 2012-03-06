@@ -37,9 +37,8 @@ namespace Snooze
     public static class ResourceFormatters
     {
         static readonly IList<IResourceFormatter> defaultViewFormatters = new List<IResourceFormatter>();
-
         static readonly IList<IResourceFormatter> defaultSerialisationFormatters = new List<IResourceFormatter>();
-        static readonly IDictionary<Type,IResourceFormatter> resourceSpecificFormatters = new Dictionary<Type, IResourceFormatter>();
+        static readonly IDictionary<Type, IList<IResourceFormatter>> resourceSpecificFormatters = new Dictionary<Type, IList<IResourceFormatter>>();
 
 		public static void Defaults(params Type[] types)
 		{
@@ -71,22 +70,33 @@ namespace Snooze
 
         public static IEnumerable<IResourceFormatter> FormattersFor(Type resourceType)
         {
-            return Enumerable.Concat(
-                              defaultViewFormatters,
-                        Enumerable.Concat(ResourceSpecificFormattersFor(resourceType),
-                              defaultSerialisationFormatters));
+            return Enumerable.Concat(defaultViewFormatters, Enumerable.Concat(ResourceSpecificFormattersFor(resourceType), defaultSerialisationFormatters));
         }
 
         private static IEnumerable<IResourceFormatter> ResourceSpecificFormattersFor(Type resourceType)
         {
             return resourceSpecificFormatters.ContainsKey(resourceType)
-                       ? new[] {resourceSpecificFormatters[resourceType]}
+                       ? resourceSpecificFormatters[resourceType]
                        : new IResourceFormatter[] {};
         }
 
         public static void AddViewFormatter(Type type, string mediatype, string viewname)
         {
-            resourceSpecificFormatters[type] = new ExplicitNameViewFormatter(mediatype, viewname);
+            AddResourceFormatter(type, new ExplicitNameViewFormatter(mediatype, viewname));
+        }
+
+        public static void AddResourceFormatter(Type resource, IResourceFormatter formatter)
+        {
+            IList<IResourceFormatter> list;
+            if (resourceSpecificFormatters.TryGetValue(resource, out list))
+            {
+                if(list.Contains(formatter))
+                    return;
+                list.Add(formatter);
+            }
+
+            resourceSpecificFormatters.Add(resource, new List<IResourceFormatter>{ formatter });
+
         }
     }
 }
