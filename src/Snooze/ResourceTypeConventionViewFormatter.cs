@@ -71,13 +71,16 @@ namespace Snooze
         }
 
         protected abstract string GetViewName(object resource);
+
+
+        public abstract int CompareTo(object obj);
     }
 
     public class ExplicitNameViewFormatter : BaseViewFormatter
     {
         private readonly string viewname;
 
-        public ExplicitNameViewFormatter(string targetMimeType,string viewname) : base(targetMimeType)
+        public ExplicitNameViewFormatter(string targetMimeType, string viewname) : base(targetMimeType)
         {
             this.viewname = viewname;
         }
@@ -85,6 +88,17 @@ namespace Snooze
         protected override string GetViewName(object resource)
         {
             return viewname;
+        }
+
+        public override int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            var asme = obj as ExplicitNameViewFormatter;
+            if(asme==null)
+                return -1;
+
+            return _targetMimeType == asme._targetMimeType && viewname == asme.viewname  ? 0 : -1;
         }
     }
 
@@ -114,6 +128,18 @@ namespace Snooze
                 name = name.Substring(0, name.Length - "Command".Length);
             }
             return name;
+        }
+
+
+        public override int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            var asme = obj as ResourceTypeConventionViewFormatter;
+            if (asme == null)
+                return -1;
+
+            return _targetMimeType == asme._targetMimeType? 0 : -1;
         }
     }
 }

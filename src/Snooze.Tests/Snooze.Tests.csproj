@@ -112,6 +112,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsSpecs.cs" />
     <Compile Include="Automockery.cs" />
     <Compile Include="NunitMockingSpecs.cs" />
     <Compile Include="FakeHttpResponseSpecs.cs" />

@@ -23,5 +23,13 @@ namespace Snooze
         }
 
         #endregion
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            return obj.GetType() == typeof(ByteArrayFormatter) ? 0 : -1;
+        }
     }
 }

@@ -78,39 +78,51 @@ namespace Snooze
 			return this;
 		}
 
+
+	    ResourceResult AndAddFormatter(IResourceFormatter formatter)
+	    {
+            if (Resource == null)
+                return this;
+
+            var resourceType = Resource.GetType();
+            ResourceFormatters.AddResourceFormatter(resourceType, formatter);
+	        return this;
+	    }
+
+
 		public ResourceResult AsJson()
 		{
 			ContentType = "application/json";
 
-			return this;
+            return AndAddFormatter(new JsonFormatter());
 		}
 
 		public ResourceResult AsXml()
 		{
 			ContentType = "text/xml";
 
-			return this;
+            return AndAddFormatter(new XmlFormatter());
 		}
 
 		public ResourceResult AsText()
 		{
 			ContentType = "text/plain";
 
-			return this;
+            return AndAddFormatter(new StringFormatter());
 		}
 
 		public ResourceResult AsXhtml()
 		{
 			ContentType = "application/xhtml+xml";
 
-			return this;
+            return this;
 		}
 
 		public ResourceResult AsHtml()
 		{
 			ContentType = "text/html";
 
-			return this;
+            return this;
 		}
 
 		public ResourceResult As(string type)
@@ -179,12 +191,22 @@ namespace Snooze
             return this;
         }
 
+        ResourceResult<T> AndAddFormatter(IResourceFormatter formatter)
+        {
+            if (Resource == null)
+                return this;
+
+            var resourceType = Resource.GetType();
+            ResourceFormatters.AddResourceFormatter(resourceType, formatter);
+            return this;
+        }
+
 
         public new ResourceResult<T> AsJson()
         {
             ContentType = "application/json";
 
-            return this;
+            return AndAddFormatter(new JsonFormatter());
         }
 
 
@@ -192,7 +214,7 @@ namespace Snooze
         {
             ContentType = "text/xml";
 
-            return this;
+            return AndAddFormatter(new XmlFormatter());
         }
 
 
@@ -200,21 +222,22 @@ namespace Snooze
         {
             ContentType = "text/plain";
 
-            return this;
+            return AndAddFormatter(new StringFormatter());
         }
 
-		public new ResourceResult<T> AsXhtml()
+        public new ResourceResult<T> AsXhtml()
         {
             ContentType = "application/xhtml+xml";
 
             return this;
         }
 
-		public new ResourceResult<T> AsHtml()
+        public new ResourceResult<T> AsHtml()
         {
             ContentType = "text/html";
 
             return this;
+
         }
 
 

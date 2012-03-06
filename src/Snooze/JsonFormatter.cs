@@ -43,5 +43,13 @@ namespace Snooze
         }
 
         #endregion
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            return obj.GetType() == typeof(JsonFormatter) ? 0 : -1;
+        }
     }
 }

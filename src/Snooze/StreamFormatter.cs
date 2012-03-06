@@ -17,5 +17,13 @@ namespace Snooze
 			((Stream)resource).CopyTo(context.HttpContext.Response.OutputStream);
 			((Stream)resource).Close();
 		}
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            return obj.GetType() == typeof(StreamFormatter) ? 0 : -1;
+        }
 	}
 }

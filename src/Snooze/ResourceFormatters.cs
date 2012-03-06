@@ -40,9 +40,18 @@ namespace Snooze
         static readonly IList<IResourceFormatter> defaultSerialisationFormatters = new List<IResourceFormatter>();
         static readonly IDictionary<Type, IList<IResourceFormatter>> resourceSpecificFormatters = new Dictionary<Type, IList<IResourceFormatter>>();
 
+
+        public static void Defaults()
+        {
+            Defaults(typeof(JsonFormatter), typeof(XmlFormatter), typeof(StreamFormatter), typeof(ByteArrayFormatter), typeof(StringFormatter));
+        }
+
 		public static void Defaults(params Type[] types)
 		{
 			defaultSerialisationFormatters.Clear();
+            if (types == null || types.Length == 0)
+                return;
+
 			foreach (var type in types)
 			{
 				if (!typeof(IResourceFormatter).IsAssignableFrom(type))
@@ -65,7 +74,7 @@ namespace Snooze
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/rss+xml"));
             defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
 
-			Defaults(typeof(JsonFormatter), typeof(XmlFormatter), typeof(StreamFormatter),typeof(ByteArrayFormatter),typeof(StringFormatter));
+			Defaults();
         }
 
         public static IEnumerable<IResourceFormatter> FormattersFor(Type resourceType)
@@ -73,7 +82,7 @@ namespace Snooze
             return Enumerable.Concat(defaultViewFormatters, Enumerable.Concat(ResourceSpecificFormattersFor(resourceType), defaultSerialisationFormatters));
         }
 
-        private static IEnumerable<IResourceFormatter> ResourceSpecificFormattersFor(Type resourceType)
+        public static IEnumerable<IResourceFormatter> ResourceSpecificFormattersFor(Type resourceType)
         {
             return resourceSpecificFormatters.ContainsKey(resourceType)
                        ? resourceSpecificFormatters[resourceType]
@@ -85,14 +94,34 @@ namespace Snooze
             AddResourceFormatter(type, new ExplicitNameViewFormatter(mediatype, viewname));
         }
 
+        public static void ClearSpecificFormatters(Type resource)
+        {
+            if (resourceSpecificFormatters.ContainsKey(resource))
+                resourceSpecificFormatters.Remove(resource);
+        }
+
         public static void AddResourceFormatter(Type resource, IResourceFormatter formatter)
         {
+            if(formatter==null)
+                return;
+
             IList<IResourceFormatter> list;
             if (resourceSpecificFormatters.TryGetValue(resource, out list))
             {
-                if(list.Contains(formatter))
+                if (list.Any(f => f.CompareTo(formatter) == 0))
                     return;
+            }
+
+
+            if(defaultSerialisationFormatters.Any(f=>f.CompareTo(formatter)==0)
+                || defaultViewFormatters.Any(f=>f.CompareTo(formatter)==0))
+                return;
+
+            
+            if (list!=null)
+            {
                 list.Add(formatter);
+                return;
             }
 
             resourceSpecificFormatters.Add(resource, new List<IResourceFormatter>{ formatter });
