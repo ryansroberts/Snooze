@@ -114,7 +114,14 @@ namespace Snooze.MSpec
 				actionDict[methods.First().GetParameters()[i].Name] = additionalParameters[i];
 			}
 
-			CallActionExecuting(httpMethod, actionDict, methods);
+			var filterContext = CallActionExecuting(httpMethod, actionDict, methods);
+
+
+            if (filterContext.Result != null)
+            {
+                result = filterContext.Result as ResourceResult;
+                return;
+            }
 
 			if (methods.First().GetParameters().Count() > 1)
 			{
@@ -126,20 +133,23 @@ namespace Snooze.MSpec
 			}
 		}
 
-    	
-    	static void CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
-    	{
-    		var executingContext = new ActionExecutingContext(ControllerContext(),
-    			new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof (THandler))),
-    			actionDict
-    			);
 
-    		typeof (THandler).InvokeMember("OnActionExecuting",
-    			BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
-    			null,
-    			class_under_test,
-    			new[] {executingContext});
-    	}
+        static ActionExecutingContext CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
+        {
+            var executingContext = new ActionExecutingContext(ControllerContext(),
+                new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))),
+                actionDict
+                );
+
+            typeof(THandler).InvokeMember("OnActionExecuting",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
+                null,
+                class_under_test,
+                new[] { executingContext });
+
+            return executingContext;
+        }
+
 
     	static void InvokeCommand(
             RouteData route, object[] additionalParameters, 
