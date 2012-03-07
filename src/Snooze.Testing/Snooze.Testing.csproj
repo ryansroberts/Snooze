@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
@@ -48,7 +48,7 @@
     <Reference Include="Fizzler.Systems.XmlNodeQuery">
       <HintPath>..\lib\fizzler\Fizzler.Systems.XmlNodeQuery.dll</HintPath>
     </Reference>
-    <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
+    <Reference Include="Glue">
       <HintPath>..\packages\Snooze.1.0.77.0\lib\net40\Glue.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
@@ -58,14 +58,14 @@
       <HintPath>..\packages\Machine.Specifications.0.5.0.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Infrastructure">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -78,7 +78,7 @@
     <Reference Include="nVentive.Umbrella">
       <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
     </Reference>
-    <Reference Include="PGK.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f93e897f802ddcb7, processorArchitecture=MSIL">
+    <Reference Include="PGK.Extensions">
       <HintPath>..\packages\dnpextensions.2011.6.0.0\lib\PGK.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="pnunit.framework">
@@ -87,13 +87,13 @@
     <Reference Include="SgmlReaderDll">
       <HintPath>..\lib\fizzler\SgmlReaderDll.dll</HintPath>
     </Reference>
-    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Should">
       <HintPath>..\packages\Should.1.1.12.0\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="Spark, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+    <Reference Include="Spark">
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="Spark.Web.Mvc, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+    <Reference Include="Spark.Web.Mvc">
       <HintPath>..\packages\Spark.Web.Mvc3.1.6\lib\Spark.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
