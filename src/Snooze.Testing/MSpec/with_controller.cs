@@ -25,6 +25,10 @@ namespace Snooze.MSpec
     {
         protected static ResourceResult result;
         static string pathToApplicationUnderTest;
+        protected static HttpCookieCollection _requestCookies;
+        protected static NameValueCollection _requestHeaders;
+
+
 
         protected static void application_under_test_is_here(string path)
         {
@@ -40,7 +44,11 @@ namespace Snooze.MSpec
                 new TestableSparkViewEngine(HttpUtility.UrlDecode(pathToApplicationUnderTest)));
         }
 
-		Establish routing = with_routing<THandler>.enabled;
+		Establish context =() => {
+		                           with_routing<THandler>.enabled();
+                                   _requestCookies = new HttpCookieCollection();
+                                   _requestHeaders = new NameValueCollection();
+		                       };
 
 		static string lasturi;
 
@@ -270,7 +278,10 @@ namespace Snooze.MSpec
 		{
 			var path = new Uri("http://local.com/" + uri).AbsolutePath;
 			var qs = new Uri("http://local.com/" + uri).Query;
-		    var context = new FakeHttpContext(new FakeHttpRequest(path) { _queryString = HttpUtility.ParseQueryString(qs)});
+		    var context = new FakeHttpContext(new FakeHttpRequest(path) { _queryString = HttpUtility.ParseQueryString(qs),
+                                                                          _cookies = _requestCookies,
+                                                                          _headers = _requestHeaders
+            });
 
 			var routeData = RouteTable.Routes.GetRouteData(context);
 
@@ -425,7 +436,12 @@ namespace Snooze.MSpec
 
     	static ControllerContext ControllerContext(string accept = "*/*")
     	{
-            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi) { _acceptTypes = new[] { accept } });
+            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi)
+            {
+                _acceptTypes = new[] { accept },
+                _cookies = _requestCookies,
+                _headers = _requestHeaders
+            });
     		return  new ControllerContext(new RequestContext(httpContext, GetRouteData(lasturi)), GetController());
     	}
     }
