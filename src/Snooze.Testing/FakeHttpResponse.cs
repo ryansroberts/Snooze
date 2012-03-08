@@ -160,6 +160,15 @@ namespace Snooze.Testing
             RedirectInternal(url, endResponse, true);
         }
 
+        public override void AppendCookie(HttpCookie cookie)
+        {
+            _cookies.Add(cookie);
+        }
+
+        public override void AppendHeader(string name, string value)
+        {
+            _headers.Add(name,value);
+        }
        
 
         internal void RedirectInternal(string url, bool endResponse, bool permanent)
