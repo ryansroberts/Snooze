@@ -117,7 +117,11 @@ namespace Snooze.Routing
         static RouteBase GetParentRoute<TUrl>(RouteCollection routes) where TUrl : Url
         {
             var parentType = typeof (ResourceRoute<>).MakeGenericType(typeof (TUrl).BaseType.GetGenericArguments()[0]);
-            var parent = routes.First(r => parentType.IsAssignableFrom(r.GetType()));
+            var parent = routes.FirstOrDefault(parentType.IsInstanceOfType);
+
+            if(parent == null) 
+                throw new ApplicationException("Cannot locate parent url " + typeof(TUrl) + " did you register it before the sub url");
+
             return parent;
         }
     }
