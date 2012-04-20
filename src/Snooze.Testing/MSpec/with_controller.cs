@@ -191,7 +191,7 @@ namespace Snooze.MSpec
     	{
     		object command;
     		command = additionalParameters.First();
-    		foreach (var prop in FromContext(route, queryString).GetType().GetProperties())
+            foreach (var prop in FromContext(route, queryString).GetType().GetProperties().Where(p => p.GetSetMethod(false) != null))
     			command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
     		return command;
     	}
