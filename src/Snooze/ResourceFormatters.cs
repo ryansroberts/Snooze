@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +39,7 @@ namespace Snooze
     {
         static readonly IList<IResourceFormatter> defaultViewFormatters = new List<IResourceFormatter>();
         static readonly IList<IResourceFormatter> defaultSerialisationFormatters = new List<IResourceFormatter>();
-        static readonly IDictionary<Type, IList<IResourceFormatter>> resourceSpecificFormatters = new Dictionary<Type, IList<IResourceFormatter>>();
+        static readonly ConcurrentDictionary<Type, IList<IResourceFormatter>> resourceSpecificFormatters = new ConcurrentDictionary<Type, IList<IResourceFormatter>>();
 
 
         public static void Defaults()
@@ -96,8 +97,8 @@ namespace Snooze
 
         public static void ClearSpecificFormatters(Type resource)
         {
-            if (resourceSpecificFormatters.ContainsKey(resource))
-                resourceSpecificFormatters.Remove(resource);
+            IList<IResourceFormatter> formatters;
+            resourceSpecificFormatters.TryRemove(resource, out formatters);
         }
 
         public static void AddResourceFormatter(Type resource, IResourceFormatter formatter)
@@ -113,8 +114,7 @@ namespace Snooze
             }
 
 
-            if(defaultSerialisationFormatters.Any(f=>f.CompareTo(formatter)==0)
-                || defaultViewFormatters.Any(f=>f.CompareTo(formatter)==0))
+            if(defaultSerialisationFormatters.Any(f=>f.CompareTo(formatter)==0) || defaultViewFormatters.Any(f=>f.CompareTo(formatter)==0))
                 return;
 
             
@@ -124,7 +124,7 @@ namespace Snooze
                 return;
             }
 
-            resourceSpecificFormatters.Add(resource, new List<IResourceFormatter>{ formatter });
+            resourceSpecificFormatters.TryAdd(resource, new List<IResourceFormatter>{ formatter });
 
         }
     }
