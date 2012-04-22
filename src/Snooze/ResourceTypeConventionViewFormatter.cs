@@ -117,15 +117,19 @@ namespace Snooze
 
             if (name.EndsWith("ViewModel"))
             {
-                name = name.Substring(0, name.Length - "ViewModel".Length);
+                name = name.Substring(0, name.Length - 9);
             }
             else if (name.EndsWith("Model"))
             {
-                name = name.Substring(0, name.Length - "Model".Length);
+                name = name.Substring(0, name.Length - 5);
             }
             else if (name.EndsWith("Command"))
             {
-                name = name.Substring(0, name.Length - "Command".Length);
+                name = name.Substring(0, name.Length - 7);
+            }
+            else if (name.EndsWith("Url"))
+            {
+                name = name.Substring(0, name.Length - 3);
             }
             return name;
         }
