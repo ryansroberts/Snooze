@@ -12,7 +12,7 @@ namespace Snooze
     /// </summary>
     /// <typeparam name = "TParentUrl">Type of parent URL.</typeparam>
     [SubUrl]
-    public abstract class SubUrl<TParentUrl> : Url
+    public abstract class SubUrl<TParentUrl> : Url, ISubUrl
         where TParentUrl : Url
     {
         public TParentUrl Parent { get; set; }
@@ -28,5 +28,21 @@ namespace Snooze
         {
             if (Parent == null) throw new InvalidOperationException("Parent Url is null.");
         }
+
+        public Url GetParentUrl()
+        {
+            return Parent;
+        }
+
+        public Type GetParentUrlType()
+        {
+            return typeof (TParentUrl);
+        }
+    }
+
+    public interface ISubUrl
+    {
+        Url GetParentUrl();
+        Type GetParentUrlType();
     }
 }
