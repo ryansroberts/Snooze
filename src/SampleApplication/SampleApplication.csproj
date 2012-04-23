@@ -131,13 +131,13 @@
     <Content Include="Content\themes\base\jquery-ui.css" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Home\Home.spark" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Snooze\Snooze.csproj">
       <Project>{290C5812-2A16-4BA3-9A40-0DF6E0E63288}</Project>
       <Name>Snooze</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Views\Home\Home.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

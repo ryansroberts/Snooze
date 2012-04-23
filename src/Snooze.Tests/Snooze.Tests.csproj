@@ -126,6 +126,7 @@
     <Compile Include="RoutingDiscoverySpec.cs" />
     <Compile Include="RoutingFacts.cs" />
     <Compile Include="UrlContext.cs" />
+    <Compile Include="WithControllerSpecs.cs" />
     <Compile Include="XmlResourceSerializationSpecs.cs" />
   </ItemGroup>
   <ItemGroup>

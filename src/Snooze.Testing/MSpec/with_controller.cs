@@ -95,34 +95,47 @@ namespace Snooze.MSpec
 
 		public static void has_etag(string etag) { cachepolicy.Etag.ShouldEqual(etag); }
 
-		static void InvokeAction(string httpMethod,
-		                         RouteData route,
-		                         object[] additionalParameters,
-		                         NameValueCollection queryString)
+		static void InvokeAction(string httpMethod, RouteData route, object[] additionalParameters, NameValueCollection queryString)
 		{
 			var urlType = route.Route.GetType().GetGenericArguments()[0];
 
 			var methods =
-				from m in typeof (THandler).GetMethods()
+				(from m in typeof (THandler).GetMethods()
 				where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
 				let parameters = m.GetParameters()
 				where parameters.Length > 0
-				      && parameters[0].ParameterType.Equals(route.Route.GetType().GetGenericArguments()[0])
-				select m;
+				      && parameters[0].ParameterType == route.Route.GetType().GetGenericArguments()[0]
+				select m).ToList();
 
 			autoMocker.ClassUnderTest.HttpVerb = (SnoozeHttpVerbs)Enum.Parse(typeof(SnoozeHttpVerbs), httpMethod, true);
 
-			if (methods.Count() == 0)
+			if (methods.Count==0)
 				throw new InvalidOperationException("No action for uri " + urlType.Name + " method " + httpMethod);
 
-			var actionDict = new Dictionary<string, object>();
+		    var methodParams = methods[0].GetParameters();
+		    var hasMultipleParams = methodParams.Length > 1;
 
-			for(var i = 0;i != additionalParameters.Length; i++)
-			{
-				actionDict[methods.First().GetParameters()[i].Name] = additionalParameters[i];
-			}
+		    var command = additionalParameters.Any() ? CreateCommandFromAdditionalParameters(route, additionalParameters, queryString) : CreateCommandFromUri(route, queryString);
 
-			var filterContext = CallActionExecuting(httpMethod, actionDict, methods);
+
+            var actionDict = new Dictionary<string, object>();
+
+            if(command!=null)
+            {
+                var name = methodParams.Length > 0 ? methodParams[0].Name : "Command";
+                actionDict.Add(name,command);
+            }
+
+            if (additionalParameters.Length > 1)
+            {
+                for (var i = 1; i < additionalParameters.Length; i++)
+                {
+                    actionDict[methodParams[i].Name] = additionalParameters[i];
+                }
+            }
+
+
+		    var filterContext = CallActionExecuting(httpMethod, actionDict, methods);
 
 
             if (filterContext.Result != null)
@@ -131,23 +144,18 @@ namespace Snooze.MSpec
                 return;
             }
 
-			if (methods.First().GetParameters().Count() > 1)
-			{
-				InvokeUrlAndModel(route, additionalParameters, queryString, methods);
-			}
+            if (hasMultipleParams)
+			    InvokeUrlAndModel(route, additionalParameters, queryString, methods);
 			else
-			{
-				InvokeCommand(route, additionalParameters, queryString, methods);
-			}
+			    InvokeCommand(command, methods);
+			
 		}
 
 
         static ActionExecutingContext CallActionExecuting(string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
         {
-            var executingContext = new ActionExecutingContext(ControllerContext(),
-                new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))),
-                actionDict
-                );
+            var executingContext = new ActionExecutingContext(ControllerContext(), 
+                new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))), actionDict);
 
             typeof(THandler).InvokeMember("OnActionExecuting",
                 BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
@@ -159,23 +167,12 @@ namespace Snooze.MSpec
         }
 
 
-    	static void InvokeCommand(
-            RouteData route, object[] additionalParameters, 
-            NameValueCollection queryString, 
-            IEnumerable<MethodInfo> methods)
+    	static void InvokeCommand(object command, IEnumerable<MethodInfo> methods)
     	{
-
-    		object command; 
-
-			if (additionalParameters.Any())
-				command = CreateCommandFromAdditionalParameters(route, additionalParameters, queryString);
-			else
-				command = CreateCommandFromUri(route, queryString);
 	
     		var args = new List<object>(new[] {command});
 
-			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest,
-				args.ToArray());
+			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest, args.ToArray());
 		}
 
     	static object CreateCommandFromUri(RouteData route, NameValueCollection queryString)
@@ -196,15 +193,12 @@ namespace Snooze.MSpec
     		return command;
     	}
 
-    	static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, 
-            NameValueCollection queryString, 
-            IEnumerable<MethodInfo> methods)
+    	static void InvokeUrlAndModel(RouteData route, object[] additionalParameters, NameValueCollection queryString, IEnumerable<MethodInfo> methods)
 		{
 			var args = new List<object>(new[] {FromContext(route, queryString)});
 			args.AddRange(additionalParameters);
 
-			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest,
-				args.ToArray());
+			result = (ResourceResult) methods.First().Invoke(autoMocker.ClassUnderTest, args.ToArray());
 		}
 
 		protected static Url FromContext(RouteData data, NameValueCollection queryString)

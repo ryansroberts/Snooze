@@ -17,8 +17,7 @@ namespace Snooze
 
 	public class ConcreteDependency
 	{
-		public  ConcreteDependency(SubConcreteDependency subConcrete,ISubAbstractDependency subabstract)
-		{}
+		public  ConcreteDependency(SubConcreteDependency subConcrete, ISubAbstractDependency subabstract){}
 	}
 
 	public class Root
@@ -27,7 +26,7 @@ namespace Snooze
 		public readonly ConcreteDependency concreteDependency;
 		public readonly Func<ConcreteDependency> factory;
 
-		public Root(IAbstractDependency abstractDependency,ConcreteDependency concreteDependency,Func<ConcreteDependency> factory)
+		public Root(IAbstractDependency abstractDependency,ConcreteDependency concreteDependency, Func<ConcreteDependency> factory)
 		{
 			this.abstractDependency = abstractDependency;
 			this.concreteDependency = concreteDependency;
@@ -35,6 +34,7 @@ namespace Snooze
 		}
 	}
 
+    [Ignore]
 	public class automocking_abstract
 	{
 		static AutoMockContainer<Root> mocked;

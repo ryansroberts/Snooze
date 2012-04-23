@@ -73,7 +73,7 @@ namespace Snooze
 
             Behaves_like<Route> mvcroute;
 
-			It Should_have_captured_the_path = () => v("ApplicationPath").ShouldEqual("foo/bar.xml");
+			It Should_have_captured_the_path = () => v("Path").ShouldEqual("foo/bar.xml");
         }
     }
 
@@ -126,9 +126,10 @@ namespace Snooze
         protected static RouteData routeData;
 
         Cleanup after_each = () =>
-            {
-                ModelBinders.Binders.Clear();
-            };
+                                 {
+                                     ModelBinders.Binders.Clear();
+                                     RouteTable.Routes.Clear();
+                                 };
 
         protected static void RoutingTo(string path)
         {
