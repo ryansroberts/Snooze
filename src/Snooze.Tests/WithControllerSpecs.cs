@@ -9,6 +9,33 @@ namespace Snooze
 {
     public class WithControllerSpecs
     {
+
+        [Subject(typeof(with_controller<ACommand, AHandler>))]
+        public class with_a_simple_get_request_with_a_mentalroute: with_controller<ACommand, AHandler>
+        {
+            Establish context = () => RouteTable.Routes.Map<ACommand>(u => "uri/" + u.Property);
+
+            Because of = () => get("uri/www.test.com");
+
+            It should_be_ok = () => is_200();
+
+            It should_return_a_command = () => result.Resource.ShouldBeOfType<ACommand>();
+
+            It should_map_the_property = () => Resource.Property.ShouldEqual("www.test.com");
+
+            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
+
+            It should_set_the_value_from_the_uri = () => ((ACommand)class_under_test.OnActionExecutingCommand).Property.ShouldEqual("www.test.com");
+
+            Cleanup tear_down = () =>
+            {
+                ModelBinders.Binders.Clear();
+                RouteTable.Routes.Clear();
+            };
+        }
+
+
+
         [Subject(typeof(with_controller<ACommand, AHandler>))]
         public class with_a_simple_get_request_with_querystring_and_a_command : with_controller<ACommand, AHandler>
         {

@@ -19,6 +19,7 @@
 
     <p>
         Partial result ("bob")
+        <a href="<%=new MentalUrl{ brains = "www.test.com" }%>">test mental url</a>
 
         <%: Html.PartialFor(new PartialItemUrl{Something = "bob"}) %>
 

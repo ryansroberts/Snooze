@@ -14,6 +14,7 @@ namespace SampleApplication
             routes.Map<HomeUrl>(h => "");
             routes.Map<BooksUrl>(b => "books");
             routes.Map<BookUrl>(b => "book/" + b.BookId);
+            routes.Map<MentalUrl>(b => "mental/" + b.brains);
             routes.Map<BookCommentsUrl>(c => "comments");
             routes.Map<BookCommentUrl>(c => c.CommentId.ToString());
             routes.Map<PartialItemUrl>(c => "partial/item/" + c.Something);
