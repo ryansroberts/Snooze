@@ -50,6 +50,13 @@ namespace Snooze.MSpec
                                    _requestHeaders = new NameValueCollection();
 		                       };
 
+        Cleanup teardown = () =>
+                               {
+                                   RouteTable.Routes.Clear();
+                                   //RouteTable.Routes.ClearSnoozeCache();
+                                   ModelBinders.Binders.Clear();
+                               };
+
 		static string lasturi;
 
 		protected static THandler GetController() { return autoMocker.ClassUnderTest; }
@@ -276,6 +283,12 @@ namespace Snooze.MSpec
                                                                           _cookies = _requestCookies,
                                                                           _headers = _requestHeaders
             });
+
+		    foreach (var route in RouteTable.Routes)
+		    {
+		        Console.WriteLine(route);
+		    }
+            
 
 			var routeData = RouteTable.Routes.GetRouteData(context);
 

@@ -27,11 +27,7 @@ namespace Snooze
 
             It should_set_the_value_from_the_uri = () => ((ACommand)class_under_test.OnActionExecutingCommand).Property.ShouldEqual("www.test.com");
 
-            Cleanup tear_down = () =>
-            {
-                ModelBinders.Binders.Clear();
-                RouteTable.Routes.Clear();
-            };
+
         }
 
 
@@ -53,11 +49,7 @@ namespace Snooze
 
             It should_set_the_value_from_the_uri = () => ((ACommand)class_under_test.OnActionExecutingCommand).Property.ShouldEqual("value2");
 
-            Cleanup tear_down = () =>
-            {
-                ModelBinders.Binders.Clear();
-                RouteTable.Routes.Clear();
-            };
+
         }
 
 
@@ -78,11 +70,7 @@ namespace Snooze
 
             It should_set_the_value_from_the_uri = () => ((ACommand) class_under_test.OnActionExecutingCommand).Property.ShouldEqual("value");
 
-            Cleanup tear_down = () =>
-            {
-                ModelBinders.Binders.Clear();
-                RouteTable.Routes.Clear();
-            };
+
         }
 
         [Subject(typeof(with_controller<ACommand,AHandler>))]
@@ -98,11 +86,7 @@ namespace Snooze
 
             It should_pass_the_command_to_the_filter_context =()=> class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
 
-            Cleanup tear_down = () =>
-            {
-                ModelBinders.Binders.Clear();
-                RouteTable.Routes.Clear();
-            };
+
         }
         
 

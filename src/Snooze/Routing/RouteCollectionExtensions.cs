@@ -13,7 +13,12 @@ namespace Snooze.Routing
 {
     public static class RouteCollectionExtensions
     {
-        static HashSet<Type> added = new HashSet<Type>();
+        static readonly HashSet<Type> added = new HashSet<Type>();
+
+        public static void ClearSnoozeCache()
+        {
+            added.Clear();
+        }
 
         /// <summary>
         ///   Adds a route for the given Url type.
