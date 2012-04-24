@@ -18,6 +18,8 @@ namespace Snooze.Testing
             _contentEncoding = Encoding.UTF8;
             _appPathModifier = string.Empty;
             _cachePolicy = new FakeCachePolicy();
+            ContentType = "text/html";
+            CacheControl = "private";
             StatusCode = 200;
             Status = "200 OK";
             StatusDescription = "OK";
