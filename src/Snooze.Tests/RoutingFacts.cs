@@ -129,6 +129,7 @@ namespace Snooze
                                  {
                                      ModelBinders.Binders.Clear();
                                      RouteTable.Routes.Clear();
+                                     Routing.RouteCollectionExtensions.ClearSnoozeCache();
                                  };
 
         protected static void RoutingTo(string path)

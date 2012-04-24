@@ -17,6 +17,7 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using Snooze.Testing;
 using Snooze.ViewTesting.Spark;
+using Snooze.Routing;
 
 namespace Snooze.MSpec
 {
@@ -53,7 +54,7 @@ namespace Snooze.MSpec
         Cleanup teardown = () =>
                                {
                                    RouteTable.Routes.Clear();
-                                   //RouteTable.Routes.ClearSnoozeCache();
+                                   Snooze.Routing.RouteCollectionExtensions.ClearSnoozeCache();
                                    ModelBinders.Binders.Clear();
                                };
 
