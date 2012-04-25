@@ -6,11 +6,19 @@ using Snooze;
 
 namespace SampleApplication.Controllers
 {
-    public class BooksUrl : Url { }
-
-    public class BookUrl : Url
+    public class BooksUrl : Url
     {
+        public int? p { get; set; }
+    }
+
+    public class BookUrl : SubUrl<BooksUrl>
+    {
+        public BookUrl()
+        {
+            Parent = new BooksUrl();
+        }
         public string BookId { get; set; }
+        public int? p { get; set; }
     }
 
     public class BookCommentsUrl : SubUrl<BookUrl> { }

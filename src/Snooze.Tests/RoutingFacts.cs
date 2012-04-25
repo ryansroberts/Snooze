@@ -28,6 +28,21 @@ namespace Snooze
     [Subject("Routing specifications")]
     public class RoutingSpec
     {
+
+
+        public class push_to_routevalue_dictionary_when_sub_url_has_member_of_same_name : RoutingContext
+        {
+            static string uri;
+            static Exception error;
+
+            Because of = () => error = Catch.Exception(() => uri = (new OrderUrl { p= 1, OrderId = "17", Parent = new OrdersUrl { Parent = new CustomerUrl  { CustomerId = 42, Parent = new CustomersUrl()}}}).ToString());
+
+            It should_not_error = () => error.ShouldBeNull();
+
+            It shoul_bind_as_exptected = () => uri.ShouldEqual("/customers/42/orders/17?p=1");
+        }
+
+
         public class When_routing_a_url : RoutingContext
         {
             Because of = () => RoutingTo("~/customers");
@@ -89,6 +104,7 @@ namespace Snooze
 
         public class OrdersUrl : SubUrl<CustomerUrl>
         {
+            public int p { get; set; }
         }
 
         protected static Mock<HttpContextBase> httpContext;
@@ -96,6 +112,7 @@ namespace Snooze
         public class OrderUrl : SubUrl<OrdersUrl>
         {
             public string OrderId { get; set; }
+            public int p { get; set; }
         }
 
         public class ContentUrl : Url

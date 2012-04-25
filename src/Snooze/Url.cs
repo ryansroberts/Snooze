@@ -90,17 +90,18 @@ namespace Snooze
             //properties = properties.Where(p => !_preventMapping.Any(v => v(p)));
 
             properties = _preventMapping.Aggregate(properties, (current, exclude) => current.Where(p => !exclude(p)));
+            var indexer = typeof (RouteValueDictionary).GetProperty("this");
+            var addMethod = typeof(RouteValueDictionary).GetMethod("Add");
 
-            var addMethod = typeof (RouteValueDictionary).GetMethod("Add");
+            var setMethod = typeof(RouteValueDictionary).GetProperty("Item").GetSetMethod();
 
-            return properties.Select(property => CreatePropertyPusher(urlType, addMethod, property)).Select(lambda => lambda.Compile());
+            return properties.Select(property => CreatePropertyPusher(urlType, setMethod, property)).Select(lambda => lambda.Compile());
         }
 
-        static Expression<Action<Url, RouteValueDictionary>> CreatePropertyPusher(Type urlType, MethodInfo addMethod,
-                                                                                  PropertyInfo property)
+        static Expression<Action<Url, RouteValueDictionary>> CreatePropertyPusher(Type urlType, MethodInfo setMethod, PropertyInfo property)
         {
             var url = Expression.Parameter(typeof (Url), "url");
-            var values = Expression.Parameter(typeof (RouteValueDictionary), "values");
+            var values = Expression.Parameter(typeof(RouteValueDictionary), "values");
 
             var typedUrl = Expression.TypeAs(url, urlType);
             Expression getPropertyValue = Expression.Property(typedUrl, property);
@@ -110,8 +111,7 @@ namespace Snooze
                 getPropertyValue = Expression.TypeAs(getPropertyValue, typeof (object));
             }
 
-            var addValue = Expression.Call(values, addMethod, Expression.Constant(property.Name, typeof (string)),
-                                           getPropertyValue);
+            var addValue = Expression.Call(values, setMethod, Expression.Constant(property.Name, typeof (string)), getPropertyValue);
 
             return Expression.Lambda<Action<Url, RouteValueDictionary>>(addValue, url, values);
         }
