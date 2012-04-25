@@ -132,6 +132,7 @@ namespace Snooze
                                                                     {"ppm", "image/x-portable-pixmap"},
                                                                     {"pps", "application/vnd.ms-powerpoint"},
                                                                     {"ppt", "application/vnd.ms-powerpoint"},
+                                                                    {"pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
                                                                     {"prf", "application/pics-rules"},
                                                                     {"ps", "application/postscript"},
                                                                     {"pub", "application/x-mspublisher"},
@@ -147,9 +148,7 @@ namespace Snooze
                                                                     {"scd", "application/x-msschedule"},
                                                                     {"sct", "text/scriptlet"},
                                                                     {"setpay", "application/set-payment-initiation"},
-                                                                    {
-                                                                        "setreg", "application/set-registration-initiation"
-                                                                        },
+                                                                    {"setreg", "application/set-registration-initiation"},
                                                                     {"sh", "application/x-sh"},
                                                                     {"shar", "application/x-shar"},
                                                                     {"sit", "application/x-stuffit"},
@@ -196,6 +195,7 @@ namespace Snooze
                                                                     {"xlc", "application/vnd.ms-excel"},
                                                                     {"xlm", "application/vnd.ms-excel"},
                                                                     {"xls", "application/vnd.ms-excel"},
+                                                                    {"xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
                                                                     {"xlt", "application/vnd.ms-excel"},
                                                                     {"xlw", "application/vnd.ms-excel"},
                                                                     {"xml", "application/xml"},
