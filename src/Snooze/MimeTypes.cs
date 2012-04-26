@@ -195,7 +195,7 @@ namespace Snooze
                                                                     {"xlc", "application/vnd.ms-excel"},
                                                                     {"xlm", "application/vnd.ms-excel"},
                                                                     {"xls", "application/vnd.ms-excel"},
-                                                                    {"xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                                                                    {"xslx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
                                                                     {"xlt", "application/vnd.ms-excel"},
                                                                     {"xlw", "application/vnd.ms-excel"},
                                                                     {"xml", "application/xml"},

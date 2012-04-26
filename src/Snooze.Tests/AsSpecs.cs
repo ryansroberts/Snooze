@@ -7,6 +7,16 @@ namespace Snooze
     public class AsSpecs
     {
 
+        public class mime_lookup
+        {
+            static string mime;
+
+            Because of = () => { mime = MimeTypes.GetMimeTypeForFilename("somefile.xslx"); };
+
+            It should_return_mime_type =
+                () => mime.ShouldEqual("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
 
         [Subject(typeof(ResourceFormatters))]
         public class as_text_with_minimal : with_minimal
