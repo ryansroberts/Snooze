@@ -11,7 +11,7 @@ namespace Snooze
         {
             static string mime;
 
-            Because of = () => { mime = MimeTypes.GetMimeTypeForFilename("somefile.xslx"); };
+            Because of = () => { mime = MimeTypes.GetMimeTypeForFilename("somefile.xlsx"); };
 
             It should_return_mime_type =
                 () => mime.ShouldEqual("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

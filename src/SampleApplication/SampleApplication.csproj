@@ -105,7 +105,9 @@
     <Content Include="Views\Book\CommentCreated.aspx" />
     <Content Include="Views\Home\Home.aspx" />
     <Content Include="Views\OpenId\Login.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-1.4.4.js" />
     <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
