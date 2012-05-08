@@ -81,7 +81,7 @@ namespace Snooze
             controllerContext.RouteData.Values["action"] = urlType.Name.Substring(0, urlType.Name.Length - 3);
 
             if (methodInfo == null)
-                return new NoMethodActionDescriptor(httpMethod);
+                return null;
 
             return new ReflectedActionDescriptor(methodInfo, httpMethod, controllerDescriptor);
         }
