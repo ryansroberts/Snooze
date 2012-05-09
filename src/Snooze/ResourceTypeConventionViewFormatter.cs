@@ -1,8 +1,10 @@
 ﻿#region
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,7 +14,10 @@ namespace Snooze
 {
     public abstract class BaseViewFormatter : IResourceFormatter
     {
+        protected static ConcurrentDictionary<string,string> _viewNameCache = new ConcurrentDictionary<string, string>();
+        
         protected string _targetMimeType;
+
 
         protected BaseViewFormatter(string targetMimeType)
         {
@@ -63,20 +68,47 @@ namespace Snooze
 
         private ViewEngineResult FindView(ControllerContext context, object resource)
         {
-            var viewName = GetViewName(resource);
-            var result = ViewEngines.Engines.FindView(context, viewName, null);
-            if(result.View == null)
+            var ns = context.Controller.GetType().Namespace;
+            var controller = context.RouteData.GetRequiredString("controller");
+            object area;
+            context.RouteData.DataTokens.TryGetValue("area", out area);
+
+            string cachedViewName;
+            var cacheKey = string.Concat("__snoozeViewCache::", ns, "::", controller, "::", area);
+
+            List<string> viewNamesToSearch;
+            if (_viewNameCache.TryGetValue(cacheKey, out cachedViewName))
             {
-                Trace.WriteLine("Could not locate view with name " + viewName + " looked in" + string.Join("\r\n", result.SearchedLocations.ToArray()));
-                result = ViewEngines.Engines.FindView(context, string.Concat("..\\", viewName), null);
-                if (result.View == null)
-                    Trace.WriteLine("Could not locate view with name " + viewName + " looked in" + string.Join("\r\n", result.SearchedLocations.ToArray()));
+                viewNamesToSearch = new List<string> { cachedViewName };
             }
-                
+            else
+            {
+                var potentialViewNames = GetViewNames(resource);
+
+                viewNamesToSearch = potentialViewNames.ToList();
+                viewNamesToSearch.AddRange(potentialViewNames.Select(v => ".." + Path.DirectorySeparatorChar + v));
+            }
+            ViewEngineResult result = null;
+
+            foreach (var viewName in viewNamesToSearch)
+            {
+                result = ViewEngines.Engines.FindView(context, viewName, null);
+                if (result.View != null)
+                {
+                    _viewNameCache[cacheKey] = viewName;
+                    return result;
+                }
+
+                Trace.WriteLine("Could not locate view with name " + viewName + " looked in" + string.Join("\r\n", result.SearchedLocations.ToArray()));
+            }
+
+
             return result;
+
+
         }
 
-        protected abstract string GetViewName(object resource);
+        protected abstract string[] GetViewNames(object resource);
 
 
         public abstract int CompareTo(object obj);
@@ -91,9 +123,9 @@ namespace Snooze
             this.viewname = viewname;
         }
 
-        protected override string GetViewName(object resource)
+        protected override string[] GetViewNames(object resource)
         {
-            return viewname;
+            return new[] {viewname};
         }
 
         public override int CompareTo(object obj)
@@ -115,29 +147,26 @@ namespace Snooze
         {
         }
 
-        protected override string GetViewName(object resource)
+        protected override string[] GetViewNames(object resource)
         {
             var name = resource.GetType().Name;
             if (resource.GetType().IsGenericType)
                 name = resource.GetType().GetGenericArguments()[0].Name;
 
             if (name.EndsWith("ViewModel"))
-            {
-                name = name.Substring(0, name.Length - 9);
-            }
-            else if (name.EndsWith("Model"))
-            {
-                name = name.Substring(0, name.Length - 5);
-            }
-            else if (name.EndsWith("Command"))
-            {
-                name = name.Substring(0, name.Length - 7);
-            }
-            else if (name.EndsWith("Url"))
-            {
-                name = name.Substring(0, name.Length - 3);
-            }
-            return name;
+                return new[] {name, name.Substring(0, name.Length - 9)};
+            
+            
+            if (name.EndsWith("Model"))
+                return new[] {name, name.Substring(0, name.Length - 5)};
+             
+            if (name.EndsWith("Command"))
+                return new[] {name, name.Substring(0, name.Length - 7)};
+            
+            if (name.EndsWith("Url"))
+                return new[] {name, name.Substring(0, name.Length - 7)};
+                
+            return new[] { name};
         }
 
 
