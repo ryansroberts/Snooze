@@ -74,7 +74,8 @@ namespace Snooze
             context.RouteData.DataTokens.TryGetValue("area", out area);
 
             string cachedViewName;
-            var cacheKey = string.Concat("__snoozeViewCache::", ns, "::", controller, "::", area);
+            var resourceName = resource == null ? string.Empty : resource.GetType().FullName;
+            var cacheKey = string.Concat("__snoozeViewCache::", ns, "::", controller, "::", area, "::", resourceName);
 
             List<string> viewNamesToSearch;
             if (_viewNameCache.TryGetValue(cacheKey, out cachedViewName))
