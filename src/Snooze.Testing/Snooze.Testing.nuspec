@@ -15,10 +15,8 @@
   <files>
     <file src="bin\Release\Fizzler.dll" target="lib\net40" />
     <file src="bin\Release\Fizzler.Systems.HtmlAgilityPack.dll" target="lib\net40" />
-    <file src="bin\Release\Fizzler.Systems.XmlNodeQuery.dll" target="lib\net40" />
     <file src="bin\Release\Glue.dll" target="lib\net40" />
     <file src="bin\Release\HtmlAgilityPack.dll" target="lib\net40" />
     <file src="bin\Release\nVentive.Umbrella.dll" target="lib\net40" />
-    <file src="bin\Release\SgmlReaderDll.dll" target="lib\net40" />
   </files>
 </package>
