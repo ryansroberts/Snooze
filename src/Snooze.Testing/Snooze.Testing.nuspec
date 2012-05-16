@@ -13,6 +13,7 @@
     <tags>MVC ASPNET REST TESTING</tags>
   </metadata>
   <files>
+    <file src="bin\Release\HtmlParser.exe" target="lib\net40" />
     <file src="bin\Release\Fizzler.dll" target="lib\net40" />
     <file src="bin\Release\Fizzler.Systems.HtmlAgilityPack.dll" target="lib\net40" />
     <file src="bin\Release\Glue.dll" target="lib\net40" />
