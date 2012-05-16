@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web.Mvc;
 using Fizzler.Systems.HtmlAgilityPack;
 using Machine.Specifications;
 using SampleApplication.Controllers;

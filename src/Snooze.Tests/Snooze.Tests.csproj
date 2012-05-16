@@ -62,11 +62,17 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.2.5.3\lib\NET40\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="Fizzler.Systems.HtmlAgilityPack">
-      <HintPath>..\..\lib\net40\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
+    <Reference Include="Fizzler, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\fizzler\Fizzler.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\..\Libraries\fizzler\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="Fizzler.Systems.HtmlAgilityPack, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\fizzler\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\fizzler\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Specifications">
       <HintPath>..\packages\Machine.Specifications.0.5.0.0\lib\Machine.Specifications.dll</HintPath>
