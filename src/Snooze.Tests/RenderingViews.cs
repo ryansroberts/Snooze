@@ -80,6 +80,17 @@ namespace Snooze
 	}
 
 
+    public class can_validate_html5_pages : with_controller<HomeViewModel, HomeController>
+    {
+        Establish view_location = () => application_under_test_is_here("../SampleApplication");
+
+        Because of = () => get("html5");
+
+        It has_html_element = () => conneg_html().DocumentNode.QuerySelectorAll("html").ShouldNotBeEmpty();
+
+        It has_no_parse_errors = () => markup_is_valid_html5();
+    }
+
 	public class content_negotiate_json : with_controller<HomeViewModel, HomeController>
 	{
 		Establish view_location = () => application_under_test_is_here("../SampleApplication");

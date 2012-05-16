@@ -103,6 +103,7 @@
     <Content Include="Views\Book\Book.aspx" />
     <Content Include="Views\Book\Books.aspx" />
     <Content Include="Views\Book\CommentCreated.aspx" />
+    <Content Include="Views\Home\Html5.aspx" />
     <Content Include="Views\Home\Home.aspx" />
     <Content Include="Views\OpenId\Login.aspx" />
     <Content Include="Web.config">
@@ -134,6 +135,7 @@
     <Content Include="Content\themes\base\jquery-ui.css" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Home\Html5.spark" />
     <None Include="Views\Home\Home.spark" />
   </ItemGroup>
   <ItemGroup>

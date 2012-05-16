@@ -12,6 +12,7 @@ using System.Web.Routing;
 using System.Xml;
 using System.Xml.Resolvers;
 using HtmlAgilityPack;
+using HtmlParserSharp;
 using Moq;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
@@ -453,6 +454,20 @@ namespace Snooze.Nunit
             doc.LoadHtml(httpContext._response.ResponseOutput);
             return doc;
         }
+
+        public static void markup_is_valid_html5(string accept = "text/html")
+        {
+            var httpContext = Render(accept);
+            XmlDocument result;
+            using (var reader = new StringReader(httpContext._response.ResponseOutput))
+            {
+                var parser = new SimpleHtmlParser();
+                result = parser.ParseString(reader.ReadToEnd());
+            }
+
+
+        }
+
 
         public static void markup_is_valid_according_to_dtd(string accept = "text/html")
         {

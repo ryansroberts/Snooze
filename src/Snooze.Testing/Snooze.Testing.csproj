@@ -52,6 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fizzler\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlParser">
+      <HintPath>..\lib\htmlparsersharp\HtmlParser.exe</HintPath>
+    </Reference>
     <Reference Include="Machine.Specifications, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Machine.Specifications.0.5.0.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>

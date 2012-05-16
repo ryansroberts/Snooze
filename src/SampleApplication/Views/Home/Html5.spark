@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+	<head><title>HI</title></head>
+	<body>
+		<div>
+   
+		   <form action="Html5" method="POST">
+			   <fieldset>
+				   <legend>here's a html5 form</legend>
+				   <ul>
+					   <li>
+						   <label>Email<em>*</em><input type="email" required="required"/></label>
+					   </li>
+					   <li>
+						   <label>Url<em>*</em><input type="url" required="required"/></label>
+					   </li>
+				   </ul>
+			   </fieldset>
+		   </form>
+    </div>
+	</body>
+</html>

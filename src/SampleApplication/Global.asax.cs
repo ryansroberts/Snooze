@@ -11,6 +11,7 @@ namespace SampleApplication
         public void Register(RouteCollection routes)
         {
             routes.Map<HomeUrl>(h => "");
+            routes.Map<Html5Url>(h => "html5");
             routes.Map<BooksUrl>(b => "books");
             routes.Map<BookUrl>(b => b.BookId);
             routes.Map<MentalUrl>(b => "mental/" + b.brains);
