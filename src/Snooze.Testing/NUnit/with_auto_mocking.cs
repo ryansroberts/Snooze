@@ -1,5 +1,6 @@
 ﻿using Moq;
 using System;
+using NUnit.Framework;
 using StructureMap.AutoMocking;
 
 namespace Snooze.Nunit
@@ -17,6 +18,13 @@ namespace Snooze.Nunit
         public with_auto_mocking()
         {
             autoMocker = new MoqAutoMocker<TUnderTest>();
+        }
+
+        [TearDown]
+        void CleanUp()
+        {
+            err = null;
+            autoMocker = null;
         }
 
         public static Mock<TInterface> Stub<TInterface>() where TInterface : class

@@ -155,15 +155,15 @@
     <Compile Include="FakeHttpResponse.cs" />
     <Compile Include="MSpec\with_auto_mocking.cs" />
     <Compile Include="MSpec\with_controller.cs" />
-    <Compile Include="MSpec\with_routing.cs" />
     <Compile Include="NUnit\SpecificationException.cs" />
     <Compile Include="NUnit\with_auto_mocking.cs" />
     <Compile Include="NUnit\with_controller.cs" />
-    <Compile Include="NUnit\with_routing.cs" />
+    <Compile Include="with_routing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
     <Compile Include="ViewTesting\TestSparkSettings.cs" />
     <Compile Include="ViewTesting\TestSparkView.cs" />
+    <Compile Include="with_controller_implementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
