@@ -44,4 +44,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 
-[assembly: InternalsVisibleTo("Glimpse.MVC")]
+[assembly: InternalsVisibleTo("Glimpse.MVC3")]
