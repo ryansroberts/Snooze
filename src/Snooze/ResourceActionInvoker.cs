@@ -53,7 +53,7 @@ namespace Snooze
                                                            IDictionary<string, object> parameters)
         {
             if (actionDescriptor is NoMethodActionDescriptor)
-                return new ResourceResult<object>(400, ((NoMethodActionDescriptor) actionDescriptor).httpMethod);
+                return new ResourceResult<object>(405, ((NoMethodActionDescriptor) actionDescriptor).httpMethod);
 
             return Result = base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
         }
@@ -69,7 +69,6 @@ namespace Snooze
 
             var httpMethod = GetHttpMethod(controllerContext);
 
-
             CheckChildAction(IsSnoozePartial(controllerContext), controllerContext.Controller.GetType(),
                              controllerContext.RequestContext.HttpContext.Request.Url.ToString());
 
@@ -77,7 +76,6 @@ namespace Snooze
 
             // Fix up the "action" name to be the Url type name (minus the "Url" suffix).
             // This makes for decent View names e.g. AuthorUrl => controller=Book, action=Author => /Views/Book/Author.aspx
-
             controllerContext.RouteData.Values["action"] = urlType.Name.Substring(0, urlType.Name.Length - 3);
 
             if (methodInfo == null)
