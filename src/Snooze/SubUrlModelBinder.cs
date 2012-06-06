@@ -10,7 +10,7 @@ namespace Snooze
     /// <summary>
     ///   A model binder that will bind the Parent property of a SubUrl.
     /// </summary>
-    internal class SubUrlModelBinder : DefaultModelBinder
+    public class SubUrlModelBinder : DefaultModelBinder
     {
         protected override void BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext,
                                              PropertyDescriptor propertyDescriptor)
