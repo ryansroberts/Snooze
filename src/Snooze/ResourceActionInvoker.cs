@@ -135,8 +135,7 @@ namespace Snooze
                 from m in controllerType.GetMethods()
                 where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
                 let parameters = m.GetParameters()
-                where parameters.Length > 0
-                      && parameters[0].ParameterType.Equals(urlType)
+                where parameters.Length > 0 && parameters[0].ParameterType.Equals(urlType)
                 select m;
 
 
