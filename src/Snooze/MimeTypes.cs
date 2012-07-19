@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 #endregion
 
@@ -224,6 +225,11 @@ namespace Snooze
             string mimeType;
             if (_types.TryGetValue(ext, out mimeType)) return mimeType;
             return "";
+        }
+
+        public static string GetExtensionForMimeType(string mimeType)
+        {
+            return _types.Keys.FirstOrDefault(k => _types[k] == mimeType.ToLower().Trim()) ?? string.Empty;
         }
     }
 }
