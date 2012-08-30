@@ -32,6 +32,8 @@ namespace Snooze
 
         public void Output(ControllerContext context, object resource, string contentType)
         {
+            var outerStatusCode = context.RequestContext.HttpContext.Response.StatusCode;
+
             if (!context.Controller.GetType().Name.StartsWith("Partial"))
             {
                 SetContentType(context, contentType);
@@ -56,6 +58,8 @@ namespace Snooze
 
 			if(result.ViewEngine != null)
 				result.ViewEngine.ReleaseView(context, result.View);
+
+            context.RequestContext.HttpContext.Response.StatusCode = outerStatusCode;
         }
 
         private void SetContentType(ControllerContext context, string contentType)

@@ -32,7 +32,7 @@ namespace Snooze
             if (controllerType == null)
 
                 throw new InvalidOperationException(
-                    "Cannot find Controller for Route - ensure all configured Routes have matching Action defined.");
+                    "Cannot find Controller for Route - all ensure configured Routes have matching Action defined.");
 
 
             var routeValues = GetRouteValues(controllerType, url);
