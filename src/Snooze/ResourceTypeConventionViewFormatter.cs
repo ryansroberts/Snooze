@@ -169,7 +169,7 @@ namespace Snooze
                 return new[] {name, name.Substring(0, name.Length - 7)};
             
             if (name.EndsWith("Url"))
-                return new[] {name, name.Substring(0, name.Length - 7)};
+                return new[] {name, name.Substring(0, name.Length - 3)};
                 
             return new[] { name};
         }
