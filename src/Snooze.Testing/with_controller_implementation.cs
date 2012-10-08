@@ -423,7 +423,7 @@ namespace Snooze.Testing
 		FakeHttpContext Render(string accept, ControllerContext controllerContext)
 		{
 			controllerContext = (controllerContext) ?? ControllerContext(accept);
-
+            CallResultExecuting(controllerContext,Result);
 			Result.ExecuteResult(controllerContext);
             controllerContext.HttpContext.Response.Flush();
 			controllerContext.HttpContext.Response.OutputStream.Seek(0, SeekOrigin.Begin);
