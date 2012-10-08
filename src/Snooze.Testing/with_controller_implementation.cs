@@ -156,9 +156,9 @@ namespace Snooze.Testing
 
             var filterContext = CallActionExecuting(controllerContext, httpMethod, actionDict, methods);
 
-
             if (filterContext.Result != null)
             {
+                CallResultExecuting(controllerContext, filterContext.Result);
                 Result = filterContext.Result as ResourceResult;
                 return;
             }
@@ -173,14 +173,24 @@ namespace Snooze.Testing
 
         ActionExecutingContext CallActionExecuting(ControllerContext controllerContext, string httpMethod, Dictionary<string, object> actionDict, IEnumerable<MethodInfo> methods)
         {
-            var executingContext = new ActionExecutingContext(controllerContext, new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))), actionDict);
+            var context = new ActionExecutingContext(controllerContext, new ReflectedActionDescriptor(methods.First(), httpMethod, new ReflectedControllerDescriptor(typeof(THandler))), actionDict);
 
             typeof(THandler).InvokeMember("OnActionExecuting",
                 BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
                 null,
-                classUnderTest(), new[] { executingContext });
+                classUnderTest(), new[] { context });
 
-            return executingContext;
+            return context;
+        }
+
+
+        void CallResultExecuting(ControllerContext controllerContext, ActionResult result)
+        {
+            var context = new ResultExecutingContext(controllerContext,result);
+
+            typeof(THandler).InvokeMember("OnResultExecuting",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, classUnderTest(), new[] { context });
+
         }
 
 
