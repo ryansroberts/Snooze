@@ -1,5 +1,7 @@
 ﻿#region
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 
 #endregion
@@ -11,6 +13,13 @@ namespace Snooze
 
     internal class FakeHttpContext : HttpContextBase
     {
+        protected IDictionary items = new Dictionary<string, object>();
+
+        public override System.Collections.IDictionary Items
+        {
+            get { return items; }
+        }
+
         public override HttpRequestBase Request
         {
             get { return new FakeHttpRequest(); }
