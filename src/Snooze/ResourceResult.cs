@@ -283,6 +283,8 @@ namespace Snooze
 
             AppendCookies(context);
 
+            ApplyCacheActions(context);
+
             if (Resource == null) return;
 
             // Delegate to ActionResult, if one was given.
@@ -323,7 +325,7 @@ namespace Snooze
 
             formatter.Output(context, projection(Resource), ContentType);
 
-            ApplyCacheActions(context);
+            
 
         }
 
