@@ -49,7 +49,7 @@ namespace Snooze
                         context,
                         result.View,
                         context.Controller.ViewData,
-                        context.Controller.TempData,
+                        new TempDataDictionary(),
                         context.HttpContext.Response.Output
                         ),
                     context.HttpContext.Response.Output
