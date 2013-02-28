@@ -123,6 +123,16 @@ namespace Snooze
 
         public string ToString(RequestContext requestContext)
         {
+            return ToString(requestContext, RouteTable.Routes);
+        }
+
+        public string ToString(RouteCollection routes)
+        {
+            return ToString(CreateMinimalRequestContext(), routes);
+        }
+
+        public string ToString(RequestContext requestContext, RouteCollection routes)
+        {
             var values = new RouteValueDictionary();
             FillRouteValueDictionary(values);
             var name = ResourceRoute.GetRouteNameFromUrlType(GetType());
@@ -135,16 +145,16 @@ namespace Snooze
                     values[value.Key] = String.Join(",", (string[])value.Value);
                 }
 
-                vp = RouteTable.Routes.GetVirtualPath(requestContext, name, values);
+                vp = routes.GetVirtualPath(requestContext, name, values);
             }
             catch (ArgumentException)
             {
                 return GetType().Name + "-NotConfigured";
             }
-			if(vp == null)
-			{
-				return "No route for " + GetType().Name + " name: " + name + " values: " + string.Join(",", values.Keys.ToArray());
-			}
+            if (vp == null)
+            {
+                return "No route for " + GetType().Name + " name: " + name + " values: " + string.Join(",", values.Keys.ToArray());
+            }
 
             return vp.VirtualPath;
         }
