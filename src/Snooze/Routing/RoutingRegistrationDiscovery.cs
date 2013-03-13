@@ -33,7 +33,7 @@ namespace Snooze.Routing
                         .Select(t => (IRouteRegistration)Activator.CreateInstance(t)),
                     assembly.GetLoadableTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
                         .SelectMany(t => t.GetFields(BindingFlags.NonPublic | BindingFlags.Static)
-                            .Where(f => typeof(Handler.Register).IsAssignableFrom(f.FieldType))
+                            .Where(IsRegister)
                             .Select(f => new DelegatedRouteRegistration((Handler.Register)f.GetValue(null)))
                         ));
 	    }
@@ -42,6 +42,18 @@ namespace Snooze.Routing
         static bool IsConstructableRouteRegistration(Type t)
         {
             return typeof (IRouteRegistration).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface;
+        }
+
+        static bool IsRegister(FieldInfo f)
+        {
+            try
+            {
+                return typeof(Handler.Register).IsAssignableFrom(f.FieldType);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 
