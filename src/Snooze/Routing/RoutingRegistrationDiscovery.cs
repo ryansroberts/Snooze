@@ -31,7 +31,7 @@ namespace Snooze.Routing
                     assembly.GetLoadableTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetNestedTypes()))
                         .Where(IsConstructableRouteRegistration)
                         .Select(t => (IRouteRegistration)Activator.CreateInstance(t)),
-                    assembly.GetTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
+                    assembly.GetLoadableTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
                         .SelectMany(t => t.GetFields(BindingFlags.NonPublic | BindingFlags.Static)
                             .Where(f => typeof(Handler.Register).IsAssignableFrom(f.FieldType))
                             .Select(f => new DelegatedRouteRegistration((Handler.Register)f.GetValue(null)))
