@@ -28,7 +28,7 @@ namespace Snooze.Routing
         public IEnumerable<IRouteRegistration> Scan(Assembly assembly)
 		{
             return Enumerable.Concat(
-                    assembly.GetTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetNestedTypes()))
+                    assembly.GetLoadableTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetNestedTypes()))
                         .Where(IsConstructableRouteRegistration)
                         .Select(t => (IRouteRegistration)Activator.CreateInstance(t)),
                     assembly.GetTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
@@ -42,6 +42,21 @@ namespace Snooze.Routing
         static bool IsConstructableRouteRegistration(Type t)
         {
             return typeof (IRouteRegistration).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface;
+        }
+    }
+
+    public static class AssemblyExtensions
+    {
+        public static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return e.Types.Where(t => t != null);
+            }
         }
     }
 }
