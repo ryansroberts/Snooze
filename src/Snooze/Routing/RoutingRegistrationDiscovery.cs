@@ -28,7 +28,7 @@ namespace Snooze.Routing
         public IEnumerable<IRouteRegistration> Scan(Assembly assembly)
 		{
             return Enumerable.Concat(
-                    assembly.GetLoadableTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetNestedTypes()))
+                    assembly.GetLoadableTypes().SelectMany(t => Enumerable.Concat(new[] { t }, t.GetLoadableNestedTypes()))
                         .Where(IsConstructableRouteRegistration)
                         .Select(t => (IRouteRegistration)Activator.CreateInstance(t)),
                     assembly.GetLoadableTypes().Where(t => typeof(Handler).IsAssignableFrom(t))
@@ -64,6 +64,18 @@ namespace Snooze.Routing
             try
             {
                 return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return e.Types.Where(t => t != null);
+            }
+        }
+
+        public static IEnumerable<Type> GetLoadableNestedTypes(this Type type)
+        {
+            try
+            {
+                return type.GetNestedTypes();
             }
             catch (ReflectionTypeLoadException e)
             {
