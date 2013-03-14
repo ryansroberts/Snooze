@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -109,7 +110,13 @@ namespace Snooze.Routing
 
             foreach (var routeRegistration in disco.Scan(typeof(TRef).Assembly))
             {
-                routeRegistration.Register(routes);
+                try
+                {
+                    routeRegistration.Register(routes);
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                }
             }
         }
 
