@@ -38,7 +38,6 @@ namespace Snooze.Routing
                         ));
 	    }
 
-
         static bool IsConstructableRouteRegistration(Type t)
         {
             return typeof (IRouteRegistration).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface;

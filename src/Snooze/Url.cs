@@ -137,26 +137,44 @@ namespace Snooze
             FillRouteValueDictionary(values);
             var name = ResourceRoute.GetRouteNameFromUrlType(GetType());
 
-            VirtualPathData vp;
+            var vp = FindVirtualPath(routes, values, requestContext, ResourceRoute.GetRouteNameFromUrlType(GetType()));
+
+            if (vp == null && GetType().BaseType != null)
+            {
+                var type = GetType().BaseType;
+                vp = FindVirtualPath(routes, values, requestContext,
+                                     ResourceRoute.GetRouteNameFromUrlType(type));
+            }
+
+            if (vp == null)
+                return GetType().Name + "-NotConfigured";
+
+            //if (vp == null)
+            //{
+            //    return "No route for " + GetType().Name + " name: " + name + " values: " + string.Join(",", values.Keys.ToArray());
+            //}
+
+            return vp.VirtualPath;
+        }
+
+        private VirtualPathData FindVirtualPath(
+            RouteCollection routes, 
+            RouteValueDictionary values, 
+            RequestContext requestContext, 
+            string name)
+        {
             try
             {
                 foreach (var value in values.ToList().Where(value => value.Value is string[]))
                 {
                     values[value.Key] = String.Join(",", (string[])value.Value);
                 }
-
-                vp = routes.GetVirtualPath(requestContext, name, values);
+                return routes.GetVirtualPath(requestContext, name, values);
             }
             catch (ArgumentException)
             {
-                return GetType().Name + "-NotConfigured";
+                return null;
             }
-            if (vp == null)
-            {
-                return "No route for " + GetType().Name + " name: " + name + " values: " + string.Join(",", values.Keys.ToArray());
-            }
-
-            return vp.VirtualPath;
         }
 
         protected internal virtual void FillRouteValueDictionary(RouteValueDictionary values)

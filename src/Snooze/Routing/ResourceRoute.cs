@@ -59,7 +59,7 @@ namespace Snooze.Routing
         public static string GetRouteNameFromUrlType(Type type)
         {
             Type resourceRouteType;
-            if (type.IsDefined(typeof (SubUrlAttribute), true))
+            if (type.IsDefined(typeof (SubUrlAttribute), true) && type.BaseType.IsGenericType)
             {
                 resourceRouteType = GetSubResourceRouteType(type);
             }
