@@ -62,8 +62,7 @@ namespace Snooze
         public ActionResult Result { get; protected set; }
 
 
-        protected override ActionDescriptor FindAction(ControllerContext controllerContext,
-                                                       ControllerDescriptor controllerDescriptor, string actionName)
+        protected override ActionDescriptor FindAction(ControllerContext controllerContext, ControllerDescriptor controllerDescriptor, string actionName)
         {
             var urlType = GetUrlType(controllerContext);
 
@@ -155,6 +154,7 @@ namespace Snooze
 
                 return "GET";
 
+            var methodInContext = controllerContext.HttpContext.Items["_method"] as string;
 
             var methodInForm = controllerContext.HttpContext.Request.Form["_method"];
 
@@ -163,7 +163,7 @@ namespace Snooze
             var methodInRequest = controllerContext.HttpContext.Request.HttpMethod;
 
 
-            return methodInForm ?? methodInHeader ?? methodInRequest ?? "GET";
+            return methodInContext ?? methodInForm ?? methodInHeader ?? methodInRequest ?? "GET";
         }
 
 
