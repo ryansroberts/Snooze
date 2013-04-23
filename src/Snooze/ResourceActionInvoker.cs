@@ -68,8 +68,7 @@ namespace Snooze
 
             var httpMethod = GetHttpMethod(controllerContext);
 
-            CheckChildAction(IsSnoozePartial(controllerContext), controllerContext.Controller.GetType(),
-                             controllerContext.RequestContext.HttpContext.Request.Url.ToString());
+            CheckChildAction(IsSnoozePartial(controllerContext), controllerContext.Controller.GetType(), controllerContext.RequestContext.HttpContext.Request.Url.ToString());
 
             var methodInfo = GetMethodInfo(controllerContext.Controller.GetType(), urlType, httpMethod);
 
@@ -130,13 +129,22 @@ namespace Snooze
 
         public static MethodInfo FindActionMethod(Type controllerType, Type urlType, string httpMethod)
         {
-            var methods =
-                from m in controllerType.GetMethods()
+            var methods = from m in controllerType.GetMethods()
                 where m.Name.Equals(httpMethod, StringComparison.OrdinalIgnoreCase)
                 let parameters = m.GetParameters()
-                where parameters.Length > 0 && parameters[0].ParameterType.Equals(urlType)
+                where parameters.Length > 0 && parameters[0].ParameterType == urlType
                 select m;
 
+            var result = methods.FirstOrDefault();
+
+            if(result!=null)
+                return result;
+
+            methods = from m in controllerType.GetMethods()
+                where m.GetCustomAttributes(true).Any(o=>o is AnyActionAttribute)
+                let parameters = m.GetParameters()
+                where parameters.Length > 0 && parameters[0].ParameterType == urlType
+                select m;
 
             return methods.FirstOrDefault();
         }
