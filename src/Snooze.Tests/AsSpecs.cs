@@ -87,7 +87,9 @@ namespace Snooze
 
             Because of = () => GetFormatters();
 
-            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml", "*/*"));
+            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml"));
+
+            It should_have_wildcard_last = () => allFormattersFor.OfType<ResourceTypeConventionViewFormatter>().Last().ShouldEqual(new ResourceTypeConventionViewFormatter("*/*"));
 
             It should_not_add_any_specific_formatters = () => specificFormattersFor.Count().ShouldEqual(0);
 
@@ -106,7 +108,9 @@ namespace Snooze
 
             Because of = () => GetFormatters();
 
-            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html", "*/*"));
+            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html"));
+
+            It should_have_wildcard_last = () => allFormattersFor.OfType<ResourceTypeConventionViewFormatter>().Last().ShouldEqual(new ResourceTypeConventionViewFormatter("*/*"));
 
             It should_not_add_any_specific_formatters = () => specificFormattersFor.Count().ShouldEqual(0);
 
@@ -126,7 +130,9 @@ namespace Snooze
 
             Because of = () => GetFormatters();
 
-            It should_have_the_required_formatter = () => allFormattersFor.Any(f => f.CompareTo(new ResourceTypeConventionViewFormatter("application/xhtml+xml")) == 0).ShouldBeTrue();
+            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("text/html"));
+
+            It should_have_wildcard_last = () => allFormattersFor.OfType<ResourceTypeConventionViewFormatter>().Last().ShouldEqual(new ResourceTypeConventionViewFormatter("*/*"));
 
             It should_not_add_any_specific_formatters = () => specificFormattersFor.Count().ShouldEqual(0);
 

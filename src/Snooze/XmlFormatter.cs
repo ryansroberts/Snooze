@@ -30,7 +30,10 @@ namespace Snooze
             else
             {
                 var s = new XmlSerializer(resource.GetType());
-                context.HttpContext.Response.ContentType = contentType ?? "text/xml";
+                if (!context.Controller.GetType().Name.StartsWith("Partial"))
+                {
+                    context.HttpContext.Response.ContentType = contentType ?? "text/xml";
+                }
                 s.Serialize(context.HttpContext.Response.Output, resource);
             }
         }

@@ -47,26 +47,27 @@ namespace Snooze
 
         public static IEnumerable<IResourceFormatter> GetViewFormatters()
         {
+            // The order of formatters matters.
+            // Browsers like Chrome will ask for "text/xml, application/xhtml+xml, ..."
+            // But we don't want to use the XML formatter by default 
+            // - which would happen since "text/xml" appears first in the list.
+            // So we add an explicitly typed ViewFormatter first.
             switch (ViewFormatter)
             {
                 case "legacy":
                     yield return new ResourceTypeConventionViewFormatter("text/html");
                     yield return new ResourceTypeConventionViewFormatter("application/xhtml+xml");
-                    yield return new ResourceTypeConventionViewFormatter("text/xml");
-                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
-                    yield return new ResourceTypeConventionViewFormatter("*/*");
-                    yield break;
+                    break;
                 case "xhtml":
-                    yield return new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html", "*/*");
-                    yield return new ResourceTypeConventionViewFormatter("text/xml");
-                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
-                    yield break;
+                    yield return new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html");
+                    break;
                 default:
-                    yield return new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml", "*/*");
-                    yield return new ResourceTypeConventionViewFormatter("text/xml");
-                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
-                    yield break;
+                    yield return new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml");
+                    break;
             }
+            yield return new ResourceTypeConventionViewFormatter("text/xml");
+            yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
+            yield return new ResourceTypeConventionViewFormatter("*/*");
         }
         
     }
@@ -86,11 +87,6 @@ namespace Snooze
 		public static void Defaults(params Type[] types)
 		{
             defaultViewFormatters.Clear();
-            // The order of formatters matters.
-            // Browsers like Chrome will ask for "text/xml, application/xhtml+xml, ..."
-            // But we don't want to use the XML formatter by default 
-            // - which would happen since "text/xml" appears first in the list.
-            // So we add an explicitly typed ViewFormatter first.
             foreach (var resourceSpecificFormatter in ResourceFormatterDefaults.GetViewFormatters())
             {
                 defaultViewFormatters.Add(resourceSpecificFormatter);
