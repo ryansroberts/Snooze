@@ -15,7 +15,7 @@ namespace Snooze.MSpec
     public class with_controller<TResource, THandler> : with_auto_mocking<THandler>
         where THandler : ResourceController
     {
-        static with_controller_implementation<TResource, THandler> controllerImplmentation;
+        protected static with_controller_implementation<TResource, THandler> controllerImplmentation;
 
         Establish context = () =>{
                                     controllerImplmentation = new with_controller_implementation<TResource, THandler>();

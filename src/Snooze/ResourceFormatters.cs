@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 #endregion
@@ -34,6 +35,41 @@ namespace Snooze
         }
     }
 
+    public static class ResourceFormatterDefaults
+    {
+        public static string ViewFormatter { get; set; }
+
+        static ResourceFormatterDefaults()
+        {
+           ViewFormatter = ConfigurationManager.AppSettings["snooze:viewformatter"] ?? "html";
+        }
+
+
+        public static IEnumerable<IResourceFormatter> GetViewFormatters()
+        {
+            switch (ViewFormatter)
+            {
+                case "legacy":
+                    yield return new ResourceTypeConventionViewFormatter("text/html");
+                    yield return new ResourceTypeConventionViewFormatter("application/xhtml+xml");
+                    yield return new ResourceTypeConventionViewFormatter("text/xml");
+                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
+                    yield return new ResourceTypeConventionViewFormatter("*/*");
+                    yield break;
+                case "xhtml":
+                    yield return new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html", "*/*");
+                    yield return new ResourceTypeConventionViewFormatter("text/xml");
+                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
+                    yield break;
+                default:
+                    yield return new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml", "*/*");
+                    yield return new ResourceTypeConventionViewFormatter("text/xml");
+                    yield return new ResourceTypeConventionViewFormatter("application/rss+xml");
+                    yield break;
+            }
+        }
+        
+    }
 
     public static class ResourceFormatters
     {
@@ -49,6 +85,17 @@ namespace Snooze
 
 		public static void Defaults(params Type[] types)
 		{
+            defaultViewFormatters.Clear();
+            // The order of formatters matters.
+            // Browsers like Chrome will ask for "text/xml, application/xhtml+xml, ..."
+            // But we don't want to use the XML formatter by default 
+            // - which would happen since "text/xml" appears first in the list.
+            // So we add an explicitly typed ViewFormatter first.
+            foreach (var resourceSpecificFormatter in ResourceFormatterDefaults.GetViewFormatters())
+            {
+                defaultViewFormatters.Add(resourceSpecificFormatter);
+            }
+
 			defaultSerialisationFormatters.Clear();
             if (types == null || types.Length == 0)
                 return;
@@ -64,17 +111,6 @@ namespace Snooze
 
         static ResourceFormatters()
         {
-            // The order of formatters matters.
-            // Browsers like Chrome will ask for "text/xml, application/xhtml+xml, ..."
-            // But we don't want to use the XML formatter by default 
-            // - which would happen since "text/xml" appears first in the list.
-            // So we add an explicitly typed ViewFormatter first.
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/html"));
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/xhtml+xml"));
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("text/xml"));
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("application/rss+xml"));
-            defaultViewFormatters.Add(new ResourceTypeConventionViewFormatter("*/*")); // similar reason for this.
-
 			Defaults();
         }
 

@@ -17,16 +17,21 @@ namespace Snooze
         protected static ConcurrentDictionary<string,string> _viewNameCache = new ConcurrentDictionary<string, string>();
         
         protected string _targetMimeType;
+        protected string[] alsoAcceptRequestsToFormat;
 
 
-        protected BaseViewFormatter(string targetMimeType)
+        protected BaseViewFormatter(string targetMimeType, params string[] alsoAcceptRequestsToFormat)
         {
             _targetMimeType = targetMimeType;
+            
+            this.alsoAcceptRequestsToFormat = alsoAcceptRequestsToFormat;
         }
 
         public bool CanFormat(ControllerContext context, object resource, string mimeType)
         {
-            return ((_targetMimeType == mimeType) || ( string.IsNullOrEmpty(_targetMimeType)))
+            return ((_targetMimeType == mimeType) 
+                    || string.IsNullOrEmpty(_targetMimeType)
+                    || (alsoAcceptRequestsToFormat!=null&&alsoAcceptRequestsToFormat.Contains(mimeType)))
                    && FindView(context, resource).View != null;
         }
 
@@ -148,7 +153,9 @@ namespace Snooze
 
     public class ResourceTypeConventionViewFormatter : BaseViewFormatter
     {
-        public ResourceTypeConventionViewFormatter(string targetMimeType) : base(targetMimeType)
+
+        public ResourceTypeConventionViewFormatter(string targetMimeType, params string[] alsoAcceptRequestsToFormat)
+            : base(targetMimeType, alsoAcceptRequestsToFormat)
         {
         }
 

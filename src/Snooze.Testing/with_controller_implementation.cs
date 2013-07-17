@@ -19,7 +19,7 @@ using Snooze.ViewTesting.Spark;
 
 namespace Snooze.Testing
 {
-    internal class with_controller_implementation<TResource, THandler>
+    public class with_controller_implementation<TResource, THandler>
         where THandler : ResourceController
     {
         string pathToApplicationUnderTest;
@@ -27,6 +27,7 @@ namespace Snooze.Testing
         string lasturi;
         Func<THandler> classUnderTest;
         Func<string, Exception> createException;
+        public FakeHttpContext httpContext;
 
         internal void application_under_test_is_here(Assembly callingAssembly, string path)
         {
@@ -359,14 +360,14 @@ namespace Snooze.Testing
 
         public JObject conneg_json(string accept = "application/json", ControllerContext controllerContext = null)
 		{
-            var httpContext = Render(accept, controllerContext);
+            httpContext = Render(accept, controllerContext);
 
             return JObject.Parse(httpContext._response.ResponseOutput);
 		}
 
         public HtmlDocument conneg_html(string accept = "text/html", ControllerContext controllerContext = null)
 		{
-            var httpContext = Render(accept, controllerContext);
+            httpContext = Render(accept, controllerContext);
 
 			var doc = new HtmlDocument();
 
@@ -376,7 +377,7 @@ namespace Snooze.Testing
 
         public void markup_is_valid_html5(string accept = "text/html", ControllerContext controllerContext = null)
         {
-            var httpContext = Render(accept, controllerContext);
+            httpContext = Render(accept, controllerContext);
             using (var reader = new StringReader(httpContext._response.ResponseOutput))
             {
                 var parser = new SimpleHtmlParser();
@@ -397,7 +398,7 @@ namespace Snooze.Testing
 			settings.DtdProcessing = DtdProcessing.Parse;
 			settings.XmlResolver = new XmlPreloadedResolver();
 
-			var httpContext = Render(accept, controllerContext);
+			httpContext = Render(accept, controllerContext);
 
 			using (var reader = XmlReader.Create(new StringReader(httpContext._response.ResponseOutput),settings))
 			{
@@ -432,7 +433,7 @@ namespace Snooze.Testing
 
     	ControllerContext ControllerContext(string accept = "*/*")
     	{
-            var httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi)
+            httpContext = new FakeHttpContext(new FakeHttpRequest(lasturi)
             {
                 _acceptTypes = new[] { accept },
                 _cookies = RequestCookies,

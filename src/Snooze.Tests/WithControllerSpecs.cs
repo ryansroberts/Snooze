@@ -8,7 +8,7 @@ namespace Snooze
 {
     public class WithControllerSpecs
     {
-
+        
         [Subject(typeof(with_controller<ACommand, AHandler>))]
         public class with_a_simple_get_request_with_a_mentalroute: with_controller<ACommand, AHandler>
         {

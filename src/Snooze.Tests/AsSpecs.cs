@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
 
@@ -21,7 +22,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_text_with_minimal : with_minimal
         {
-            Establish context = () =>
+            Establish context = () => afterSetup =() =>
             {
                 (new ResourceResult<MyResource>(200, new MyResource())).AsText();
                 (new ResourceResult<MyResource>(200, new MyResource())).AsText();
@@ -41,7 +42,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_xml_with_minimal : with_minimal
         {
-            Establish context = () =>
+            Establish context = () => afterSetup = () =>
             {
                 (new ResourceResult<MyResource>(200, new MyResource())).AsXml();
                 (new ResourceResult<MyResource>(200, new MyResource())).AsXml();
@@ -60,7 +61,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_json_with_minimal : with_minimal
         {
-            Establish context = () =>
+            Establish context = () => afterSetup = () =>
             {
                 (new ResourceResult<MyResource>(200, new MyResource())).AsJson();
                 (new ResourceResult<MyResource>(200, new MyResource())).AsJson();
@@ -76,13 +77,52 @@ namespace Snooze
 
         }
 
+        [Subject(typeof(ResourceFormatters))]
+        public class as_xhtml_with_defaults : with_defaults
+        {
+            Establish context = () =>
+            {
+                afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsXhtml();
+            };
+
+            Because of = () => GetFormatters();
+
+            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("text/html", "application/xhtml+xml", "*/*"));
+
+            It should_not_add_any_specific_formatters = () => specificFormattersFor.Count().ShouldEqual(0);
+
+            It should_not_add_a_specific_formatter = () => specificFormattersFor.Any(f => f.CompareTo(new ResourceTypeConventionViewFormatter("application/xhtml+xml")) == 0).ShouldBeFalse();
+        }
+
+
+        [Subject(typeof(ResourceFormatters))]
+        public class as_xhtml_with_xhtml : with_defaults
+        {
+            Establish context = () =>
+            {
+                ResourceFormatterDefaults.ViewFormatter = "xhtml";
+                afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsXhtml();
+            };
+
+            Because of = () => GetFormatters();
+
+            It should_have_the_required_formatter = () => allFormattersFor.First().ShouldEqual(new ResourceTypeConventionViewFormatter("application/xhtml+xml", "text/html", "*/*"));
+
+            It should_not_add_any_specific_formatters = () => specificFormattersFor.Count().ShouldEqual(0);
+
+            It should_not_add_a_specific_formatter = () => specificFormattersFor.Any(f => f.CompareTo(new ResourceTypeConventionViewFormatter("application/xhtml+xml")) == 0).ShouldBeFalse();
+        }
 
 
 
         [Subject(typeof(ResourceFormatters))]
-        public class as_xhtml_with_defaults : with_defaults
+        public class as_xhtml_with_legacy : with_defaults
         {
-            Establish context = () => (new ResourceResult<MyResource>(200, new MyResource())).AsXhtml();
+            Establish context = () =>
+                {
+                    ResourceFormatterDefaults.ViewFormatter = "legacy";
+                    afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsXhtml();
+                };
 
             Because of = () => GetFormatters();
 
@@ -98,7 +138,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_html_with_defaults : with_defaults
         {
-            Establish context = () => (new ResourceResult<MyResource>(200, new MyResource())).AsHtml();
+            Establish context = () => afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsHtml();
 
             Because of = () => GetFormatters();
 
@@ -113,7 +153,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_text_with_defaults : with_defaults
         {
-            Establish context = () => (new ResourceResult<MyResource>(200, new MyResource())).AsText();
+            Establish context = () => afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsText();
 
             Because of = () => GetFormatters();
 
@@ -129,7 +169,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_xml_with_defaults : with_defaults
         {
-            Establish context = () => (new ResourceResult<MyResource>(200, new MyResource())).AsXml();
+            Establish context = () => afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsXml();
 
             Because of = () => GetFormatters();
 
@@ -144,7 +184,7 @@ namespace Snooze
         [Subject(typeof(ResourceFormatters))]
         public class as_json_with_defaults : with_defaults
         {
-            Establish context = () => (new ResourceResult<MyResource>(200, new MyResource())).AsJson();
+            Establish context = () => afterSetup = () => new ResourceResult<MyResource>(200, new MyResource()).AsJson();
 
             Because of = () => GetFormatters();
 
@@ -162,20 +202,25 @@ namespace Snooze
         {
             protected static IEnumerable<IResourceFormatter> allFormattersFor;
             protected static IEnumerable<IResourceFormatter> specificFormattersFor;
-
-            Establish context = () => ResourceFormatters.Defaults();
+            protected static Action afterSetup;
 
             protected static void GetFormatters()
             {
+                ResourceFormatters.Defaults();
+                if (afterSetup != null)
+                    afterSetup();
                 allFormattersFor = ResourceFormatters.FormattersFor(typeof(MyResource));
                 specificFormattersFor = ResourceFormatters.ResourceSpecificFormattersFor(typeof(MyResource));
             }
 
             Cleanup tearDown = () =>
-                                   {
-                                        ResourceFormatters.ClearSpecificFormatters(typeof(MyResource));
-                                        ResourceFormatters.Defaults();
-                                   };
+            {
+                afterSetup = null;
+                ResourceFormatterDefaults.ViewFormatter = null;
+                ResourceFormatters.ClearSpecificFormatters(typeof(MyResource));
+                ResourceFormatters.Defaults();
+
+            };
 
         }
 
@@ -185,21 +230,22 @@ namespace Snooze
         {
             protected static IEnumerable<IResourceFormatter> allFormattersFor;
             protected static IEnumerable<IResourceFormatter> specificFormattersFor;
-
-            Establish context = () =>
-                                    {
-                                        ResourceFormatters.ClearSpecificFormatters(typeof(MyResource));
-                                        ResourceFormatters.Defaults(null);
-                                    };
+            protected static Action afterSetup;
 
             protected static void GetFormatters()
             {
+                ResourceFormatters.ClearSpecificFormatters(typeof(MyResource));
+                ResourceFormatters.Defaults(null);
+                if (afterSetup != null)
+                    afterSetup();
                 allFormattersFor = ResourceFormatters.FormattersFor(typeof (MyResource));
                 specificFormattersFor = ResourceFormatters.ResourceSpecificFormattersFor(typeof(MyResource));
             }
 
             Cleanup tearDown = () =>
             {
+                afterSetup = null;
+                ResourceFormatterDefaults.ViewFormatter = null;
                 ResourceFormatters.ClearSpecificFormatters(typeof(MyResource));
                 ResourceFormatters.Defaults();
             };
