@@ -211,11 +211,20 @@ namespace Snooze.Testing
 
         object CreateCommandFromAdditionalParameters(RouteData route, object[] additionalParameters,
     	                                                    NameValueCollection queryString)
-    	{
-            var command = additionalParameters.First();
-            foreach (var prop in FromContext(route, queryString).GetType().GetProperties().Where(p => p.GetSetMethod(false) != null))
-    			command.SetPropertyValue(prop.Name, additionalParameters.First().GetPropertyValue(prop.Name));
-    		return command;
+        {
+            var command = FromContext(route, queryString);
+            var properties = command.GetType().GetProperties().Where(p => p.GetSetMethod(false) != null);
+            var additionalParameter = additionalParameters.FirstOrDefault();
+            if (additionalParameter != null)
+            {
+                var parmType = additionalParameter.GetType();
+                foreach (var prop in properties)
+                {
+                    if(parmType.GetProperty(prop.Name) != null)
+                        command.SetPropertyValue(prop.Name, additionalParameter.GetPropertyValue(prop.Name));
+                }
+            }
+            return command;
     	}
 
     	void InvokeUrlAndModel(RouteData route, IEnumerable<object> additionalParameters, NameValueCollection queryString, IEnumerable<MethodInfo> methods)
@@ -281,8 +290,8 @@ namespace Snooze.Testing
 
 				AssignUrlProperties(data, parentUrl, queryString);
 
-				if(url.GetType().GetProperty("Parent") != null)
-					url.SetPropertyValue("Parent", parentUrl);
+                if (subUrl.GetType().GetProperty("Parent") != null)
+                    subUrl.SetPropertyValue("Parent", parentUrl);
 
                 subUrl = parentUrl as ISubUrl;
 			}
