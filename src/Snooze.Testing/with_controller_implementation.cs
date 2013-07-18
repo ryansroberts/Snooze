@@ -212,18 +212,17 @@ namespace Snooze.Testing
         object CreateCommandFromAdditionalParameters(RouteData route, object[] additionalParameters,
     	                                                    NameValueCollection queryString)
         {
-            var command = FromContext(route, queryString);
-            var properties = command.GetType().GetProperties().Where(p => p.GetSetMethod(false) != null);
-            var additionalParameter = additionalParameters.FirstOrDefault();
-            if (additionalParameter != null)
+            var url = FromContext(route, queryString);
+            var properties = url.GetType().GetProperties().Where(p => p.GetSetMethod(false) != null);
+            var command = additionalParameters.First();
+
+            var commandType = command.GetType();
+            foreach (var prop in properties)
             {
-                var parmType = additionalParameter.GetType();
-                foreach (var prop in properties)
-                {
-                    if(parmType.GetProperty(prop.Name) != null)
-                        command.SetPropertyValue(prop.Name, additionalParameter.GetPropertyValue(prop.Name));
-                }
+                if(commandType.GetProperty(prop.Name) != null)
+                    url.SetPropertyValue(prop.Name, command.GetPropertyValue(prop.Name));
             }
+
             return command;
     	}
 
