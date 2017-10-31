@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FF2AE14E-22E3-4812-8655-ED050E666145}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Snooze.Testing</RootNamespace>
+    <AssemblyName>Snooze.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.2.5.3\lib\NET40\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Fizzler">
+      <HintPath>..\lib\fizzler\Fizzler.dll</HintPath>
+    </Reference>
+    <Reference Include="Fizzler.Systems.HtmlAgilityPack">
+      <HintPath>..\lib\fizzler\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Glue, Version=0.9.0.0, Culture=neutral, PublicKeyToken=25072c8b05b6a762, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Snooze.1.3.15.0\lib\net40\Glue.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\fizzler\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlParser">
+      <HintPath>..\lib\htmlparsersharp\HtmlParser.exe</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Machine.Specifications.0.5.0.0\lib\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="nVentive.Umbrella">
+      <HintPath>..\..\Tools\nVentive\nVentive.Umbrella.dll</HintPath>
+    </Reference>
+    <Reference Include="PGK.Extensions">
+      <HintPath>..\packages\dnpextensions.2011.6.0.0\lib\PGK.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SgmlReaderDll, Version=1.8.3.13761, Culture=neutral, PublicKeyToken=46b2db9ca481831b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\net40\SgmlReaderDll.dll</HintPath>
+    </Reference>
+    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Snooze, Version=1.3.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Snooze.1.3.15.0\lib\net40\Snooze.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\packages\Spark.Web.Mvc3.1.6\lib\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebActivator, Version=1.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\SparkWebMvc.cs" />
+    <Compile Include="Automocking\Castle\AutoMockHelper.cs" />
+    <Compile Include="Automocking\Castle\IAutoMockContainer.cs" />
+    <Compile Include="Automocking\Castle\LazyLoader.cs" />
+    <Compile Include="Automocking\Castle\MoqAutoMockContainer.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\AutoMockHelper.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\IAutoMockContainer.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\IAutoMocker.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\IInstanceProvider.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\ILatentMocker.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\IMockGenerator.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\IMockHeap.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\MockGenerator.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\MockHeap.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\MockingUtilities.cs" />
+    <Compile Include="Automocking\MoqContrib.AutoMock\UnmockableException.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\ExpressionTreeBasedDelegateBuilder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryArguments.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryParameter.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\FactoryParametersStore.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\IDelegateBuilder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\LightweightFactory.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\LightweightFactoryFacility.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\NoUniqueComponentException.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\ParametersBinder.cs" />
+    <Compile Include="Castle.Facilities.LightweighFactory\Tokens.cs" />
+    <Compile Include="FakeCachePolicy.cs" />
+    <Compile Include="FakeHttpContext.cs" />
+    <Compile Include="FakeHttpFileCollection.cs" />
+    <Compile Include="FakeHttpRequest.cs" />
+    <Compile Include="FakeHttpResponse.cs" />
+    <Compile Include="MSpec\with_auto_mocking.cs" />
+    <Compile Include="MSpec\with_controller.cs" />
+    <Compile Include="NUnit\SpecificationException.cs" />
+    <Compile Include="NUnit\with_auto_mocking.cs" />
+    <Compile Include="NUnit\with_controller.cs" />
+    <Compile Include="with_routing.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewTesting\TestableSparkViewEngine.cs" />
+    <Compile Include="ViewTesting\TestSparkSettings.cs" />
+    <Compile Include="ViewTesting\TestSparkView.cs" />
+    <Compile Include="with_controller_implementation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Shared\_global.spark" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

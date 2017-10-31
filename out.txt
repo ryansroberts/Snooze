@@ -1,0 +1,404 @@
+# OpenWrap Shell 1.1.0.35
+# Copyright ¸ naughtyProd Limited 2009-2011
+# Using c:\Code\Snooze\wraps\_cache\openwrap-1.0.0.63365789\bin-net35\OpenWrap.dll (1.0.0.0)
+
+Using MSBuild from path 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe'.
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:43.
+Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" on node 1 (Clean target(s)).
+CoreClean:
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\DotNetOpenId.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\log4net.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Machine.Specifications.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Moq.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\MvcContrib.TestHelper.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\nunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\nunit.mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\pnunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Rhino.Mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\StructureMap.AutoMocking.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\StructureMap.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\log4net.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Moq.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\Moq.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\StructureMap.AutoMocking.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\StructureMap.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\StructureMap.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze\bin\Debug\nunit.framework.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze\obj\Debug\Snooze.Properties.Resources.resources".
+  Deleting file "c:\Code\Snooze\src\Snooze\obj\Debug\GenerateResource.read.1.tlog".
+  Deleting file "c:\Code\Snooze\src\Snooze\obj\Debug\GenerateResource.write.1.tlog".
+  Deleting file "c:\Code\Snooze\src\Snooze\obj\Debug\Snooze.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze\obj\Debug\Snooze.pdb".
+Done Building Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" (Clean target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.26
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:43.
+Project "c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" on node 1 (Clean target(s)).
+CoreClean:
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Snooze.Mspecc.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Snooze.Mspecc.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\log4net.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Machine.Specifications.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Moq.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\MvcContrib.TestHelper.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\nunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\nunit.mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\nVentive.Umbrella.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\pnunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Rhino.Mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Snooze.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\StructureMap.AutoMocking.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\StructureMap.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Snooze.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\nVentive.Umbrella.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\log4net.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Moq.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Moq.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\StructureMap.AutoMocking.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\StructureMap.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\StructureMap.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\nunit.framework.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\obj\Debug\Snooze.Mspecc.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Mspecc\obj\Debug\Snooze.Mspecc.pdb".
+Done Building Project "c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" (Clean target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.27
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:43.
+Project "c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" on node 1 (Clean target(s)).
+CoreClean:
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Snooze.Testing.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Snooze.Testing.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\log4net.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Machine.Specifications.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Moq.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\MvcContrib.TestHelper.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\nunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\nunit.mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\nVentive.Umbrella.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\pnunit.framework.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Rhino.Mocks.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Snooze.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\StructureMap.AutoMocking.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\StructureMap.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Snooze.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\nVentive.Umbrella.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\log4net.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Moq.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Moq.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\StructureMap.AutoMocking.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\StructureMap.pdb".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\StructureMap.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\bin\Debug\nunit.framework.xml".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\obj\Debug\Snooze.Testing.dll".
+  Deleting file "c:\Code\Snooze\src\Snooze.Testing\obj\Debug\Snooze.Testing.pdb".
+Done Building Project "c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" (Clean target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.26
+Building 'c:\Code\Snooze\src\Snooze\Snooze.csproj'...
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:44.
+Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" on node 1 (Build target(s)).
+OpenWrap-ResolveReferences:
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll'
+CoreResGen:
+  "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\NETFX 4.0 Tools\resgen.exe" /useSourcePath /r:c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.dll /r:c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll /r:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll /r:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll /r:c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /r:c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll /r:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll /r:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll /r:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll /r:c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll /r:c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll /r:c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Abstractions.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Extensions.dll" /r:"c:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Routing.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.XML.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll" /compile Properties\Resources.resx,obj\Debug\Snooze.Properties.Resources.resources
+  Processing resource file "Properties\Resources.resx" into "obj\Debug\Snooze.Properties.Resources.resources".
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /errorreport:prompt /warn:4 /define:DEBUG;TRACE;__OW_PLATFORM_AnyCPU__;__OW_PROFILE_net40__ /reference:c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.dll /reference:c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll /reference:c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /reference:c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Abstractions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Extensions.dll" /reference:"c:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Routing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.XML.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\Snooze.dll /resource:obj\Debug\Snooze.Properties.Resources.resources /resource:Resources\blank.gif,Snooze.Resources.blank.gif /resource:Resources\iepngfix.htc,Snooze.Resources.iepngfix.htc /target:library BlankGifUrl.cs ByteArrayFormatter.cs FakeHttpContext.cs FakeHttpRequest.cs FakeHttpResponse.cs FormEncoding.cs FutureAction.cs HttpHandlerUtil.cs IEPngFixUrl.cs IInput.cs Input.cs InputModelBinder.cs IResourceFormatter.cs JsonFormatter.cs MimeTypes.cs Modules\CompressionModule.cs IEPngFixController.cs PartialRequestExtensions.cs Properties\Resources.Designer.cs RequiredInput.cs ResourceFormatters.cs ResourceResult.cs Routing\IRouteRegistration.cs Routing\RoutingRegistrationDiscovery.cs StaticFileController.cs StaticFileUrl.cs StringFormatter.cs SubUrlAttribute.cs Routing\RouteCollectionExtensions.cs Routing\RouteExpressionExtensions.cs SubUrl.cs ResourceControllerTypes.cs Routing\SubResourceRoute.cs SubUrlModelBinder.cs Url.cs ExpressionManipulation\ExpressionVisitor.cs ResourceController.cs Properties\AssemblyInfo.cs Routing\ResourceRoute.cs ExpressionManipulation\ParameterReplacer.cs ExpressionManipulation\RouteDefaultsProvider.cs ExpressionManipulation\RouteUrlProvider.cs ResourceActionInvoker.cs UrlConverter.cs UrlExtensions.cs UrlHelperExtensions.cs ResourceTypeConventionViewFormatter.cs XmlFormatter.cs "C:\Users\Ryan Roberts\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cs"
+_CopyFilesMarkedCopyLocal:
+  Copying file from "c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.dll" to "bin\Debug\DotNetOpenId.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll" to "bin\Debug\log4net.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll" to "bin\Debug\Machine.Specifications.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll" to "bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll" to "bin\Debug\Moq.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll" to "bin\Debug\MvcContrib.TestHelper.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll" to "bin\Debug\nunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll" to "bin\Debug\nunit.mocks.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll" to "bin\Debug\pnunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll" to "bin\Debug\Rhino.Mocks.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll" to "bin\Debug\StructureMap.AutoMocking.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll" to "bin\Debug\StructureMap.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.xml" to "bin\Debug\log4net.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.pdb" to "bin\Debug\Moq.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.xml" to "bin\Debug\Moq.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.xml" to "bin\Debug\StructureMap.AutoMocking.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.pdb" to "bin\Debug\StructureMap.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.xml" to "bin\Debug\StructureMap.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.xml" to "bin\Debug\nunit.framework.xml".
+CopyFilesToOutputDirectory:
+  Copying file from "obj\Debug\Snooze.dll" to "bin\Debug\Snooze.dll".
+  Snooze -> c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll
+  Copying file from "obj\Debug\Snooze.pdb" to "bin\Debug\Snooze.pdb".
+OpenWrap-AfterBuild:
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\obj\Debug\Snooze.dll'
+Output found - bin-net40\Libraries: 'c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\Libraries\DotNetOpenId.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\obj\Debug\Snooze.pdb'
+  Deleting file "obj\Debug\ResolveAssemblyReference.cache".
+Done Building Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" (Build target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.09
+Build complete.
+Building 'c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj'...
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:45.
+Project "c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" on node 1 (Build target(s)).
+Project "c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" (1) is building "c:\Code\Snooze\src\Snooze\Snooze.csproj" (2) on node 1 (default targets).
+OpenWrap-ResolveReferences:
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll'
+CoreResGen:
+  All outputs are up-to-date.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  Snooze -> c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll
+OpenWrap-AfterBuild:
+  Deleting file "obj\Debug\ResolveAssemblyReference.cache".
+Done Building Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" (default targets).
+OpenWrap-ResolveReferences:
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll'
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /errorreport:prompt /warn:4 /define:DEBUG;TRACE;__OW_PLATFORM_AnyCPU__;__OW_PROFILE_net40__ /reference:c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll" /reference:c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /reference:c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll /reference:c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll /reference:c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Abstractions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll" /reference:"c:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\Snooze.Mspecc.dll /target:library FakeCachePolicy.cs with_controller.cs Properties\AssemblyInfo.cs with_auto_mocking.cs with_routing.cs "C:\Users\Ryan Roberts\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cs"
+FakeCachePolicy.cs(8,49): warning CS0649: Field 'Snooze.MSpec.FakeCachePolicy.varyByContentEncodings' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj]
+FakeCachePolicy.cs(12,39): warning CS0649: Field 'Snooze.MSpec.FakeCachePolicy.varyByParams' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj]
+_CopyFilesMarkedCopyLocal:
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll" to "bin\Debug\log4net.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll" to "bin\Debug\Machine.Specifications.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll" to "bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll" to "bin\Debug\Moq.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll" to "bin\Debug\MvcContrib.TestHelper.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll" to "bin\Debug\nunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll" to "bin\Debug\nunit.mocks.dll".
+  Copying file from "c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll" to "bin\Debug\nVentive.Umbrella.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll" to "bin\Debug\pnunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll" to "bin\Debug\Rhino.Mocks.dll".
+  Copying file from "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll" to "bin\Debug\Snooze.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll" to "bin\Debug\StructureMap.AutoMocking.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll" to "bin\Debug\StructureMap.dll".
+  Copying file from "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb" to "bin\Debug\Snooze.pdb".
+  Copying file from "c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb" to "bin\Debug\nVentive.Umbrella.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.xml" to "bin\Debug\log4net.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.pdb" to "bin\Debug\Moq.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.xml" to "bin\Debug\Moq.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.xml" to "bin\Debug\StructureMap.AutoMocking.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.pdb" to "bin\Debug\StructureMap.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.xml" to "bin\Debug\StructureMap.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.xml" to "bin\Debug\nunit.framework.xml".
+CopyFilesToOutputDirectory:
+  Copying file from "obj\Debug\Snooze.Mspecc.dll" to "bin\Debug\Snooze.Mspecc.dll".
+  Snooze.Mspec -> c:\Code\Snooze\src\Snooze.Mspecc\bin\Debug\Snooze.Mspecc.dll
+  Copying file from "obj\Debug\Snooze.Mspecc.pdb" to "bin\Debug\Snooze.Mspecc.pdb".
+OpenWrap-AfterBuild:
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze.Mspecc\obj\Debug\Snooze.Mspecc.dll'
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze.Mspecc\obj\Debug\Snooze.Mspecc.pdb'
+  Deleting file "obj\Debug\ResolveAssemblyReference.cache".
+Done Building Project "c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" (Build target(s)).
+
+Build succeeded.
+
+"c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj" (Build target) (1) ->
+(CoreCompile target) -> 
+  FakeCachePolicy.cs(8,49): warning CS0649: Field 'Snooze.MSpec.FakeCachePolicy.varyByContentEncodings' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj]
+  FakeCachePolicy.cs(12,39): warning CS0649: Field 'Snooze.MSpec.FakeCachePolicy.varyByParams' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Mspecc\Snooze.Mspec.csproj]
+
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.85
+Build complete.
+Building 'c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj'...
+Microsoft (R) Build Engine Version 4.0.30319.1
+[Microsoft .NET Framework, Version 4.0.30319.235]
+Copyright (C) Microsoft Corporation 2007. All rights reserved.
+
+Build started 30/06/2011 13:36:46.
+Project "c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" on node 1 (Build target(s)).
+Project "c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" (1) is building "c:\Code\Snooze\src\Snooze\Snooze.csproj" (2) on node 1 (default targets).
+OpenWrap-ResolveReferences:
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll'
+CoreResGen:
+  All outputs are up-to-date.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  Snooze -> c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll
+OpenWrap-AfterBuild:
+  Deleting file "obj\Debug\ResolveAssemblyReference.cache".
+Done Building Project "c:\Code\Snooze\src\Snooze\Snooze.csproj" (default targets).
+OpenWrap-ResolveReferences:
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll'
+  Adding OpenWrap reference to 'c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll'
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /errorreport:prompt /warn:4 /define:DEBUG;TRACE;__OW_PLATFORM_AnyCPU__;__OW_PROFILE_net40__ /reference:c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll /reference:c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll" /reference:c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /reference:c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll /reference:c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll /reference:c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll /reference:c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll /reference:c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll /reference:c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Abstractions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll" /reference:"c:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\Snooze.Testing.dll /target:library with_nunit_auto_mocking.cs with_nunit_controller.cs with_mspec_controller.cs with_mspec_auto_mocking.cs FakeCachePolicy.cs Properties\AssemblyInfo.cs with_routing.cs "C:\Users\Ryan Roberts\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cs"
+FakeCachePolicy.cs(8,49): warning CS0649: Field 'Snooze.Testing.FakeCachePolicy.varyByContentEncodings' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj]
+FakeCachePolicy.cs(12,39): warning CS0649: Field 'Snooze.Testing.FakeCachePolicy.varyByParams' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj]
+_CopyFilesMarkedCopyLocal:
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.dll" to "bin\Debug\log4net.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.dll" to "bin\Debug\Machine.Specifications.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Machine.Specifications-0.4.13.0\bin-net20\Machine.Specifications.TDNetRunner.dll" to "bin\Debug\Machine.Specifications.TDNetRunner.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.dll" to "bin\Debug\Moq.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\MvcContrib.Mvc3.TestHelper-ci-3.0.75.0\bin-net20\MvcContrib.TestHelper.dll" to "bin\Debug\MvcContrib.TestHelper.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.dll" to "bin\Debug\nunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.mocks.dll" to "bin\Debug\nunit.mocks.dll".
+  Copying file from "c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll" to "bin\Debug\nVentive.Umbrella.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\pnunit.framework.dll" to "bin\Debug\pnunit.framework.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\RhinoMocks-3.6\bin-net20\Rhino.Mocks.dll" to "bin\Debug\Rhino.Mocks.dll".
+  Copying file from "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll" to "bin\Debug\Snooze.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.dll" to "bin\Debug\StructureMap.AutoMocking.dll".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.dll" to "bin\Debug\StructureMap.dll".
+  Copying file from "c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb" to "bin\Debug\Snooze.pdb".
+  Copying file from "c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb" to "bin\Debug\nVentive.Umbrella.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\log4net-1.2.10\bin-net20\log4net.xml" to "bin\Debug\log4net.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.pdb" to "bin\Debug\Moq.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\Moq-4.0.10827\bin-net40\Moq.xml" to "bin\Debug\Moq.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap.automocking-2.6.2.1\bin-net20\StructureMap.AutoMocking.xml" to "bin\Debug\StructureMap.AutoMocking.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.pdb" to "bin\Debug\StructureMap.pdb".
+  Copying file from "c:\Code\Snooze\wraps\_cache\structuremap-2.6.2\bin-net20\StructureMap.xml" to "bin\Debug\StructureMap.xml".
+  Copying file from "c:\Code\Snooze\wraps\_cache\NUnit-2.5.10.11092\bin-net20\nunit.framework.xml" to "bin\Debug\nunit.framework.xml".
+CopyFilesToOutputDirectory:
+  Copying file from "obj\Debug\Snooze.Testing.dll" to "bin\Debug\Snooze.Testing.dll".
+  Snooze.Testing -> c:\Code\Snooze\src\Snooze.Testing\bin\Debug\Snooze.Testing.dll
+  Copying file from "obj\Debug\Snooze.Testing.pdb" to "bin\Debug\Snooze.Testing.pdb".
+OpenWrap-AfterBuild:
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.dll'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze.Testing\obj\Debug\Snooze.Testing.dll'
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze\bin\Debug\Snooze.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\Tools\nVentive\nVentive.Umbrella.pdb'
+Output found - bin-net40: 'c:\Code\Snooze\src\Snooze.Testing\obj\Debug\Snooze.Testing.pdb'
+  Deleting file "obj\Debug\ResolveAssemblyReference.cache".
+  Deleting file "obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache".
+Done Building Project "c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" (Build target(s)).
+
+Build succeeded.
+
+"c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj" (Build target) (1) ->
+(CoreCompile target) -> 
+  FakeCachePolicy.cs(8,49): warning CS0649: Field 'Snooze.Testing.FakeCachePolicy.varyByContentEncodings' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj]
+  FakeCachePolicy.cs(12,39): warning CS0649: Field 'Snooze.Testing.FakeCachePolicy.varyByParams' is never assigned to, and will always have its default value null [c:\Code\Snooze\src\Snooze.Testing\Snooze.Testing.csproj]
+
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.81
+Build complete.
+Copying: bin-net40/DotNetOpenId.dll (376,832 bytes)
+Copying: bin-net40/Snooze.dll (87,552 bytes)
+Copying: bin-net40\Libraries/DotNetOpenId.dll (376,832 bytes)
+Copying: bin-net40/Snooze.pdb (185,856 bytes)
+Copying: bin-net40/nVentive.Umbrella.dll (162,816 bytes)
+Copying: bin-net40/Snooze.Mspecc.dll (17,920 bytes)
+Copying: bin-net40/nVentive.Umbrella.pdb (718,336 bytes)
+Copying: bin-net40/Snooze.Mspecc.pdb (36,352 bytes)
+Copying: bin-net40/Snooze.Testing.dll (22,528 bytes)
+Copying: bin-net40/Snooze.Testing.pdb (56,832 bytes)
+Copying: ./version (14 bytes)
+Copying: ./Snooze.wrapdesc (379 bytes)
+Package built at 'c:\Code\Snooze\Snooze-0.0.1.71479647.wrap'.
