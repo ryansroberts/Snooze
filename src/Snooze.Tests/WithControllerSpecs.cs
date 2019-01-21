@@ -18,11 +18,11 @@ namespace Snooze
 
             It should_be_ok = () => is_200();
 
-            It should_return_a_command = () => Result.Resource.ShouldBeOfType<ACommand>();
+            It should_return_a_command = () => Result.Resource.ShouldBeOfExactType<ACommand>();
 
             It should_map_the_property = () => Resource.Property.ShouldEqual("www.test.com");
 
-            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
+            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfExactType<ACommand>();
 
             It should_set_the_value_from_the_uri = () => ((ACommand)class_under_test.OnActionExecutingCommand).Property.ShouldEqual("www.test.com");
 
@@ -40,11 +40,11 @@ namespace Snooze
 
             It should_be_ok = () => is_200();
 
-            It should_return_a_command = () => Result.Resource.ShouldBeOfType<ACommand>();
+            It should_return_a_command = () => Result.Resource.ShouldBeOfExactType<ACommand>();
 
             It should_map_the_property = () => Resource.Property.ShouldEqual("value2");
 
-            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
+            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfExactType<ACommand>();
 
             It should_set_the_value_from_the_uri = () => ((ACommand)class_under_test.OnActionExecutingCommand).Property.ShouldEqual("value2");
 
@@ -61,11 +61,11 @@ namespace Snooze
 
             It should_be_ok = () => is_200();
 
-            It should_return_a_command = () => Result.Resource.ShouldBeOfType<ACommand>();
+            It should_return_a_command = () => Result.Resource.ShouldBeOfExactType<ACommand>();
 
             It should_map_the_property = () => Resource.Property.ShouldEqual("value");
 
-            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
+            It should_pass_the_command_to_the_filter_context = () => class_under_test.OnActionExecutingCommand.ShouldBeOfExactType<ACommand>();
 
             It should_set_the_value_from_the_uri = () => ((ACommand) class_under_test.OnActionExecutingCommand).Property.ShouldEqual("value");
 
@@ -81,9 +81,9 @@ namespace Snooze
 
             It should_be_ok = () => is_200();
 
-            It should_return_a_command = () => Result.Resource.ShouldBeOfType<ACommand>();
+            It should_return_a_command = () => Result.Resource.ShouldBeOfExactType<ACommand>();
 
-            It should_pass_the_command_to_the_filter_context =()=> class_under_test.OnActionExecutingCommand.ShouldBeOfType<ACommand>();
+            It should_pass_the_command_to_the_filter_context =()=> class_under_test.OnActionExecutingCommand.ShouldBeOfExactType<ACommand>();
 
 
         }
