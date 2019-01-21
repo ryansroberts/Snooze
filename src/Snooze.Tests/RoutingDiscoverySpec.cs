@@ -80,7 +80,7 @@ namespace Snooze
             Because of = () => registrations =  discovery.Scan(typeof(TestRegistration).Assembly);
 
             It Should_have_discovered_the_test_registration = () => 
-                registrations.First().ShouldBeOfType<TestRegistration>();
+                registrations.First().ShouldBeOfExactType<TestRegistration>();
 
          }
     }

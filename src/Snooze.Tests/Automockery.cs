@@ -34,7 +34,7 @@ namespace Snooze
 		}
 	}
 
-    [Ignore]
+    [Ignore("")]
 	public class automocking_abstract
 	{
 		static AutoMockContainer<Root> mocked;

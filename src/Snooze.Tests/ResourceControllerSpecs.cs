@@ -47,7 +47,7 @@ namespace Snooze
 
             Because of = () => exception = Catch.Exception(() => controller.Get(new TestUrl1()));
 
-            It throws_an_invalid_operation_exception =() => exception.ShouldBeOfType(typeof (InvalidOperationException));
+            It throws_an_invalid_operation_exception =() => exception.ShouldBeOfExactType(typeof (InvalidOperationException));
         }
 
         [Subject(typeof(ResourceController))]
@@ -59,7 +59,7 @@ namespace Snooze
 
             Because of = () => exception = Catch.Exception(() => controller.Get(new TestUrl2()));
 
-            It throws_an_invalid_operation_exception = () => exception.ShouldBeOfType(typeof(InvalidOperationException));
+            It throws_an_invalid_operation_exception = () => exception.ShouldBeOfExactType(typeof(InvalidOperationException));
         }
 
 
