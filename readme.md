@@ -30,5 +30,3 @@ It is used by importing the NuGet Package in Visual Studio
 This project is in the the 'Nuggets' deprecated builds in TeamCity and can only be found by selecting 'show archived projects'
 
 https://teamcity.nice.org.uk/project.html?projectId=Nuggets
-
-# Top 5 common issues affecting users
